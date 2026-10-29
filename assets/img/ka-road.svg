@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 900" width="1920" height="900">
+  <defs>
+    <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0B0D10"/>
+      <stop offset="50%" stop-color="#1A2027"/>
+      <stop offset="85%" stop-color="#2D1C1E"/>
+      <stop offset="100%" stop-color="#731920"/>
+    </linearGradient>
+    <linearGradient id="roadG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#14181C"/>
+      <stop offset="50%" stop-color="#181C20"/>
+      <stop offset="100%" stop-color="#0E1012"/>
+    </linearGradient>
+    <linearGradient id="beamG" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="rgba(255,200,120,0.4)"/>
+      <stop offset="100%" stop-color="rgba(255,200,120,0)"/>
+    </linearGradient>
+    <linearGradient id="redStreak" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="rgba(230,26,40,0)"/>
+      <stop offset="50%" stop-color="rgba(230,26,40,0.85)"/>
+      <stop offset="100%" stop-color="rgba(255,70,80,0.95)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky & Distant Mountain Ridges -->
+  <rect width="1920" height="900" fill="url(#skyG)"/>
+  <path d="M 0 540 Q 400 480 800 520 Q 1200 460 1600 510 L 1920 530 L 1920 600 L 0 600 Z" fill="#12161A" opacity="0.8"/>
+  <path d="M 0 570 Q 300 530 700 560 Q 1300 520 1920 565 L 1920 620 L 0 620 Z" fill="#0C0E11"/>
+
+  <!-- Open Asphalt Road Surface with Curve -->
+  <path d="M 0 620 L 1920 620 L 1920 900 L 0 900 Z" fill="url(#roadG)"/>
+  
+  <!-- Perspective Road Markings -->
+  <polygon points="950,620 970,620 1200,900 1140,900" fill="#FFFFFF" opacity="0.3"/>
+  <polygon points="400,900 440,900 780,620 765,620" stroke="#FFCC00" stroke-width="3" fill="none" opacity="0.4"/>
+  <polygon points="1520,900 1480,900 1150,620 1165,620" stroke="#FFFFFF" stroke-width="3" fill="none" opacity="0.4"/>
+
+  <!-- High-speed Light Streaks -->
+  <path d="M 700 640 Q 950 660 1350 720" stroke="url(#redStreak)" stroke-width="6" fill="none"/>
+  <path d="M 720 645 Q 960 664 1380 726" stroke="url(#redStreak)" stroke-width="4" fill="none"/>
+  <path d="M 680 638 Q 940 658 1320 715" stroke="url(#redStreak)" stroke-width="3" fill="none"/>
+
+  <!-- Ambient Headlight Beam Cast -->
+  <polygon points="680,640 180,900 700,900" fill="url(#beamG)"/>
+
+  <!-- Roadside Safety Barriers and Markers -->
+  <line x1="0" y1="640" x2="1920" y2="640" stroke="#252B33" stroke-width="4"/>
+  <circle cx="500" cy="638" r="3" fill="#FF4433"/>
+  <circle cx="850" cy="638" r="3" fill="#FF4433"/>
+  <circle cx="1200" cy="638" r="3" fill="#FF4433"/>
+  <circle cx="1600" cy="638" r="3" fill="#FF4433"/>
+
+  <!-- Cinematic Vignette & Grain Overlay -->
+  <rect width="1920" height="900" fill="none" stroke="#000" stroke-width="40" opacity="0.5"/>
+</svg>

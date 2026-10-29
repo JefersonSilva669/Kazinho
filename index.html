@@ -1,0 +1,2869 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FORD KA 1998 — Vermelho Colorado · A Revolução New Edge</title>
+  <meta name="description" content="Showroom oficial de tributo ao Ford Ka 1998 em Vermelho Colorado. Visualizador 3D interativo 360°, laboratório de áudio do motor Endura-E e design New Edge.">
+  <link rel="icon" href="assets/img/ka-red-colorado.svg" type="image/svg+xml">
+
+  <!-- Typography: Cormorant Garamond (Editorial Luxury Serif) + Zen Kaku Gothic New (Precision Modernist Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Fallback local fonts stylesheet if available -->
+  <link rel="stylesheet" href="assets/fonts.googleapis.com/css2__qec736f76.css" onerror="this.onerror=null;">
+
+  <!-- Tailwind CSS (Offline primary, CDN fallback) -->
+  <script src="assets/cdn.tailwindcss.com/3.4.17.js" onerror="this.src='https://cdn.tailwindcss.com/3.4.17'"></script>
+
+    <!-- Sketchfab Viewer API (Offline primary com CDN fallback) -->
+  <script src="assets/js/sketchfab-viewer-1.12.1.js" onerror="this.src='https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js'"></script>
+
+  <!-- Three.js for 360° 3D Showroom (Offline primary, CDN fallback) -->
+  <script src="assets/three.min.js" onerror="this.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'"></script>
+
+  <style>
+    :root {
+      --pearl: #F6F4F0;
+      --mist: #ECE7DF;
+      --ink: #141618;
+      --red: #C41E28;
+      --crimson: #E83A45;
+      --dark-red: #7A0F15;
+      --bronze: #C41E28;
+      --bumper: #2A2D33;
+      --mid: rgba(20, 22, 24, .56);
+      --line: rgba(20, 22, 24, .12);
+      --nav: 74px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { overflow-x: clip; scroll-behavior: smooth; }
+    body {
+      background: var(--pearl);
+      color: var(--ink);
+      overflow-x: clip;
+      font: 300 15px/1.7 'Zen Kaku Gothic New', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 clamp(18px, 3.4vw, 48px);
+    }
+    .ser {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 300;
+    }
+    .lbl {
+      font: 400 9.5px/1 'Zen Kaku Gothic New', sans-serif;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+
+    /* ── Aerodynamic Airflow Canvas (Behind Hero) ── */
+    #petals {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── Floating Sticky Navigation ── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto;
+      height: var(--nav);
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 clamp(18px, 3.4vw, 48px);
+      background: linear-gradient(180deg, rgba(246, 244, 240, .96) 0%, rgba(246, 244, 240, .82) 58%, rgba(246, 244, 240, 0) 100%);
+      transition: background .45s ease, color .45s ease, border-color .45s ease;
+    }
+    nav.solid {
+      background: rgba(246, 244, 240, .96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    nav.inv {
+      background: rgba(20, 22, 24, .95);
+      backdrop-filter: blur(12px);
+      color: var(--pearl);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    nav.inv ul a { color: rgba(246, 244, 240, .6); }
+    nav.inv ul a:hover { color: #FFF; }
+    nav.inv .res { border-color: var(--crimson); color: var(--crimson); }
+    nav.inv .res:hover { background: var(--crimson); color: #FFF; }
+
+    nav .mk {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 22px;
+      letter-spacing: .32em;
+    }
+    nav .ford-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 20px;
+      background: #003478;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.7);
+      color: #FFF;
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-size: 10px;
+      font-style: italic;
+      font-weight: bold;
+      letter-spacing: 0;
+    }
+    nav ul {
+      display: flex;
+      gap: clamp(16px, 2.2vw, 32px);
+      list-style: none;
+    }
+    nav ul a {
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      transition: color .2s;
+    }
+    nav ul a:hover { color: var(--ink); }
+
+    nav .res {
+      border: 1px solid var(--red);
+      color: var(--red);
+      padding: 9px 18px;
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      transition: background .3s, color .3s, transform .2s;
+      white-space: nowrap;
+    }
+    nav .res:hover {
+      background: var(--red);
+      color: var(--pearl);
+      transform: translateY(-1px);
+    }
+    #prog {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 2px;
+      width: 100%;
+      background: var(--red);
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      will-change: transform;
+    }
+
+    /* ── Hero Section (Layered Poster with 3D Parallax Depth) ── */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      padding-top: var(--nav);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      z-index: 10;
+    }
+    #hero .wash {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: radial-gradient(65% 55% at 70% 32%, rgba(232, 58, 69, .15), transparent 70%),
+                  radial-gradient(45% 45% at 15% 75%, rgba(196, 30, 40, .08), transparent 60%);
+      pointer-events: none;
+    }
+    #hero .rule {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: clamp(120px, 28vh, 230px);
+      height: 1px;
+      background: var(--line);
+      z-index: 1;
+    }
+    #hero .marque {
+      position: absolute;
+      left: 50%;
+      top: clamp(90px, 22vh, 180px);
+      transform: translate(-50%, 0);
+      z-index: 1;
+      width: 100%;
+      text-align: center;
+      pointer-events: none;
+      user-select: none;
+    }
+    #hero .marque b {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 300;
+      font-size: clamp(80px, 19vw, 290px);
+      letter-spacing: .24em;
+      line-height: .8;
+      color: rgba(20, 22, 24, .06);
+      white-space: nowrap;
+      will-change: transform;
+    }
+
+    /* Car Stack in Hero */
+    #hero .carstack {
+      position: absolute;
+      left: 54%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: clamp(340px, 62vw, 920px);
+      aspect-ratio: 1200 / 520;
+      z-index: 4;
+      pointer-events: none;
+      will-change: transform;
+    }
+    #hero .carstack .cc {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transition: opacity .65s cubic-bezier(.4, 0, .2, 1);
+    }
+    #hero .carstack .cc.on { opacity: 1; }
+
+    /* Parallax Floating Accents */
+    #hero .arc-accent {
+      position: absolute;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0.75;
+      will-change: transform;
+    }
+    #hero .arc-accent.foreground {
+      right: -2%;
+      top: 25%;
+      width: clamp(200px, 28vw, 420px);
+    }
+    #hero .arc-accent.background {
+      left: -5%;
+      top: 15%;
+      width: clamp(240px, 32vw, 480px);
+      opacity: 0.35;
+      z-index: 2;
+    }
+
+    /* Hero Typography Plates */
+    #hero .plate {
+      position: relative;
+      z-index: 6;
+      max-width: 460px;
+      margin-left: clamp(18px, 6vw, 90px);
+    }
+    #hero .ed {
+      font-size: clamp(48px, 7vw, 102px);
+      line-height: .92;
+      letter-spacing: .02em;
+      margin-bottom: 20px;
+    }
+    #hero .ed i {
+      display: block;
+      font-size: clamp(18px, 2.2vw, 28px);
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      font-style: italic;
+      color: var(--red);
+      margin-bottom: 4px;
+    }
+    #hero .ed em {
+      font-style: normal;
+      color: var(--red);
+    }
+    #hero .plate p {
+      color: var(--mid);
+      font-size: 14.5px;
+      line-height: 1.7;
+      max-width: 360px;
+    }
+
+    /* Paint Color Swatches */
+    .paints {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 26px;
+    }
+    .paints .sw {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--c);
+      cursor: pointer;
+      border: 1px solid rgba(20, 22, 24, .25);
+      position: relative;
+      transition: transform .25s ease, box-shadow .25s ease;
+      outline: none;
+    }
+    .paints .sw:hover { transform: scale(1.15); }
+    .paints .sw.on {
+      box-shadow: 0 0 0 2px var(--pearl), 0 0 0 4px var(--red);
+      transform: scale(1.1);
+    }
+    .paints .pn {
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-weight: 500;
+      margin-left: 8px;
+    }
+
+    /* Hero Quick Specs Pill */
+    #hero .specs {
+      position: absolute;
+      right: clamp(18px, 4vw, 60px);
+      bottom: clamp(24px, 5vh, 60px);
+      z-index: 6;
+      display: flex;
+      gap: clamp(18px, 2.8vw, 42px);
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }
+    #hero .specs div b {
+      display: block;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(28px, 3.4vw, 44px);
+      font-weight: 400;
+      line-height: 1;
+    }
+    #hero .specs div span {
+      display: block;
+      font-size: 9px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 4px;
+    }
+
+    /* Hero Seal Badge */
+    #hero .seal {
+      position: absolute;
+      left: clamp(18px, 6vw, 90px);
+      bottom: clamp(24px, 5vh, 60px);
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    #hero .seal .mark {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--red);
+    }
+    #hero .seal p {
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      line-height: 1.4;
+    }
+
+    /* Hero Initial Load Transitions */
+    .hv {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .8s ease, transform .8s cubic-bezier(.2, .8, .2, 1);
+    }
+    .hv.on {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── SECTION: 3D Turntable Showroom (Three.js WebGL) ── */
+    #viewer-3d {
+      position: relative;
+      background: #101215;
+      color: var(--pearl);
+      padding: clamp(60px, 9vh, 120px) 0;
+      overflow: hidden;
+      z-index: 10;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .v3d-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+    .v3d-canvas-wrap {
+      position: relative;
+      width: 100%;
+      height: clamp(380px, 64vh, 680px);
+      background: radial-gradient(circle at 50% 50%, #1c2027 0%, #0c0e10 85%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: inset 0 0 100px rgba(0,0,0,0.8), 0 20px 40px rgba(0,0,0,0.5);
+    }
+    #canvas3d {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+    }
+    #canvas3d:active { cursor: grabbing; }
+
+    /* 3D UI Overlay Controls */
+    .v3d-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(14px, 2.5vw, 24px);
+    }
+    .v3d-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      pointer-events: auto;
+    }
+    .v3d-pill {
+      background: rgba(16, 18, 21, 0.75);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.14);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .v3d-pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22C55E;
+      box-shadow: 0 0 8px #22C55E;
+    }
+    .v3d-bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 16px;
+      pointer-events: auto;
+    }
+    .v3d-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: rgba(16, 18, 21, 0.75);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.14);
+      padding: 6px;
+      border-radius: 6px;
+    }
+    .v3d-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: rgba(255,255,255,0.7);
+      padding: 7px 12px;
+      border-radius: 4px;
+      font-size: 9.5px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .v3d-btn:hover { color: #FFF; border-color: rgba(255,255,255,0.3); }
+    .v3d-btn.active { background: var(--red); color: #FFF; border-color: var(--crimson); }
+
+    /* ── SECTION: BAND (High-Contrast Marque Bar) ── */
+    #band {
+      background: var(--ink);
+      color: var(--pearl);
+      padding: 26px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      position: relative;
+      z-index: 10;
+    }
+    #band .row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+    }
+    #band span {
+      font-size: 11px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: rgba(246, 244, 240, .45);
+    }
+    #band b {
+      color: var(--pearl);
+      font-weight: 500;
+      margin-left: 6px;
+      letter-spacing: .16em;
+    }
+
+    /* ── SECTION: TRIM / SPECIFICATION SELECTOR ── */
+    #trim {
+      padding: clamp(60px, 10vh, 130px) 0;
+      position: relative;
+      z-index: 10;
+    }
+    #trim .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(30px, 6vw, 90px);
+      align-items: center;
+    }
+    @media(max-width: 900px) {
+      #trim .grid { grid-template-columns: 1fr; }
+    }
+    #trim h2 {
+      font-size: clamp(34px, 5.2vw, 68px);
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    #trim h2 em {
+      font-style: italic;
+      color: var(--red);
+    }
+    #trim p {
+      color: var(--mid);
+      max-width: 440px;
+      line-height: 1.75;
+    }
+
+    .picker {
+      margin-top: clamp(22px, 3.8vh, 38px);
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      max-width: 440px;
+    }
+    .picker button {
+      background: var(--pearl);
+      border: 0;
+      cursor: pointer;
+      text-align: left;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background .2s;
+    }
+    .picker button:hover { background: var(--mist); }
+    .picker button[aria-pressed="true"] {
+      background: #FFF;
+      box-shadow: inset 4px 0 0 var(--red);
+    }
+    .picker .nm {
+      font-size: 13px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .picker .no {
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    /* Animated Readout Grid */
+    .readout {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+    .readout div {
+      background: var(--pearl);
+      padding: clamp(20px, 3.2vw, 36px);
+      transition: background .3s;
+    }
+    .readout div:hover { background: #FFF; }
+    .readout b {
+      display: block;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(40px, 5.8vw, 78px);
+      font-weight: 300;
+      line-height: .95;
+      color: var(--ink);
+    }
+    .readout span {
+      display: block;
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 10px;
+    }
+
+    /* ── SECTION: SOUND LAB (Web Audio Synthesizer) ── */
+    #sound-lab {
+      position: relative;
+      background: #0E1012;
+      color: var(--pearl);
+      padding: clamp(60px, 9vh, 120px) 0;
+      z-index: 10;
+      border-top: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .sound-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(30px, 5vw, 80px);
+      align-items: center;
+    }
+    @media(max-width:900px) {
+      .sound-grid { grid-template-columns: 1fr; }
+    }
+    .tacho-container {
+      background: radial-gradient(circle at 50% 50%, #1A1E24, #0A0C0E);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 16px 32px rgba(0,0,0,0.6);
+    }
+    #tachoCanvas {
+      width: 100%;
+      max-width: 380px;
+      height: auto;
+      aspect-ratio: 1;
+      margin: 0 auto;
+      display: block;
+    }
+    .throttle-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 24px;
+    }
+    .engine-btn {
+      background: var(--red);
+      color: #FFF;
+      border: none;
+      padding: 16px 28px;
+      font-size: 11px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: all .25s ease;
+      box-shadow: 0 6px 18px rgba(196, 30, 40, 0.4);
+    }
+    .engine-btn:hover { background: var(--crimson); transform: translateY(-2px); }
+    .engine-btn.running { background: #166534; box-shadow: 0 6px 18px rgba(34, 197, 94, 0.4); }
+    .gas-slider-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+    .gas-slider-wrap label {
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      display: flex;
+      justify-content: space-between;
+    }
+    .gas-range {
+      width: 100%;
+      height: 6px;
+      -webkit-appearance: none;
+      background: #252A30;
+      border-radius: 3px;
+      outline: none;
+    }
+    .gas-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--crimson);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--crimson);
+    }
+
+    /* ── SECTION: ROAD (Cinematic Parallax Drift) ── */
+    #road {
+      position: relative;
+      height: clamp(380px, 58vh, 640px);
+      overflow: hidden;
+      z-index: 10;
+    }
+    #road .road-inner {
+      position: absolute;
+      inset: -12% 0;
+      will-change: transform;
+    }
+    #road img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ── SECTION: GALLERY (Horizontal Draggable Rail) ── */
+    #gallery {
+      padding: clamp(60px, 10vh, 130px) 0;
+      position: relative;
+      z-index: 10;
+    }
+    .ghd {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: clamp(24px, 4vh, 48px);
+    }
+    .ghd h2 {
+      font-size: clamp(34px, 5.2vw, 68px);
+      line-height: 1.05;
+    }
+    .gnav {
+      display: flex;
+      gap: 10px;
+    }
+    .gnav button {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      background: var(--pearl);
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+    }
+    .gnav button:hover {
+      background: var(--ink);
+      color: var(--pearl);
+      border-color: var(--ink);
+    }
+
+    .rail {
+      display: flex;
+      gap: clamp(14px, 2vw, 24px);
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 0 clamp(18px, 3.4vw, 48px) 14px;
+      cursor: grab;
+      user-select: none;
+      scrollbar-width: none;
+    }
+    .rail::-webkit-scrollbar { display: none; }
+    .rail.drag {
+      cursor: grabbing;
+      scroll-behavior: auto;
+    }
+    .rail figure {
+      flex: 0 0 clamp(320px, 50vw, 560px);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .rail figure img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      background: #111;
+      border: 1px solid var(--line);
+    }
+    .rail figcaption {
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    /* ── SECTION: INTERIOR COCKPIT WITH HOTSPOTS ── */
+    #interior {
+      padding: clamp(60px, 10vh, 130px) 0;
+      position: relative;
+      z-index: 10;
+    }
+    .ihd {
+      max-width: 540px;
+      margin-bottom: clamp(24px, 4.4vh, 48px);
+    }
+    .ihd h2 {
+      font-size: clamp(34px, 5.2vw, 68px);
+      line-height: 1.05;
+      margin-bottom: 18px;
+    }
+    .ihd p {
+      color: var(--mid);
+      line-height: 1.75;
+    }
+
+    .ifig {
+      position: relative;
+      border: 1px solid var(--line);
+      background: #111;
+      overflow: hidden;
+    }
+    .ifig img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+
+    /* Pulsating Hotspots */
+    .hs {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid rgba(255,255,255,0.7);
+      background: rgba(196, 30, 40, 0.4);
+      cursor: pointer;
+      padding: 0;
+      outline: none;
+      transition: all .25s ease;
+      z-index: 5;
+    }
+    .hs::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      background: #FFF;
+      box-shadow: 0 0 10px #FFF;
+      transition: transform .25s;
+    }
+    .hs::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px solid var(--crimson);
+      opacity: 0.6;
+      animation: pulse 2.4s cubic-bezier(0, .2, .8, 1) infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.6); opacity: 1; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+    .hs.on {
+      background: var(--red);
+      border-color: #FFF;
+      transform: translate(-50%, -50%) scale(1.15);
+    }
+    .hs.on::before { background: #FFF; }
+
+    /* Hotspot Output Box */
+    .hsout {
+      position: absolute;
+      left: clamp(16px, 3vw, 36px);
+      bottom: clamp(16px, 3vw, 36px);
+      max-width: 380px;
+      background: rgba(16, 18, 20, 0.92);
+      backdrop-filter: blur(12px);
+      color: #FFF;
+      padding: 18px 22px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-left: 3px solid var(--red);
+      z-index: 6;
+      transition: opacity .3s ease;
+    }
+    .hsout b {
+      display: block;
+      font-size: 13px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: var(--crimson);
+    }
+    .hsout span {
+      display: block;
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.6;
+    }
+
+    /* ── SECTION: ENGINE / POWERTRAIN TELEMETRY ── */
+    #engine {
+      background: var(--ink);
+      color: var(--pearl);
+      padding: clamp(60px, 10vh, 130px) 0;
+      position: relative;
+      z-index: 10;
+    }
+    .egrid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: clamp(30px, 5vw, 70px);
+      align-items: center;
+    }
+    @media(max-width:900px) {
+      .egrid { grid-template-columns: 1fr; }
+    }
+    .egrid figure img {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .ecopy h2 {
+      font-size: clamp(34px, 5.2vw, 68px);
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    .ecopy p {
+      color: rgba(246, 244, 240, .6);
+      line-height: 1.75;
+      margin-bottom: 30px;
+    }
+    .ecopy dl {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .ecopy dl div {
+      background: var(--ink);
+      padding: 16px 20px;
+    }
+    .ecopy dt {
+      font-size: 9.5px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: rgba(246, 244, 240, .45);
+      margin-bottom: 4px;
+    }
+    .ecopy dd {
+      font-size: 13.5px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--pearl);
+      font-weight: 500;
+    }
+
+    /* ── SECTION: CRAFT / DESIGN HISTORY ── */
+    #craft {
+      padding: clamp(60px, 10vh, 130px) 0;
+      position: relative;
+      z-index: 10;
+    }
+    #craft .hd {
+      max-width: 600px;
+      margin-bottom: clamp(32px, 5vh, 60px);
+    }
+    #craft .hd h2 {
+      font-size: clamp(34px, 5.2vw, 68px);
+      line-height: 1.05;
+      margin-bottom: 18px;
+    }
+    #craft .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(20px, 3.2vw, 48px);
+    }
+    @media(max-width:820px) {
+      #craft .steps { grid-template-columns: 1fr; }
+    }
+    #craft article {
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+    }
+    #craft .no {
+      font-size: 38px;
+      color: var(--red);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    #craft h3 {
+      font-size: 16px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    #craft p {
+      color: var(--mid);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* ── SECTION: RESERVE / CONFIGURATOR CONSULTATION ── */
+    #reserve {
+      position: relative;
+      z-index: 10;
+      background: var(--ink);
+      color: var(--pearl);
+      padding: clamp(70px, 11vh, 140px) 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    #reserve h2 {
+      font-size: clamp(34px, 5.4vw, 76px);
+      line-height: 1.02;
+      margin-bottom: 18px;
+    }
+    #reserve h2 em {
+      font-style: italic;
+      color: var(--crimson);
+    }
+    #reserve p {
+      color: rgba(246, 244, 240, .6);
+      max-width: 520px;
+      line-height: 1.75;
+      margin-bottom: 34px;
+    }
+    .order-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      max-width: 820px;
+      margin-bottom: 24px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group label {
+      font-size: 9.5px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .form-input, .form-select {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.16);
+      color: #FFF;
+      padding: 12px 14px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .form-input:focus, .form-select:focus {
+      border-color: var(--crimson);
+      background: rgba(255,255,255,0.09);
+    }
+    .form-select option {
+      background: #181A1D;
+      color: #FFF;
+    }
+    .order-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid var(--red);
+      background: var(--red);
+      color: #FFF;
+      padding: 14px 34px;
+      font-size: 11px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .25s ease;
+      margin-top: 12px;
+    }
+    .order-submit:hover {
+      background: var(--crimson);
+      border-color: var(--crimson);
+      transform: translateY(-2px);
+    }
+    #reserve .avail {
+      margin-top: 32px;
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(246, 244, 240, .4);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0D0E10;
+      color: var(--pearl);
+      padding: clamp(50px, 8vh, 90px) 0 30px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      position: relative;
+      z-index: 10;
+    }
+    footer .cols {
+      display: grid;
+      grid-template-columns: 1.4fr repeat(3, 1fr);
+      gap: clamp(24px, 4vw, 50px);
+      margin-bottom: 50px;
+    }
+    @media(max-width:800px) {
+      footer .cols { grid-template-columns: 1fr 1fr; }
+    }
+    footer .mk {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      letter-spacing: .28em;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    footer address {
+      font-style: normal;
+      color: rgba(255,255,255,0.45);
+      font-size: 12.5px;
+      line-height: 1.6;
+    }
+    footer h4 {
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 16px;
+    }
+    footer a {
+      display: block;
+      color: rgba(255,255,255,0.55);
+      font-size: 12px;
+      line-height: 2;
+      transition: color .2s;
+    }
+    footer a:hover { color: #FFF; }
+    footer .legal {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ── Scroll Reveal System ── */
+    .rv {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .85s cubic-bezier(.16, 1, .3, 1), transform .85s cubic-bezier(.16, 1, .3, 1);
+      will-change: opacity, transform;
+    }
+    .rv.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Aerodynamic Airflow Background Canvas -->
+  <canvas id="petals" aria-hidden="true"></canvas>
+
+  <!-- Sticky Floating Dynamic Navigation -->
+  <nav>
+    <a href="#hero" class="mk">
+      <span class="ford-badge">Ford</span>
+      <span>KA · 1998</span>
+    </a>
+    <ul>
+      <li><a href="#viewer-3d">3D 360°</a></li>
+      <li><a href="#trim">Especificações</a></li>
+      <li><a href="#sound-lab">Motor Som</a></li>
+      <li><a href="#gallery">Galeria</a></li>
+      <li><a href="#interior">Interior</a></li>
+      <li><a href="#engine">Endura-E</a></li>
+      <li><a href="#craft">História</a></li>
+    </ul>
+    <a href="#reserve" class="res">Configurar Ka</a>
+  </nav>
+
+  <!-- 1. HERO POSTER WITH 3D DEPTH PARALLAX -->
+  <header id="hero">
+    <div class="wash"></div>
+    <div class="rule" aria-hidden="true"></div>
+    <div class="marque" aria-hidden="true"><b id="mq">FORD KA</b></div>
+
+    <!-- Background Blueprint Arc Accent -->
+    <svg class="arc-accent background" id="br2" viewBox="0 0 400 400" fill="none">
+      <circle cx="200" cy="200" r="160" stroke="#C41E28" stroke-width="1.5" stroke-dasharray="8 6"/>
+      <ellipse cx="200" cy="200" rx="190" ry="120" stroke="#C41E28" stroke-width="1" stroke-dasharray="14 10"/>
+      <line x1="0" y1="200" x2="400" y2="200" stroke="#C41E28" stroke-width="0.8" stroke-dasharray="4 4"/>
+    </svg>
+
+    <!-- Interactive Car Stack (Cut-out with transparent background) -->
+    <div class="carstack hv" id="car">
+      <!-- Vermelho Colorado (Default) -->
+      <img class="cc on" data-p="colorado" src="assets/img/ka-red-colorado.jpg" alt="Ford Ka 1998 em Vermelho Colorado com para-choques New Edge">
+      <!-- Vermelho Paris Metálico -->
+      <img class="cc" data-p="paris" src="assets/img/ka-red-paris.svg" alt="Ford Ka 1998 em Vermelho Paris Metálico">
+      <!-- Preto Ebony -->
+      <img class="cc" data-p="ebony" src="assets/img/ka-black-ebony.svg" alt="Ford Ka 1998 em Preto Ebony">
+      <!-- Azul Mônaco -->
+      <img class="cc" data-p="monaco" src="assets/img/ka-blue-monaco.svg" alt="Ford Ka 1998 em Azul Mônaco Metálico">
+      <!-- Prata Bari -->
+      <img class="cc" data-p="bari" src="assets/img/ka-silver-bari.svg" alt="Ford Ka 1998 em Prata Bari Metálico">
+    </div>
+
+    <!-- Foreground Aerodynamic Curve Accent -->
+    <svg class="arc-accent foreground hv" id="br1" viewBox="0 0 300 300" fill="none">
+      <path d="M 20 280 Q 150 20 290 80" stroke="#C41E28" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="290" cy="80" r="4" fill="#C41E28"/>
+    </svg>
+
+    <!-- Hero Title Plate -->
+    <div class="plate hv" id="p1">
+      <div class="ed ser">
+        <i>Edição 1998 Mk1</i>
+        Ford <em>Ka</em>
+      </div>
+      <p>A mais pura expressão da filosofia New Edge. Proporções compactas, arcos dinâmicos e para-choques envolventes esculpidos para a agilidade definitiva.</p>
+      
+      <!-- Paint Swatch Selector -->
+      <div class="paints" role="group" aria-label="Seletor de Cores">
+        <button class="sw on" data-p="colorado" style="--c:#C41E28" aria-pressed="true" aria-label="Vermelho Colorado"></button>
+        <button class="sw" data-p="paris" style="--c:#8C1420" aria-pressed="false" aria-label="Vermelho Paris"></button>
+        <button class="sw" data-p="ebony" style="--c:#26292D" aria-pressed="false" aria-label="Preto Ebony"></button>
+        <button class="sw" data-p="monaco" style="--c:#1C3866" aria-pressed="false" aria-label="Azul Mônaco"></button>
+        <button class="sw" data-p="bari" style="--c:#B8BFC6" aria-pressed="false" aria-label="Prata Bari"></button>
+        <span class="pn" id="pn">Vermelho Colorado</span>
+      </div>
+    </div>
+
+    <!-- Technical Specs Pill -->
+    <div class="specs hv" id="p2">
+      <div><b>890</b><span>kg peso seco</span></div>
+      <div><b>1.0</b><span>Endura-E L</span></div>
+      <div><b>15.6</b><span>0 a 100 km/h</span></div>
+      <div><b>0.36</b><span>Coeficiente Cx</span></div>
+    </div>
+
+    <!-- Seal of Provenance -->
+    <div class="seal hv" id="p3">
+      <div class="mark">Ka</div>
+      <p>Complexo Industrial Ford<br>São Bernardo do Campo, SP</p>
+    </div>
+  </header>
+
+  <!-- 2. INTERACTIVE 3D WEBGL SHOWROOM (THREE.JS) -->
+    <!-- 2. INTERACTIVE 3D WEBGL SHOWROOM & SKETCHFAB 3D -->
+  <section id="viewer-3d">
+    <div class="wrap">
+      <div class="v3d-header">
+        <div>
+          <div class="lbl rv" style="color:var(--crimson);margin-bottom:12px">Visualizador 360° em Tempo Real</div>
+          <h2 class="ser rv" style="font-size:clamp(32px,4.5vw,56px);line-height:1.1">O Ka 1998 sob<br>todos os <em>ângulos</em>.</h2>
+        </div>
+        <div class="rv" style="display:flex;flex-direction:column;align-items:flex-end;gap:12px">
+          <!-- Abas para alternar entre Modelo Sketchfab e Estúdio Three.js -->
+          <div style="display:inline-flex;background:rgba(255,255,255,0.08);padding:4px;border-radius:30px;border:1px solid rgba(255,255,255,0.12)">
+            <button id="tabSketchfab" onclick="switchViewerTab('sketchfab')" style="background:var(--crimson);color:#FFF;border:none;padding:8px 18px;border-radius:20px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;font-weight:600;transition:all .3s">
+              ★ Modelo 3D Oficial HD (Sketchfab)
+            </button>
+            <button id="tabThree" onclick="switchViewerTab('three')" style="background:transparent;color:rgba(255,255,255,0.7);border:none;padding:8px 18px;border-radius:20px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;font-weight:600;transition:all .3s">
+              Estúdio de Pintura Three.js
+            </button>
+          </div>
+          <p style="color:rgba(255,255,255,0.6);max-width:440px;font-size:13px;text-align:right">
+            Inspecione o modelo 3D ultra-detalhado (625k polígonos) ou teste a paleta de cores no estúdio interativo.
+          </p>
+        </div>
+      </div>
+
+      <!-- Container 1: Sketchfab Oficial Embed -->
+      <div id="sketchfabWrap" class="v3d-canvas-wrap rv" style="display:block;height:clamp(440px,72vh,740px)">
+        <iframe id="sketchfab-frame" title="Ford Ka 3D Model" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/434d5030c0144d5f990ded6953d218dc/embed?autostart=1&internal=1&tracking=0&ui_infos=0&ui_watermark=0&ui_help=0&ui_settings=0&ui_inspector=0&ui_annotations=0&ui_stop=0&ui_vr=0&preload=1" style="width:100%;height:100%;border:none;border-radius:4px"></iframe>
+        <!-- Barra de Cor Vermelho Colorado Superior -->
+        <div style="position:absolute;top:16px;left:18px;display:flex;align-items:center;gap:10px;pointer-events:auto;z-index:20">
+          <div class="v3d-pill" style="background:rgba(196,30,40,0.92);color:#FFF;border:1px solid rgba(255,255,255,0.4);font-weight:700">
+            <span class="v3d-pill-dot" style="background:#FFF"></span>
+            <span id="sfPillLabel">Pintura: Vermelho Colorado</span>
+          </div>
+          <button onclick="paintSketchfabColorado()" class="v3d-pill" style="cursor:pointer;background:rgba(196,30,40,0.95);color:#FFF;font-weight:700;border:1px solid #FFF;transition:transform .2s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            ★ PINTAR DE VERMELHO COLORADO
+          </button>
+        </div>
+        <div style="position:absolute;bottom:14px;left:18px;right:18px;display:flex;justify-content:space-between;align-items:center;pointer-events:none">
+          <div class="v3d-pill" style="pointer-events:auto">
+            <span class="v3d-pill-dot"></span>
+            <span>Ford Ka Mk1 3D • 625.947 Faces • Licença CC Attribution</span>
+          </div>
+          <a href="https://sketchfab.com/3d-models/ford-ka-434d5030c0144d5f990ded6953d218dc" target="_blank" rel="noopener" class="v3d-pill" style="pointer-events:auto;text-decoration:none;cursor:pointer;background:rgba(255,255,255,0.12)">
+            Abrir no Sketchfab ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- Container 2: Three.js Studio Canvas -->
+      <div id="threeWrap" class="v3d-canvas-wrap rv" style="display:none;height:clamp(440px,72vh,740px)">
+        <canvas id="canvas3d"></canvas>
+        <div class="v3d-overlay">
+          <div class="v3d-top-bar">
+            <div class="v3d-pill">
+              <span class="v3d-pill-dot"></span>
+              <span id="v3dColorLabel">Vermelho Colorado — Sólido</span>
+            </div>
+            <button id="btnHeadlights" class="v3d-pill" style="cursor:pointer;background:rgba(255,255,255,0.1)">
+              💡 <span id="txtHeadlights">Faróis: DESLIGADOS</span>
+            </button>
+          </div>
+
+          <div class="v3d-bottom-bar">
+            <div class="v3d-buttons">
+              <button class="v3d-btn active" data-v="front">Frente ¾</button>
+              <button class="v3d-btn" data-v="profile">Perfil</button>
+              <button class="v3d-btn" data-v="rear">Traseira ¾</button>
+              <button class="v3d-btn" data-v="top">Topo</button>
+              <button class="v3d-btn" id="btnWireframe">Wireframe</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.5)">Proporção Real Ford Ka 1998</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. MARQUE IDENTITY BAND -->
+  <section id="band">
+    <div class="wrap row">
+      <span>Marca <b>FORD</b></span>
+      <span>Modelo <b>KA 1998</b></span>
+      <span>Edição <b>VERMELHO COLORADO</b></span>
+      <span>Origem <b>SÃO BERNARDO DO CAMPO</b></span>
+      <span>Chassi <b>MK1 NEW EDGE</b></span>
+      <span>Peso Seco <b>890 KG</b></span>
+    </div>
+  </section>
+
+  <!-- 4. TRIM & SPECIFICATIONS WITH ANIMATED COUNTERS -->
+  <section id="trim">
+    <div class="wrap">
+      <div class="grid">
+        <div>
+          <div class="lbl rv" style="color:var(--red);margin-bottom:16px">Especificações &amp; Motores</div>
+          <h2 class="ser rv">Três formas de viver o <em>mesmo espírito</em>.</h2>
+          <p class="rv">O DNA de dirigibilidade estilo kart permanece imutável. Escolha a configuração mecânica e veja a dinâmica de peso e aceleração responder instantaneamente.</p>
+          
+          <div class="picker rv" role="group" aria-label="Configuração">
+            <button aria-pressed="true" data-i="0">
+              <span class="nm">Endura-E 1.0</span>
+              <span class="no">Econômico &amp; Ágil</span>
+            </button>
+            <button aria-pressed="false" data-i="1">
+              <span class="nm">Endura-E 1.3 CLX</span>
+              <span class="no">Torque Elevado</span>
+            </button>
+            <button aria-pressed="false" data-i="2">
+              <span class="nm">Ka XR 1.6 Zetec</span>
+              <span class="no">Pocket Rocket</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="readout rv">
+          <div>
+            <b id="r1">53.0</b>
+            <span>Potência, cv</span>
+          </div>
+          <div>
+            <b id="r2">15.6</b>
+            <span>0 a 100 km/h, s</span>
+          </div>
+          <div>
+            <b id="r3">890</b>
+            <span>Peso em ordem de marcha, kg</span>
+          </div>
+          <div>
+            <b id="r4">153</b>
+            <span>Velocidade máxima, km/h</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. SOUND LAB (WEB AUDIO PROCEDURAL ENGINE SYNTHESIZER) -->
+  <section id="sound-lab">
+    <div class="wrap">
+      <div class="sound-grid">
+        <div>
+          <div class="lbl rv" style="color:var(--crimson);margin-bottom:16px">Laboratório Acústico</div>
+          <h2 class="ser rv" style="font-size:clamp(34px,5.2vw,68px);line-height:1.05;margin-bottom:20px">
+            O som analógico do <em>Endura-E</em>.
+          </h2>
+          <p class="rv" style="color:rgba(255,255,255,0.65);line-height:1.75;margin-bottom:28px">
+            Sintetizador procedural em tempo real via Web Audio API. Experimente a partida clássica, a marcha lenta pulsante de 850 RPM e controle o acelerador para ouvir o fluxo cruzado subir até a faixa de corte de 5.500 RPM.
+          </p>
+
+          <div class="throttle-controls rv">
+            <button id="btnIgnition" class="engine-btn">
+              <span>⚡</span> <span id="lblIgnition">Dar a Partida (Start Engine)</span>
+            </button>
+
+            <div class="gas-slider-wrap">
+              <label>
+                <span>Acelerador / Rotação (RPM)</span>
+                <b id="valRpm">850 RPM</b>
+              </label>
+              <input type="range" id="sliderGas" class="gas-range" min="850" max="5500" value="850" step="10">
+            </div>
+          </div>
+        </div>
+
+        <div class="tacho-container rv">
+          <canvas id="tachoCanvas" width="400" height="400"></canvas>
+          <div style="font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:10px">
+            Tacômetro Analógico · Ford Instruments
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. CINEMATIC ROAD PARALLAX -->
+  <section id="road">
+    <div class="road-inner">
+      <img id="roadImg" src="assets/img/ka-road.svg" alt="Ford Ka 1998 na estrada ao entardecer">
+    </div>
+  </section>
+
+  <!-- 7. DRAGGABLE RAIL GALLERY -->
+  <section id="gallery">
+    <div class="wrap">
+      <div class="ghd">
+        <div>
+          <div class="lbl rv" style="color:var(--red);margin-bottom:14px">Galeria Visual</div>
+          <h2 class="ser rv">Cada ângulo,<br>uma revolução.</h2>
+        </div>
+        <div class="gnav rv">
+          <button id="gprev" aria-label="Anterior">←</button>
+          <button id="gnext" aria-label="Próximo">→</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="rail" id="rail" tabindex="0" aria-label="Galeria Exterior">
+      <figure>
+        <img src="assets/img/ka-front3q.jpg" alt="Ford Ka três quartos dianteiro" loading="lazy">
+        <figcaption>01 · Linhas Dianteiras &amp; Faróis em Gota</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/ka-rear3q.jpg" alt="Ford Ka traseira três quartos" loading="lazy">
+        <figcaption>02 · Traseira Envolvente &amp; Lanternas Triangulares</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/ka-wheel.svg" alt="Roda aro 13 com calota Ford" loading="lazy">
+        <figcaption>03 · Rodas de 13 Polegadas nos Quatro Vértices</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/ka-cockpit.svg" alt="Interior do Ford Ka" loading="lazy">
+        <figcaption>04 · Cockpit Assimétrico &amp; Relógio Oval</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/ka-engine.svg" alt="Motor Endura-E no cofre" loading="lazy">
+        <figcaption>05 · Trem de Força Endura-E Crossflow</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/ka-plaque.svg" alt="Plaqueta de identificação do chassi" loading="lazy">
+        <figcaption>06 · Plaqueta de Identificação de São Bernardo</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 8. INTERIOR WITH INTERACTIVE HOTSPOTS -->
+  <section id="interior">
+    <div class="wrap">
+      <div class="ihd">
+        <div class="lbl rv" style="color:var(--red);margin-bottom:14px">Habitáculo</div>
+        <h2 class="ser rv">Tudo ao alcance das mãos,<br>sem distrações.</h2>
+        <p class="rv">O painel curvo que abraça o motorista, os difusores esféricos de rotação completa e o inesquecível relógio analógico oval. Clique nos pontos para explorar a cabine.</p>
+      </div>
+
+      <div class="ifig rv" data-scrub>
+        <img src="assets/img/ka-cockpit.svg" alt="O cockpit do Ford Ka 1998 visto da perspectiva do passageiro">
+
+        <!-- Hotspot 1: Relógio Oval -->
+        <button class="hs on" style="--x:50%;--y:41%" 
+                data-t="Relógio Oval Analógico" 
+                data-d="O clássico relógio analógico com formato da elipse Ford, embutido no ápice do console central com numerais nítidos e ponteiros minimalistas." 
+                aria-label="Relógio Oval Analógico"></button>
+
+        <!-- Hotspot 2: Difusores Esféricos -->
+        <button class="hs" style="--x:41%;--y:48%" 
+                data-t="Difusores de Ar Esféricos 360°" 
+                data-d="Difusores em formato de esfera que giram em todos os eixos, permitindo direcionamento cirúrgico da climatização na cabine." 
+                aria-label="Difusores Esféricos"></button>
+
+        <!-- Hotspot 3: Painel New Edge -->
+        <button class="hs" style="--x:72%;--y:52%" 
+                data-t="Painel em Onda Assimétrica" 
+                data-d="Superfície plástica texturizada de alta durabilidade que flui em curva contínua, eliminando cantos retos e ampliando o espaço para pernas." 
+                aria-label="Painel em Onda"></button>
+
+        <!-- Hotspot 4: Volante Esportivo -->
+        <button class="hs" style="--x:25%;--y:72%" 
+                data-t="Volante de 3 Raios Ergonômico" 
+                data-d="Diâmetro reduzido com empunhadura espessa para controle ágil e respostas imediatas da caixa de direção." 
+                aria-label="Volante de 3 Raios"></button>
+
+        <!-- Hotspot 5: Câmbio iB5 -->
+        <button class="hs" style="--x:50%;--y:80%" 
+                data-t="Câmbio Manual iB5 de 5 Marchas" 
+                data-d="Alavanca de engates mecânicos curtos e estalados, proporcionando prazer absoluto em trocas rápidas de marcha no trânsito." 
+                aria-label="Câmbio iB5"></button>
+
+        <div class="hsout" id="hsout" role="status" aria-live="polite">
+          <b>Relógio Oval Analógico</b>
+          <span>O clássico relógio analógico com formato da elipse Ford, embutido no ápice do console central com numerais nítidos e ponteiros minimalistas.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. ENGINE TELEMETRY -->
+  <section id="engine">
+    <div class="wrap">
+      <div class="egrid">
+        <figure class="rv" data-scrub data-speed="0.04">
+          <img src="assets/img/ka-engine.svg" alt="O motor Ford Endura-E no cofre" loading="lazy">
+        </figure>
+        
+        <div class="ecopy">
+          <div class="lbl rv" style="color:var(--crimson);margin-bottom:14px">Trem de Força &amp; Dinâmica</div>
+          <h2 class="ser rv">Robustez comprovada,<br>comando por corrente.</h2>
+          <p class="rv">O motor Endura-E utiliza bloco em ferro fundido com cabeçote de fluxo cruzado (crossflow) e injeção multiponto EEC-V. A distribuição por corrente dispensa troca periódica de correia dentada, garantindo longevidade incomparável.</p>
+
+          <dl class="rv">
+            <div>
+              <dt>Arquitetura</dt>
+              <dd>4 Cilindros em Linha · 8V</dd>
+            </div>
+            <div>
+              <dt>Comando de Válvulas</dt>
+              <dd>Acionado por Corrente</dd>
+            </div>
+            <div>
+              <dt>Alimentação</dt>
+              <dd>Injeção Multiponto EEC-V</dd>
+            </div>
+            <div>
+              <dt>Suspensão</dt>
+              <dd>McPherson com Subchassi</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. CRAFT & HERITAGE -->
+  <section id="craft">
+    <div class="wrap">
+      <div class="hd">
+        <div class="lbl rv" style="color:var(--red);margin-bottom:16px">História &amp; Legado</div>
+        <h2 class="ser rv">Do conceito Saetta<br>à consagração nas ruas.</h2>
+        <p class="rv" style="color:var(--mid);font-size:14px">Em 1994, o estúdio Ghia apresentou em Turim o conceito Saetta. Dois anos depois, o mundo conhecia o Ka — o pioneiro que inaugurou a escola New Edge na Ford global.</p>
+      </div>
+
+      <div class="steps">
+        <article class="rv">
+          <div class="no ser">01</div>
+          <h3>A Gênese New Edge</h3>
+          <p>Jack Telnack e Claude Lobo uniram planos curvos e arestas pontiagudas, desafiando a mesmice dos carros arredondados dos anos 90.</p>
+        </article>
+        <article class="rv">
+          <div class="no ser">02</div>
+          <h3>Acerto Dinâmico Go-Kart</h3>
+          <p>Richard Parry-Jones calibrou a suspensão com bitolas largas e pneus nos quatro cantos da carroceria, entregando estabilidade em curvas sem precedentes.</p>
+        </article>
+        <article class="rv">
+          <div class="no ser">03</div>
+          <h3>Nacionalização em São Bernardo</h3>
+          <p>Lançado no Brasil em 1997 e consagrado em 1998, tornou-se o queridinho dos centros urbanos com excelente relação peso-potência e consumo comedido.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. RESERVE & CONSULTATION FORM -->
+  <section id="reserve">
+    <div class="wrap">
+      <h2 class="ser rv">Seu Ka 1998.<br><em>Configurado para você</em>.</h2>
+      <p class="rv">Seja para colecionadores em busca da cor Vermelho Colorado original ou entusiastas da dirigibilidade analógica, envie sua especificação para nossa consultoria de clássicos.</p>
+
+      <form class="order-form rv" onsubmit="handleReserve(event)">
+        <div class="form-group">
+          <label>Nome Completo</label>
+          <input type="text" class="form-input" required placeholder="Seu nome">
+        </div>
+        <div class="form-group">
+          <label>E-mail ou Telefone</label>
+          <input type="text" class="form-input" required placeholder="contato@exemplo.com">
+        </div>
+        <div class="form-group">
+          <label>Configuração de Motor</label>
+          <select class="form-select">
+            <option>Endura-E 1.0 (53 cv · Econômico)</option>
+            <option>Endura-E 1.3 CLX (60 cv · Torque)</option>
+            <option>Ka XR 1.6 Zetec Rocam (95 cv · Esportivo)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Pintura de Carroceria</label>
+          <select class="form-select">
+            <option>Vermelho Colorado (Sólido Clássico)</option>
+            <option>Vermelho Paris (Metálico Profundo)</option>
+            <option>Preto Ebony (Brilho Intenso)</option>
+            <option>Azul Mônaco (Metálico)</option>
+            <option>Prata Bari (Prata Tecnológico)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Opcionais de Época</label>
+          <select class="form-select">
+            <option>Pacote Completo (Ar + Direção + Vidros)</option>
+            <option>Ar-Condicionado &amp; Direção Hidráulica</option>
+            <option>Padrão Original de Fábrica (Purista)</option>
+          </select>
+        </div>
+        <div class="form-group" style="justify-content:flex-end">
+          <button type="submit" class="order-submit">Confirmar Especificação →</button>
+        </div>
+      </form>
+
+      <div id="reserveFeedback" style="display:none;color:#4ADE80;font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-top:16px">
+        ✓ Especificação registrada com sucesso! Entraremos em contato com a ficha técnica detalhada.
+      </div>
+
+      <div class="avail rv">Fabricação 1998 · Manutenção facilitada com peças genuínas Motorcraft</div>
+    </div>
+  </section>
+
+  <!-- 12. FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="cols">
+        <div>
+          <div class="mk">FORD KA</div>
+          <address>
+            Divisão de Veículos Clássicos Ford<br>
+            Complexo Industrial de São Bernardo do Campo<br>
+            São Paulo, Brasil
+          </address>
+        </div>
+        <div>
+          <h4>O Veículo</h4>
+          <a href="#trim">Especificações</a>
+          <a href="#viewer-3d">Modelo 3D</a>
+          <a href="#sound-lab">Motor &amp; Som</a>
+          <a href="#gallery">Galeria</a>
+        </div>
+        <div>
+          <h4>Técnica</h4>
+          <a href="#engine">Motor Endura-E</a>
+          <a href="#interior">Habitáculo</a>
+          <a href="#craft">Design New Edge</a>
+          <a href="#reserve">Configurador</a>
+        </div>
+        <div>
+          <h4>Comunidade</h4>
+          <a href="#">Ka Clube Brasil</a>
+          <a href="#">Catálogo de Peças</a>
+          <a href="#">Manual do Proprietário</a>
+          <a href="#">Histórico de Chassi</a>
+        </div>
+      </div>
+
+      <div class="legal">
+        <span>© 1998–2026 Tributo ao Ford Ka Mk1 · New Edge Design</span>
+        <span>Dados técnicos baseados no manual de serviço de fábrica</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== JAVASCRIPT MASTER ENGINE ==================== -->
+  <script>
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ── 1. AERODYNAMIC AIRFLOW CANVAS (Wind Tunnel Flow Streamlines) ── */
+    (function(){
+      const cv = document.getElementById('petals');
+      if(!cv) return;
+      const g = cv.getContext('2d');
+      let W = 0, H = 0, P = [], raf = 0, vis = true, t = 0;
+      const N = 48; // Streamline particles
+
+      function size(){
+        W = cv.width = Math.max(2, Math.round(innerWidth * 0.65));
+        H = cv.height = Math.max(2, Math.round(innerHeight * 0.65));
+        if(!P.length) spawn();
+      }
+
+      function spawn(){
+        P = [];
+        for(let i = 0; i < N; i++){
+          P.push({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            len: 40 + Math.random() * 90,
+            speed: 1.8 + Math.random() * 3.2,
+            amp: 6 + Math.random() * 18,
+            freq: 0.006 + Math.random() * 0.012,
+            opacity: 0.12 + Math.random() * 0.45,
+            isSpark: Math.random() > 0.65
+          });
+        }
+      }
+
+      function frame(){
+        raf = 0;
+        if(!vis || document.hidden) return;
+        t += 0.02;
+        g.clearRect(0, 0, W, H);
+
+        for(const p of P){
+          p.x += p.speed;
+          if(p.x - p.len > W){
+            p.x = -p.len;
+            p.y = Math.random() * H;
+          }
+
+          const curY = p.y + Math.sin(p.x * p.freq + t) * p.amp;
+
+          if(p.isSpark){
+            // Glowing micro-spark in Ford Red
+            g.beginPath();
+            g.arc(p.x, curY, 1.6, 0, Math.PI * 2);
+            g.fillStyle = `rgba(232, 58, 69, ${p.opacity * 0.9})`;
+            g.shadowColor = '#C41E28';
+            g.shadowBlur = 6;
+            g.fill();
+            g.shadowBlur = 0;
+          } else {
+            // Sleek aerodynamic streamline curve
+            g.beginPath();
+            g.moveTo(p.x - p.len, curY);
+            g.lineTo(p.x, curY);
+            const grd = g.createLinearGradient(p.x - p.len, curY, p.x, curY);
+            grd.addColorStop(0, 'rgba(196, 30, 40, 0)');
+            grd.addColorStop(0.7, `rgba(196, 30, 40, ${p.opacity * 0.5})`);
+            grd.addColorStop(1, `rgba(232, 58, 69, ${p.opacity * 0.8})`);
+            g.strokeStyle = grd;
+            g.lineWidth = 1.2;
+            g.stroke();
+          }
+        }
+        go();
+      }
+
+      function go(){ if(!raf) raf = requestAnimationFrame(frame); }
+
+      addEventListener('resize', () => { size(); spawn(); });
+      document.addEventListener('visibilitychange', () => { if(!document.hidden && !RM) go(); });
+      new IntersectionObserver(es => { vis = es[0].isIntersecting; if(vis && !RM) go(); }).observe(cv);
+
+      size();
+      if(!RM) go();
+    })();
+
+    /* ── 2. SCROLL PROGRESS BAR & PARALLAX SPEEDS ── */
+    (function(){
+      if(RM) return;
+      const bar = document.createElement('i');
+      bar.id = 'prog';
+      const navEl = document.querySelector('nav');
+      if(navEl) navEl.appendChild(bar);
+
+      const speeds = [...document.querySelectorAll('[data-speed]')];
+      let queued = false;
+
+      function pass(){
+        queued = false;
+        const h = document.documentElement.scrollHeight - innerHeight;
+        if(bar) bar.style.transform = `scaleX(${h > 0 ? scrollY / h : 0})`;
+
+        for(const el of speeds){
+          const r = el.getBoundingClientRect();
+          if(r.bottom < -200 || r.top > innerHeight + 200) continue;
+          const c = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+          el.style.transform = `translate3d(0, ${c * -parseFloat(el.dataset.speed) * 100}px, 0)`;
+        }
+      }
+
+      addEventListener('scroll', () => { if(!queued){ queued = true; requestAnimationFrame(pass); } }, {passive:true});
+      addEventListener('resize', pass);
+      pass();
+    })();
+
+    /* ── 3. NAV INVERSION ON DARK SECTIONS ── */
+    (function(){
+      const navEl = document.querySelector('nav');
+      if(!navEl) return;
+      const darkSections = [...document.querySelectorAll('#viewer-3d, #band, #sound-lab, #engine, #reserve, footer')];
+      const navHeight = 74;
+      let pending = false;
+
+      function checkNav(){
+        pending = false;
+        const probeY = navHeight * 0.5;
+        const onDark = darkSections.some(s => {
+          const r = s.getBoundingClientRect();
+          return r.top <= probeY && r.bottom >= probeY;
+        });
+        const scrolledPast = scrollY > innerHeight * 0.72;
+
+        navEl.classList.toggle('inv', onDark);
+        navEl.classList.toggle('solid', scrolledPast && !onDark);
+      }
+
+      addEventListener('scroll', () => { if(!pending){ pending = true; requestAnimationFrame(checkNav); } }, {passive:true});
+      addEventListener('resize', checkNav);
+      checkNav();
+    })();
+
+    /* ── 4. HERO ENTRANCE SEQUENCE ── */
+    addEventListener('load', () => {
+      if(RM){
+        document.querySelectorAll('.hv').forEach(e => e.classList.add('on'));
+        return;
+      }
+      ['car','br1','p1','p2','p3'].forEach((id, i) => {
+        const el = document.getElementById(id);
+        if(el) setTimeout(() => el.classList.add('on'), 120 + i * 140);
+      });
+    });
+
+    /* ── 5. HERO 3D PARALLAX TRACKING (Mouse & Scroll) ── */
+    (function(){
+      const car = document.getElementById('car');
+      const br1 = document.getElementById('br1');
+      const br2 = document.getElementById('br2');
+      const mq  = document.getElementById('mq');
+      let mx = 0, my = 0, tx = 0, ty = 0, ticking = false;
+
+      function depth(){
+        ticking = false;
+        const y = scrollY;
+        if(y < innerHeight * 1.3){
+          mx += (tx - mx) * 0.06;
+          my += (ty - my) * 0.06;
+
+          if(mq)  mq.style.transform  = `translate3d(${mx * 8}px, ${y * 0.16 + my * 4}px, 0)`;
+          if(car) car.style.transform = `translate(-50%,-50%) translate3d(${mx * 22}px, ${y * -0.06 + my * 10}px, 0)`;
+          if(br1) br1.style.transform = `translate3d(${mx * 38}px, ${y * 0.22 + my * 18}px, 0) rotate(${mx * 0.5}deg)`;
+          if(br2) br2.style.transform = `rotate(12deg) translate3d(${mx * -18}px, ${y * 0.08 + my * -10}px, 0)`;
+        }
+      }
+
+      function queueDepth(){ if(!ticking){ ticking = true; requestAnimationFrame(depth); } }
+      if(!RM){
+        addEventListener('scroll', queueDepth, {passive:true});
+        addEventListener('pointermove', e => {
+          tx = (e.clientX / innerWidth - 0.5) * 2;
+          ty = (e.clientY / innerHeight - 0.5) * 2;
+          queueDepth();
+        }, {passive:true});
+      }
+    })();
+
+    /* ── 6. HERO PAINT SELECTOR (Live Cross-Fade) ── */
+    (function(){
+      const PAINT_NAMES = {
+        colorado: 'Vermelho Colorado',
+        paris: 'Vermelho Paris Metálico',
+        ebony: 'Preto Ebony',
+        monaco: 'Azul Mônaco Metálico',
+        bari: 'Prata Bari Metálico'
+      };
+      const pn = document.getElementById('pn');
+      const carImages = [...document.querySelectorAll('#hero .cc')];
+      const swatches = [...document.querySelectorAll('.paints .sw')];
+
+      swatches.forEach(sw => {
+        sw.addEventListener('click', () => {
+          const paintKey = sw.dataset.p;
+          swatches.forEach(s => {
+            const isActive = s === sw;
+            s.classList.toggle('on', isActive);
+            s.setAttribute('aria-pressed', String(isActive));
+          });
+          carImages.forEach(img => {
+            img.classList.toggle('on', img.dataset.p === paintKey);
+          });
+          if(pn && PAINT_NAMES[paintKey]) pn.textContent = PAINT_NAMES[paintKey];
+
+          // Also synchronize with 3D viewer if available
+          if(window.set3dPaint) window.set3dPaint(paintKey);
+        });
+      });
+    })();
+
+    /* ── 7. TRIM SPECIFICATION COUNTERS (requestAnimationFrame Easing) ── */
+    const TRIMS_DATA = [
+      { ps: 53.0, s: 15.6, kg: 890, v: 153 }, // 1.0 Endura-E
+      { ps: 60.0, s: 13.8, kg: 915, v: 160 }, // 1.3 CLX
+      { ps: 95.0, s: 10.3, kg: 935, v: 186 }  // 1.6 XR Zetec
+    ];
+    const READOUT_ELS = ['r1','r2','r3','r4'].map(id => document.getElementById(id));
+    let shownVals = [53.0, 15.6, 890, 153];
+    let targetVals = shownVals.slice();
+    let animCountRaf = 0;
+
+    function formatNumber(val, index){
+      if(index === 0 || index === 1) return val.toFixed(1);
+      return Math.round(val).toLocaleString('pt-BR');
+    }
+
+    function tickCounters(){
+      animCountRaf = 0;
+      let isMoving = false;
+      shownVals = shownVals.map((v, i) => {
+        const diff = targetVals[i] - v;
+        if(Math.abs(diff) > (i <= 1 ? 0.05 : 0.5)){
+          isMoving = true;
+          return v + diff * 0.15;
+        }
+        return targetVals[i];
+      });
+      READOUT_ELS.forEach((el, i) => { if(el) el.textContent = formatNumber(shownVals[i], i); });
+      if(isMoving) animCountRaf = requestAnimationFrame(tickCounters);
+    }
+
+    document.querySelectorAll('.picker button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.picker button').forEach(b => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        const trimIndex = parseInt(btn.dataset.i, 10);
+        const data = TRIMS_DATA[trimIndex];
+        targetVals = [data.ps, data.s, data.kg, data.v];
+        if(RM){
+          shownVals = targetVals.slice();
+          READOUT_ELS.forEach((el, i) => { if(el) el.textContent = formatNumber(shownVals[i], i); });
+        } else if(!animCountRaf){
+          animCountRaf = requestAnimationFrame(tickCounters);
+        }
+      });
+    });
+
+    /* ── 8. ROAD SECTION DRIFT PARALLAX ── */
+    (function(){
+      const sec = document.getElementById('road');
+      const inner = document.querySelector('#road .road-inner');
+      if(!sec || !inner || RM) return;
+      let q = false;
+      function drift(){
+        q = false;
+        const r = sec.getBoundingClientRect();
+        if(r.bottom < 0 || r.top > innerHeight) return;
+        const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+        inner.style.transform = `translateY(${p * -8}%)`;
+      }
+      addEventListener('scroll', () => { if(!q){ q = true; requestAnimationFrame(drift); } }, {passive:true});
+      drift();
+    })();
+
+    /* ── 9. DRAGGABLE & ACCESSIBLE RAIL GALLERY ── */
+    (function(){
+      const rail = document.getElementById('rail');
+      if(!rail) return;
+      const getStep = () => Math.min(540, innerWidth * 0.72) + 20;
+
+      document.getElementById('gnext')?.addEventListener('click', () => rail.scrollBy({left: getStep(), behavior:'smooth'}));
+      document.getElementById('gprev')?.addEventListener('click', () => rail.scrollBy({left: -getStep(), behavior:'smooth'}));
+
+      let isDown = false, startX = 0, scrollLeftStart = 0, movedPixels = 0;
+      rail.addEventListener('pointerdown', e => {
+        isDown = true;
+        movedPixels = 0;
+        startX = e.clientX;
+        scrollLeftStart = rail.scrollLeft;
+        rail.classList.add('drag');
+        rail.setPointerCapture(e.pointerId);
+      });
+      rail.addEventListener('pointermove', e => {
+        if(!isDown) return;
+        const dist = e.clientX - startX;
+        movedPixels = Math.abs(dist);
+        rail.scrollLeft = scrollLeftStart - dist;
+      });
+      const endDrag = e => {
+        if(!isDown) return;
+        isDown = false;
+        rail.classList.remove('drag');
+        try { rail.releasePointerCapture(e.pointerId); } catch(_){}
+      };
+      rail.addEventListener('pointerup', endDrag);
+      rail.addEventListener('pointercancel', endDrag);
+      rail.addEventListener('click', e => { if(movedPixels > 6) e.preventDefault(); }, true);
+
+      rail.addEventListener('keydown', e => {
+        if(e.key === 'ArrowRight'){ e.preventDefault(); rail.scrollBy({left: getStep(), behavior:'smooth'}); }
+        if(e.key === 'ArrowLeft'){ e.preventDefault(); rail.scrollBy({left: -getStep(), behavior:'smooth'}); }
+      });
+    })();
+
+    /* ── 10. INTERIOR HOTSPOTS INSPECTION ── */
+    (function(){
+      const out = document.getElementById('hsout');
+      const spots = [...document.querySelectorAll('.hs')];
+      if(!out || !spots.length) return;
+
+      function pickHotspot(btn){
+        spots.forEach(s => s.classList.toggle('on', s === btn));
+        out.querySelector('b').textContent = btn.dataset.t;
+        out.querySelector('span').textContent = btn.dataset.d;
+      }
+      spots.forEach(btn => {
+        btn.addEventListener('click', () => pickHotspot(btn));
+        btn.addEventListener('pointerenter', () => pickHotspot(btn));
+      });
+    })();
+
+    /* ── 11. SCROLL REVEAL OBSERVER ── */
+    const pendingReveals = new Set(document.querySelectorAll('.rv'));
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting || entry.boundingClientRect.top < 0){
+          entry.target.classList.add('in');
+          pendingReveals.delete(entry.target);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.12, rootMargin: '0px 0px -5% 0px'});
+
+    pendingReveals.forEach((el, idx) => {
+      el.style.transitionDelay = (idx % 4) * 75 + 'ms';
+      revealObserver.observe(el);
+    });
+
+    let sweepingScroll = false;
+    function sweepCheck(){
+      sweepingScroll = false;
+      pendingReveals.forEach(el => {
+        if(el.getBoundingClientRect().top < innerHeight * 0.95){
+          el.classList.add('in');
+          pendingReveals.delete(el);
+        }
+      });
+      if(!pendingReveals.size) removeEventListener('scroll', queueSweep);
+    }
+    function queueSweep(){ if(!sweepingScroll){ sweepingScroll = true; requestAnimationFrame(sweepCheck); } }
+    addEventListener('scroll', queueSweep, {passive:true});
+    addEventListener('load', sweepCheck);
+
+    /* ── 12. RESERVE FORM HANDLER ── */
+    function handleReserve(e){
+      e.preventDefault();
+      const fb = document.getElementById('reserveFeedback');
+      if(fb){
+        fb.style.display = 'block';
+        fb.scrollIntoView({behavior:'smooth', block:'nearest'});
+      }
+    }
+
+    /* ── 13. THREE.JS 3D TURNTABLE SHOWROOM IMPLEMENTATION ── */
+    (function(){
+      const canvas = document.getElementById('canvas3d');
+      if(!canvas || typeof THREE === 'undefined') return;
+
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x101215, 0.035);
+
+      const camera = new THREE.PerspectiveCamera(40, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+      camera.position.set(5.2, 2.1, 5.2);
+
+      // Studio Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+      scene.add(ambientLight);
+
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
+      keyLight.position.set(6, 9, 7);
+      keyLight.castShadow = true;
+      scene.add(keyLight);
+
+      const fillLight = new THREE.DirectionalLight(0xd4e2ff, 0.65);
+      fillLight.position.set(-6, 4, -5);
+      scene.add(fillLight);
+
+      const rimLight = new THREE.DirectionalLight(0xff5533, 0.8);
+      rimLight.position.set(0, 6, -8);
+      scene.add(rimLight);
+
+      // Headlight Beam Spotlights (Toggled by user)
+      const headL = new THREE.SpotLight(0xfff4d6, 0, 15, Math.PI / 6, 0.4);
+      headL.position.set(-1.8, 0.65, 0.6);
+      headL.target.position.set(-6, 0, 0.6);
+      scene.add(headL);
+      scene.add(headL.target);
+
+      const headR = new THREE.SpotLight(0xfff4d6, 0, 15, Math.PI / 6, 0.4);
+      headR.position.set(-1.8, 0.65, -0.6);
+      headR.target.position.set(-6, 0, -0.6);
+      scene.add(headR);
+      scene.add(headR.target);
+
+      // Studio Ground Floor with Shadow Receiving
+      const floorGeo = new THREE.PlaneGeometry(30, 30);
+      const floorMat = new THREE.MeshStandardMaterial({
+        color: 0x14181d,
+        roughness: 0.82,
+        metalness: 0.15
+      });
+      const floor = new THREE.Mesh(floorGeo, floorMat);
+      floor.rotation.x = -Math.PI / 2;
+      floor.receiveShadow = true;
+      scene.add(floor);
+
+      // Circular Turntable Platform
+      const plinthGeo = new THREE.CylinderGeometry(3.2, 3.4, 0.08, 64);
+      const plinthMat = new THREE.MeshStandardMaterial({ color: 0x1d2229, roughness: 0.6, metalness: 0.3 });
+      const plinth = new THREE.Mesh(plinthGeo, plinthMat);
+      plinth.position.y = 0.04;
+      plinth.receiveShadow = true;
+      scene.add(plinth);
+
+      // Turntable Edge Ring
+      const ringGeo = new THREE.RingGeometry(3.18, 3.24, 64);
+      const ringMat = new THREE.MeshBasicMaterial({ color: 0xC41E28, side: THREE.DoubleSide });
+      const ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.rotation.x = -Math.PI / 2;
+      ring.position.y = 0.085;
+      scene.add(ring);
+
+      // ── FORD KA 1998 3D PROCEDURAL CAR GROUP ──
+      const carGroup = new THREE.Group();
+      carGroup.position.y = 0.42;
+      scene.add(carGroup);
+
+      // Car Paint Material (MeshPhysicalMaterial with deep clearcoat)
+      const PAINT_COLORS = {
+        colorado: { hex: 0xC41E28, clear: 0.9, rough: 0.18, metal: 0.08, name: 'Vermelho Colorado · Sólido' },
+        paris:    { hex: 0x8C1420, clear: 1.0, rough: 0.15, metal: 0.65, name: 'Vermelho Paris · Metálico' },
+        ebony:    { hex: 0x1E2024, clear: 0.95, rough: 0.12, metal: 0.2, name: 'Preto Ebony · Profundo' },
+        monaco:   { hex: 0x1C3866, clear: 0.9, rough: 0.2, metal: 0.72,  name: 'Azul Mônaco · Metálico' },
+        bari:     { hex: 0xB8BFC6, clear: 0.9, rough: 0.25, metal: 0.88, name: 'Prata Bari · Metálico' }
+      };
+
+      const paintMat = new THREE.MeshPhysicalMaterial({
+        color: 0xC41E28,
+        roughness: 0.15,
+        metalness: 0.08,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.08,
+        reflectivity: 0.95
+      });
+
+      // Iconic Contrast Charcoal Textured Bumper Material
+      const bumperMat = new THREE.MeshStandardMaterial({
+        color: 0x2A2D33,
+        roughness: 0.85,
+        metalness: 0.05
+      });
+
+      // Dark Tinted Glass Canopy
+      const glassMat = new THREE.MeshStandardMaterial({
+        color: 0x14181D,
+        roughness: 0.1,
+        metalness: 0.8,
+        transparent: true,
+        opacity: 0.85
+      });
+
+            // 1. Lower Body Chassis / Floor (Compact Bubble Hatchback Mk1)
+      const baseBodyGeo = new THREE.BoxGeometry(2.35, 0.44, 1.42, 4, 2, 4);
+      // Suavizar e afunilar extremidades estilo New Edge
+      const bPos = baseBodyGeo.attributes.position;
+      for (let i = 0; i < bPos.count; i++) {
+        let x = bPos.getX(i);
+        let z = bPos.getZ(i);
+        if (Math.abs(x) > 0.7) {
+          let taper = 1.0 - (Math.abs(x) - 0.7) * 0.18;
+          bPos.setZ(i, z * taper);
+        }
+      }
+      baseBodyGeo.computeVertexNormals();
+      const baseBody = new THREE.Mesh(baseBodyGeo, paintMat);
+      baseBody.castShadow = true;
+      carGroup.add(baseBody);
+
+      // 2. Curvilinear Bubbly Cabin (The iconic Ka teardrop arch)
+      const cabinGeo = new THREE.SphereGeometry(1.05, 32, 24, 0, Math.PI * 2, 0, Math.PI * 0.54);
+      cabinGeo.scale(1.18, 0.66, 0.68);
+      const cabin = new THREE.Mesh(cabinGeo, paintMat);
+      cabin.position.set(0.04, 0.22, 0);
+      cabin.castShadow = true;
+      carGroup.add(cabin);
+
+      // Glass Greenhouse Inset
+      const glassGeo = new THREE.SphereGeometry(1.04, 32, 24, 0, Math.PI * 2, 0, Math.PI * 0.54);
+      glassGeo.scale(1.17, 0.655, 0.685);
+      const glassMesh = new THREE.Mesh(glassGeo, glassMat);
+      glassMesh.position.set(0.04, 0.225, 0);
+      carGroup.add(glassMesh);
+
+      // 3. New Edge Distinctive Front Bumper (Large wrap-around)
+      const fBumpGeo = new THREE.CylinderGeometry(0.72, 0.74, 0.42, 24, 1, false, Math.PI * 0.4, Math.PI * 1.2);
+      fBumpGeo.scale(0.85, 1, 0.95);
+      const fBump = new THREE.Mesh(fBumpGeo, bumperMat);
+      fBump.rotation.y = Math.PI / 2;
+      fBump.position.set(-1.18, -0.02, 0);
+      fBump.castShadow = true;
+      carGroup.add(fBump);
+
+      // 4. New Edge Rear Bumper & Arch Flare
+      const rBumpGeo = new THREE.CylinderGeometry(0.72, 0.74, 0.42, 24, 1, false, Math.PI * 0.4, Math.PI * 1.2);
+      rBumpGeo.scale(0.85, 1, 0.95);
+      const rBump = new THREE.Mesh(rBumpGeo, bumperMat);
+      rBump.rotation.y = -Math.PI / 2;
+      rBump.position.set(1.18, -0.02, 0);
+      rBump.castShadow = true;
+      carGroup.add(rBump);
+
+      // 5. Front Teardrop Headlights (New Edge Amendoado)
+      const hlGeo = new THREE.SphereGeometry(0.12, 16, 12);
+      hlGeo.scale(1.3, 0.65, 0.8);
+      const hlMat = new THREE.MeshStandardMaterial({ color: 0xF4F8FA, roughness: 0.1, emissive: 0x333333 });
+      const hlLeft = new THREE.Mesh(hlGeo, hlMat);
+      hlLeft.position.set(-1.22, 0.10, 0.48);
+      hlLeft.rotation.y = -0.35;
+      carGroup.add(hlLeft);
+
+      const hlRight = new THREE.Mesh(hlGeo, hlMat);
+      hlRight.position.set(-1.22, 0.10, -0.48);
+      hlRight.rotation.y = 0.35;
+      carGroup.add(hlRight);
+
+      // 6. High-Mounted Triangular Tail Lights (Lanternas Elevadas nas Colunas)
+      const tlGeo = new THREE.ConeGeometry(0.12, 0.32, 4);
+      tlGeo.scale(0.8, 1, 0.55);
+      const tlMat = new THREE.MeshStandardMaterial({ color: 0xDC143C, roughness: 0.2, emissive: 0x660000 });
+      const tlLeft = new THREE.Mesh(tlGeo, tlMat);
+      tlLeft.position.set(1.18, 0.32, 0.48);
+      tlLeft.rotation.z = -0.5;
+      tlLeft.rotation.y = 0.4;
+      carGroup.add(tlLeft);
+
+      const tlRight = new THREE.Mesh(tlGeo, tlMat);
+      tlRight.position.set(1.18, 0.32, -0.48);
+      tlRight.rotation.z = -0.5;
+      tlRight.rotation.y = -0.4;
+      carGroup.add(tlRight);
+
+      // 7. Ford Blue Oval Badge (Bico do Capô)
+      const badgeGeo = new THREE.CylinderGeometry(0.045, 0.045, 0.015, 16);
+      badgeGeo.scale(1.5, 1, 0.7);
+      const badgeMat = new THREE.MeshStandardMaterial({ color: 0x003478, roughness: 0.3 });
+      const badge = new THREE.Mesh(badgeGeo, badgeMat);
+      badge.rotation.z = Math.PI / 2;
+      badge.position.set(-1.24, 0.06, 0);
+      carGroup.add(badge);
+
+      // 8. 4 Wheels & Tires
+      const wheels = [];
+      // Pneus aro 13 proporcionais ao Ka Mk1
+      const tireGeo = new THREE.CylinderGeometry(0.26, 0.26, 0.18, 28);
+      const tireMat = new THREE.MeshStandardMaterial({ color: 0x16181B, roughness: 0.85 });
+      const rimGeo = new THREE.CylinderGeometry(0.17, 0.17, 0.185, 20);
+      const rimMat = new THREE.MeshStandardMaterial({ color: 0xBAC2CB, metalness: 0.7, roughness: 0.3 });
+
+      // Rodas nos quatro cantos (proporção go-kart do Ka 1998)
+      const wheelPositions = [
+        [-0.92, -0.15,  0.68],
+        [-0.92, -0.15, -0.68],
+        [ 0.92, -0.15,  0.68],
+        [ 0.92, -0.15, -0.68]
+      ];
+
+      wheelPositions.forEach(pos => {
+        const wGroup = new THREE.Group();
+        wGroup.position.set(pos[0], pos[1], pos[2]);
+
+        const tire = new THREE.Mesh(tireGeo, tireMat);
+        tire.rotation.x = Math.PI / 2;
+        tire.castShadow = true;
+        wGroup.add(tire);
+
+        const rim = new THREE.Mesh(rimGeo, rimMat);
+        rim.rotation.x = Math.PI / 2;
+        wGroup.add(rim);
+
+        carGroup.add(wGroup);
+        wheels.push(wGroup);
+      });
+
+      // ── CAMERA ORBIT CONTROLLER ──
+      let isDragging = false;
+      let prevMouseX = 0, prevMouseY = 0;
+      let sphTheta = 0.85, sphPhi = 1.15, sphRadius = 6.8;
+      let targetSphTheta = 0.85, targetSphPhi = 1.15, targetSphRadius = 6.8;
+      let autoRotate = true;
+
+      function updateCamera(){
+        if(autoRotate && !isDragging){
+          targetSphTheta += 0.003;
+        }
+        sphTheta += (targetSphTheta - sphTheta) * 0.1;
+        sphPhi += (targetSphPhi - sphPhi) * 0.1;
+        sphRadius += (targetSphRadius - sphRadius) * 0.1;
+
+        // Clamp pitch so camera doesn't go below floor
+        sphPhi = Math.max(0.2, Math.min(Math.PI / 2 - 0.05, sphPhi));
+
+        camera.position.x = sphRadius * Math.sin(sphPhi) * Math.cos(sphTheta);
+        camera.position.y = sphRadius * Math.cos(sphPhi) + 0.3;
+        camera.position.z = sphRadius * Math.sin(sphPhi) * Math.sin(sphTheta);
+        camera.lookAt(0, 0.4, 0);
+      }
+
+      canvas.addEventListener('pointerdown', e => {
+        isDragging = true;
+        autoRotate = false;
+        prevMouseX = e.clientX;
+        prevMouseY = e.clientY;
+        canvas.setPointerCapture(e.pointerId);
+      });
+
+      canvas.addEventListener('pointermove', e => {
+        if(!isDragging) return;
+        const dx = e.clientX - prevMouseX;
+        const dy = e.clientY - prevMouseY;
+        prevMouseX = e.clientX;
+        prevMouseY = e.clientY;
+
+        targetSphTheta -= dx * 0.008;
+        targetSphPhi = Math.max(0.15, Math.min(Math.PI / 2 - 0.05, targetSphPhi - dy * 0.008));
+      });
+
+      const stopDrag = e => {
+        if(!isDragging) return;
+        isDragging = false;
+        try{ canvas.releasePointerCapture(e.pointerId); }catch(_){}
+      };
+      canvas.addEventListener('pointerup', stopDrag);
+      canvas.addEventListener('pointercancel', stopDrag);
+
+      canvas.addEventListener('wheel', e => {
+        e.preventDefault();
+        targetSphRadius = Math.max(3.5, Math.min(10.0, targetSphRadius + e.deltaY * 0.005));
+      }, {passive:false});
+
+      // Camera Preset Angles
+      const PRESETS = {
+        front3q: { theta: -0.65, phi: 1.18, radius: 6.2 },
+        side:    { theta: 0.0,   phi: 1.35, radius: 6.0 },
+        rear3q:  { theta: 2.35,  phi: 1.20, radius: 6.2 },
+        top:     { theta: 0.0,   phi: 0.25, radius: 7.2 }
+      };
+
+      document.querySelectorAll('.v3d-btn[data-view]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.v3d-btn[data-view]').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const p = PRESETS[btn.dataset.view];
+          if(p){
+            targetSphTheta = p.theta;
+            targetSphPhi = p.phi;
+            targetSphRadius = p.radius;
+            autoRotate = false;
+          }
+        });
+      });
+
+      // Wireframe Mode
+      const wireBtn = document.getElementById('btnWireframe');
+      let isWire = false;
+      if(wireBtn){
+        wireBtn.addEventListener('click', () => {
+          isWire = !isWire;
+          paintMat.wireframe = isWire;
+          bumperMat.wireframe = isWire;
+          wireBtn.classList.toggle('active', isWire);
+        });
+      }
+
+      // Headlights Toggle
+      const hlBtn = document.getElementById('btnHeadlights');
+      const hlTxt = document.getElementById('txtHeadlights');
+      let hlActive = false;
+      if(hlBtn){
+        hlBtn.addEventListener('click', () => {
+          hlActive = !hlActive;
+          headL.intensity = hlActive ? 4.5 : 0;
+          headR.intensity = hlActive ? 4.5 : 0;
+          hlMat.emissive.setHex(hlActive ? 0xFFEEAA : 0x333333);
+          hlBtn.style.background = hlActive ? 'rgba(232, 58, 69, 0.4)' : 'rgba(255,255,255,0.1)';
+          if(hlTxt) hlTxt.textContent = hlActive ? 'Faróis Acesos' : 'Acender Faróis';
+        });
+      }
+
+      // 3D Paint Color Setter
+      window.set3dPaint = function(colorKey){
+        const cfg = PAINT_COLORS[colorKey];
+        if(!cfg) return;
+        paintMat.color.setHex(cfg.hex);
+        paintMat.roughness = cfg.rough;
+        paintMat.metalness = cfg.metal;
+
+        const lbl = document.getElementById('v3dColorLabel');
+        if(lbl) lbl.textContent = cfg.name;
+
+        document.querySelectorAll('.v3d-btn[data-paint]').forEach(b => {
+          b.classList.toggle('active', b.dataset.paint === colorKey);
+        });
+      };
+
+      document.querySelectorAll('.v3d-btn[data-paint]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          window.set3dPaint(btn.dataset.paint);
+        });
+      });
+
+      // Resize Observer
+      window.addEventListener('resize', () => {
+        const w = canvas.clientWidth;
+        const h = canvas.clientHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      });
+
+      // Turntable Render Loop
+      function render3D(){
+        requestAnimationFrame(render3D);
+        updateCamera();
+        renderer.render(scene, camera);
+      }
+      render3D();
+    })();
+
+    /* ── 14. WEB AUDIO PROCEDURAL ENGINE SYNTHESIZER ── */
+    (function(){
+      const btnIgnition = document.getElementById('btnIgnition');
+      const lblIgnition = document.getElementById('lblIgnition');
+      const sliderGas = document.getElementById('sliderGas');
+      const valRpm = document.getElementById('valRpm');
+      const tachoCanvas = document.getElementById('tachoCanvas');
+
+      let audioCtx = null;
+      let isRunning = false;
+      let oscBase = null, oscSub = null, oscCams = null;
+      let noiseNode = null;
+      let masterGain = null, gasGain = null;
+      let filter = null;
+      let currentRpm = 0;
+      let targetRpm = 0;
+
+      // Tachometer Drawing
+      const tCtx = tachoCanvas ? tachoCanvas.getContext('2d') : null;
+
+      function drawTacho(rpm){
+        if(!tCtx) return;
+        const W = tachoCanvas.width;
+        const H = tachoCanvas.height;
+        const cx = W / 2;
+        const cy = H / 2;
+        const r = W * 0.42;
+
+        tCtx.clearRect(0, 0, W, H);
+
+        // Outer Dark Bezel
+        tCtx.beginPath();
+        tCtx.arc(cx, cy, r + 14, 0, Math.PI * 2);
+        tCtx.fillStyle = '#16191D';
+        tCtx.fill();
+        tCtx.strokeStyle = '#32373F';
+        tCtx.lineWidth = 3;
+        tCtx.stroke();
+
+        // Inner Dial Face
+        tCtx.beginPath();
+        tCtx.arc(cx, cy, r, 0, Math.PI * 2);
+        const dialGrad = tCtx.createRadialGradient(cx, cy, 20, cx, cy, r);
+        dialGrad.addColorStop(0, '#1E232A');
+        dialGrad.addColorStop(1, '#0C0E10');
+        tCtx.fillStyle = dialGrad;
+        tCtx.fill();
+
+        // Tick marks (0 to 6000 RPM)
+        const startAngle = Math.PI * 0.75;
+        const endAngle = Math.PI * 2.25;
+        const maxRpm = 6000;
+
+        for(let i = 0; i <= 60; i++){
+          const frac = i / 60;
+          const ang = startAngle + frac * (endAngle - startAngle);
+          const isMajor = i % 10 === 0;
+          const isMid = i % 5 === 0;
+          const tickLen = isMajor ? 18 : (isMid ? 12 : 7);
+
+          const isRedline = i >= 50;
+
+          const x1 = cx + Math.cos(ang) * (r - 8);
+          const y1 = cy + Math.sin(ang) * (r - 8);
+          const x2 = cx + Math.cos(ang) * (r - 8 - tickLen);
+          const y2 = cy + Math.sin(ang) * (r - 8 - tickLen);
+
+          tCtx.beginPath();
+          tCtx.moveTo(x1, y1);
+          tCtx.lineTo(x2, y2);
+          tCtx.strokeStyle = isRedline ? '#EF4444' : (isMajor ? '#FFFFFF' : '#6B7280');
+          tCtx.lineWidth = isMajor ? 3 : 1.5;
+          tCtx.stroke();
+
+          // Numbers at major ticks (x100)
+          if(isMajor){
+            const tx = cx + Math.cos(ang) * (r - 38);
+            const ty = cy + Math.sin(ang) * (r - 38);
+            tCtx.font = "bold 15px 'Zen Kaku Gothic New', sans-serif";
+            tCtx.fillStyle = isRedline ? '#EF4444' : '#E5E7EB';
+            tCtx.textAlign = 'center';
+            tCtx.textBaseline = 'middle';
+            tCtx.fillText(String(i / 10), tx, ty);
+          }
+        }
+
+        // Center Dial Labels
+        tCtx.font = "bold 13px 'Zen Kaku Gothic New', sans-serif";
+        tCtx.fillStyle = '#C41E28';
+        tCtx.textAlign = 'center';
+        tCtx.fillText("RPM × 1000", cx, cy - 35);
+
+        tCtx.font = "10px 'Zen Kaku Gothic New', sans-serif";
+        tCtx.fillStyle = 'rgba(255,255,255,0.4)';
+        tCtx.fillText("ENDURA-E 1.0L", cx, cy + 50);
+
+        // Needle
+        const clampedRpm = Math.max(0, Math.min(maxRpm, rpm));
+        const needleAngle = startAngle + (clampedRpm / maxRpm) * (endAngle - startAngle);
+
+        tCtx.save();
+        tCtx.translate(cx, cy);
+        tCtx.rotate(needleAngle);
+
+        // Needle Shadow
+        tCtx.beginPath();
+        tCtx.moveTo(-15, 0);
+        tCtx.lineTo(r - 18, 0);
+        tCtx.strokeStyle = 'rgba(0,0,0,0.5)';
+        tCtx.lineWidth = 4;
+        tCtx.stroke();
+
+        // Needle Blade
+        tCtx.beginPath();
+        tCtx.moveTo(-18, 0);
+        tCtx.lineTo(r - 20, 0);
+        tCtx.strokeStyle = '#EF4444';
+        tCtx.lineWidth = 3.5;
+        tCtx.lineCap = 'round';
+        tCtx.stroke();
+
+        // Center Cap
+        tCtx.beginPath();
+        tCtx.arc(0, 0, 12, 0, Math.PI * 2);
+        tCtx.fillStyle = '#111';
+        tCtx.fill();
+        tCtx.strokeStyle = '#C41E28';
+        tCtx.lineWidth = 2;
+        tCtx.stroke();
+
+        tCtx.restore();
+      }
+
+      function initAudio(){
+        if(audioCtx) return;
+        const AudioClass = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioClass();
+
+        masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+
+        filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(260, audioCtx.currentTime);
+        filter.Q.setValueAtTime(4.2, audioCtx.currentTime);
+
+        gasGain = audioCtx.createGain();
+        gasGain.gain.setValueAtTime(0.7, audioCtx.currentTime);
+
+        // Primary 4-Stroke Cylinder Pulse Oscillator
+        oscBase = audioCtx.createOscillator();
+        oscBase.type = 'sawtooth';
+        oscBase.frequency.setValueAtTime(28, audioCtx.currentTime);
+
+        // Sub Rumble Oscillator
+        oscSub = audioCtx.createOscillator();
+        oscSub.type = 'triangle';
+        oscSub.frequency.setValueAtTime(14, audioCtx.currentTime);
+
+        // Valve-Train Mechanical Chatter
+        oscCams = audioCtx.createOscillator();
+        oscCams.type = 'square';
+        oscCams.frequency.setValueAtTime(56, audioCtx.currentTime);
+
+        const camGain = audioCtx.createGain();
+        camGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        oscCams.connect(camGain);
+
+        oscBase.connect(filter);
+        oscSub.connect(filter);
+        camGain.connect(filter);
+
+        filter.connect(gasGain);
+        gasGain.connect(masterGain);
+        masterGain.connect(audioCtx.destination);
+
+        oscBase.start();
+        oscSub.start();
+        oscCams.start();
+      }
+
+      function startEngine(){
+        initAudio();
+        if(audioCtx.state === 'suspended') audioCtx.resume();
+
+        // Starter Motor Cranking Phase
+        lblIgnition.textContent = "Dando a partida...";
+        btnIgnition.style.background = "#D97706";
+
+        // Simulated crank sputter
+        masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+        masterGain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+        masterGain.gain.exponentialRampToValueAtTime(0.2, audioCtx.currentTime + 0.3);
+
+        setTimeout(() => {
+          // Ignition Roar & Settle into 850 RPM Idle
+          isRunning = true;
+          targetRpm = 850;
+          btnIgnition.classList.add('running');
+          btnIgnition.style.background = "#166534";
+          lblIgnition.textContent = "Motor em Funcionamento (Desligar)";
+
+          masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+          masterGain.gain.setValueAtTime(0.35, audioCtx.currentTime);
+          masterGain.gain.exponentialRampToValueAtTime(0.65, audioCtx.currentTime + 0.4);
+        }, 600);
+      }
+
+      function stopEngine(){
+        isRunning = false;
+        targetRpm = 0;
+        btnIgnition.classList.remove('running');
+        btnIgnition.style.background = "var(--red)";
+        lblIgnition.textContent = "Dar a Partida (Start Engine)";
+
+        if(masterGain && audioCtx){
+          masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+          masterGain.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+        }
+      }
+
+      if(btnIgnition){
+        btnIgnition.addEventListener('click', () => {
+          if(!isRunning) startEngine();
+          else stopEngine();
+        });
+      }
+
+      if(sliderGas){
+        sliderGas.addEventListener('input', e => {
+          if(!isRunning) return;
+          targetRpm = parseFloat(e.target.value);
+          if(valRpm) valRpm.textContent = `${Math.round(targetRpm)} RPM`;
+        });
+      }
+
+      // Tachometer & Audio Modulation Loop
+      function updateEngineSound(){
+        requestAnimationFrame(updateEngineSound);
+
+        currentRpm += (targetRpm - currentRpm) * 0.12;
+        drawTacho(currentRpm);
+
+        if(isRunning && audioCtx && oscBase){
+          // 4-cylinder engine: firing frequency = (RPM / 60) * 2
+          const freq = Math.max(14, (currentRpm / 60) * 2);
+          oscBase.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.05);
+          oscSub.frequency.setTargetAtTime(freq * 0.5, audioCtx.currentTime, 0.05);
+          oscCams.frequency.setTargetAtTime(freq * 2.0, audioCtx.currentTime, 0.05);
+
+          // Induction Filter opening with RPM
+          const filterFreq = 180 + (currentRpm / 5500) * 1400;
+          filter.frequency.setTargetAtTime(filterFreq, audioCtx.currentTime, 0.06);
+
+          // Volume dynamics
+          const dynamicVol = 0.45 + (currentRpm / 5500) * 0.4;
+          gasGain.gain.setTargetAtTime(dynamicVol, audioCtx.currentTime, 0.05);
+        }
+      }
+      drawTacho(0);
+      updateEngineSound();
+    })();
+  </script>
+<script>
+  // Alternância entre visualizador Sketchfab Oficial e Estúdio Three.js
+  window.switchViewerTab = function(tab) {
+    const sWrap = document.getElementById('sketchfabWrap');
+    const tWrap = document.getElementById('threeWrap');
+    const tSketch = document.getElementById('tabSketchfab');
+    const tThree = document.getElementById('tabThree');
+
+    if (tab === 'sketchfab') {
+      if (sWrap) sWrap.style.display = 'block';
+      if (tWrap) tWrap.style.display = 'none';
+      if (tSketch) { tSketch.style.background = 'var(--crimson)'; tSketch.style.color = '#FFF'; }
+      if (tThree) { tThree.style.background = 'transparent'; tThree.style.color = 'rgba(255,255,255,0.7)'; }
+    } else {
+      if (sWrap) sWrap.style.display = 'none';
+      if (tWrap) tWrap.style.display = 'block';
+      if (tThree) { tThree.style.background = 'var(--crimson)'; tThree.style.color = '#FFF'; }
+      if (tSketch) { tSketch.style.background = 'transparent'; tSketch.style.color = 'rgba(255,255,255,0.7)'; }
+      // Trigger resize to fix Three.js canvas size
+      window.dispatchEvent(new Event('resize'));
+    }
+  };
+</script>
+<script>
+  // ── AUTOMAÇÃO DA PINTURA VERMELHO COLORADO NO MODELO SKETCHFAB ──
+  let sketchfabApi = null;
+  const COLORADO_RED_NORM = [0.7686, 0.1176, 0.1568]; // #C41E28 normalizado
+
+  function initSketchfabColorEngine() {
+    const frame = document.getElementById('sketchfab-frame');
+    if (!frame || typeof Sketchfab === 'undefined') return;
+
+    try {
+      const client = new Sketchfab('1.12.1', frame);
+      client.init('434d5030c0144d5f990ded6953d218dc', {
+        autostart: 1,
+        preload: 1,
+        ui_infos: 0,
+        ui_watermark: 0,
+        ui_help: 0,
+        ui_settings: 0,
+        ui_inspector: 0,
+        ui_stop: 0,
+        ui_vr: 0,
+        success: function(api) {
+          sketchfabApi = api;
+          api.start();
+          api.addEventListener('viewerready', function() {
+            console.log('Sketchfab Viewer pronto! Aplicando Vermelho Colorado...');
+            paintSketchfabColorado();
+          });
+        },
+        error: function(err) {
+          console.warn('Sketchfab API:', err);
+        }
+      });
+    } catch(e) {
+      console.warn('Erro ao inicializar Sketchfab API:', e);
+    }
+  }
+
+  window.paintSketchfabColorado = function(rgbArray) {
+    const targetColor = rgbArray || COLORADO_RED_NORM;
+    if (!sketchfabApi) return;
+
+    sketchfabApi.getMaterialList(function(err, materials) {
+      if (err || !materials) return;
+      materials.forEach(function(mat) {
+        const n = (mat.name || '').toLowerCase();
+        // Não alterar vidros, pneus, rodas, interior e lanternas
+        if (n.includes('tire') || n.includes('pneu') || n.includes('wheel') || 
+            n.includes('rim') || n.includes('glass') || n.includes('window') || 
+            n.includes('vidro') || n.includes('light') || n.includes('lamp') ||
+            n.includes('interior') || n.includes('seat') || n.includes('mirror') ||
+            n.includes('black') || n.includes('rubber') || n.includes('calota')) {
+          return;
+        }
+
+        let changed = false;
+        if (mat.channels.AlbedoPBR) {
+          mat.channels.AlbedoPBR.color = targetColor;
+          mat.channels.AlbedoPBR.factor = 1.0;
+          delete mat.channels.AlbedoPBR.texture;
+          changed = true;
+        }
+        if (mat.channels.DiffuseColor) {
+          mat.channels.DiffuseColor.color = targetColor;
+          mat.channels.DiffuseColor.factor = 1.0;
+          delete mat.channels.DiffuseColor.texture;
+          changed = true;
+        }
+        if (mat.channels.DiffusePBR) {
+          mat.channels.DiffusePBR.color = targetColor;
+          mat.channels.DiffusePBR.factor = 1.0;
+          delete mat.channels.DiffusePBR.texture;
+          changed = true;
+        }
+        if (mat.channels.ClearCoat) {
+          mat.channels.ClearCoat.factor = 0.95;
+          mat.channels.ClearCoat.roughness = 0.08;
+        }
+        if (changed) {
+          sketchfabApi.setMaterial(mat, function() {
+            console.log('Material pintado com sucesso:', mat.name);
+          });
+        }
+      });
+    });
+
+    const pill = document.getElementById('sfPillLabel');
+    if (pill) pill.textContent = 'Pintura: Vermelho Colorado (Aplicada)';
+  };
+
+  // Iniciar após carregamento do DOM
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSketchfabColorEngine);
+  } else {
+    initSketchfabColorEngine();
+  }
+</script>
+</body>
+</html>

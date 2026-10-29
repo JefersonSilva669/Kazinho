@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="800" height="520">
+  <defs>
+    <linearGradient id="bgG2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141618"/><stop offset="100%" stop-color="#0A0B0D"/></linearGradient>
+    <linearGradient id="kaRed2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#E83A45"/><stop offset="50%" stop-color="#C41E28"/><stop offset="100%" stop-color="#6E0B11"/></linearGradient>
+    <linearGradient id="bDark2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#363A40"/><stop offset="100%" stop-color="#16181B"/></linearGradient>
+  </defs>
+  <rect width="800" height="520" fill="url(#bgG2)"/>
+  <ellipse cx="400" cy="445" rx="350" ry="20" fill="#030405" opacity="0.9"/>
+
+  <!-- Rear 3/4 Silhouette -->
+  <!-- Main body -->
+  <path d="M 680 370 C 660 300, 600 240, 480 200 C 360 170, 240 210, 160 270 C 130 330, 130 380, 160 415 C 220 420, 300 420, 320 420 C 330 350, 390 350, 400 420 L 590 420 C 600 350, 660 350, 670 420 Z" fill="url(#kaRed2)" stroke="#111" stroke-width="2"/>
+  
+  <!-- Massive rear unpainted bumper -->
+  <path d="M 520 370 C 570 350, 640 330, 680 370 C 690 395, 685 418, 620 420 C 590 420, 540 420, 520 415 Z" fill="url(#bDark2)" stroke="#111" stroke-width="1.5"/>
+
+  <!-- Rear Window Hatch -->
+  <path d="M 280 215 C 380 185, 480 200, 560 250 L 520 330 C 420 315, 330 300, 260 280 Z" fill="#161E24" stroke="#2B3640" stroke-width="2"/>
+  <!-- Rear Wiper -->
+  <line x1="390" y1="320" x2="450" y2="260" stroke="#000" stroke-width="4"/>
+
+  <!-- Distinctive High-Mounted Triangular Tail Lights -->
+  <path d="M 580 240 C 620 265, 640 310, 630 345 C 600 325, 580 285, 575 255 Z" fill="#E61A28" stroke="#8A000A" stroke-width="2"/>
+  <path d="M 595 285 C 615 295, 620 315, 610 325 Z" fill="#FFF" opacity="0.85"/>
+
+  <!-- Wheels in perspective -->
+  <g transform="translate(635, 400)">
+    <circle cx="0" cy="0" r="46" fill="#15171A" stroke="#000" stroke-width="3"/>
+    <circle cx="0" cy="0" r="32" fill="#889098" stroke="#333" stroke-width="2"/>
+    <circle cx="0" cy="0" r="12" fill="#003478"/>
+  </g>
+  <g transform="translate(365, 400)">
+    <circle cx="0" cy="0" r="46" fill="#15171A" stroke="#000" stroke-width="3"/>
+    <circle cx="0" cy="0" r="32" fill="#889098" stroke="#333" stroke-width="2"/>
+    <circle cx="0" cy="0" r="12" fill="#003478"/>
+  </g>
+
+  <!-- Ka Chrome Badge -->
+  <text x="440" y="360" font-family="'Cormorant Garamond', Georgia, serif" font-size="28" font-style="italic" font-weight="600" fill="#E0E6EC" letter-spacing="4">Ka</text>
+  <ellipse cx="440" cy="380" rx="12" ry="7" fill="#003478" stroke="#A0AAB2" stroke-width="1"/>
+
+  <text x="50" y="490" font-family="'Zen Kaku Gothic New', sans-serif" font-size="12" fill="#8E959E" letter-spacing="3">02 · TRASEIRA &amp; LANTERNAS TRIANGULARES INTEGRADAS</text>
+</svg>

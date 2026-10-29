@@ -1,0 +1,249 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="1200" height="520">
+  <defs>
+    <!-- Paint Gradients -->
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E6ECF0" />
+      <stop offset="40%" stop-color="#B8BFC6" />
+      <stop offset="85%" stop-color="#757E88" />
+      <stop offset="100%" stop-color="#111113" />
+    </linearGradient>
+    <linearGradient id="hoodGrad" x1="0%" y1="0%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#E6ECF0" />
+      <stop offset="60%" stop-color="#B8BFC6" />
+      <stop offset="100%" stop-color="#757E88" />
+    </linearGradient>
+    <linearGradient id="roofGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E6ECF0" />
+      <stop offset="50%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#B8BFC6" />
+    </linearGradient>
+
+    <!-- Glass Gradients -->
+    <linearGradient id="glassGrad" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#3A4D59" stop-opacity="0.9" />
+      <stop offset="45%" stop-color="#1E2A32" stop-opacity="0.95" />
+      <stop offset="70%" stop-color="#2D3B45" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#12181C" stop-opacity="0.95" />
+    </linearGradient>
+    <linearGradient id="glassSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.5" />
+      <stop offset="30%" stop-color="#FFFFFF" stop-opacity="0.1" />
+      <stop offset="70%" stop-color="#FFFFFF" stop-opacity="0" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.15" />
+    </linearGradient>
+
+    <!-- Bumper & Textured Plastic (Iconic Ka grey bumper) -->
+    <linearGradient id="bumperGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3E4249" />
+      <stop offset="50%" stop-color="#2A2D33" />
+      <stop offset="100%" stop-color="#1A1C20" />
+    </linearGradient>
+
+    <!-- Wheels & Tires -->
+    <radialGradient id="tireGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="65%" stop-color="#1A1C1E" />
+      <stop offset="85%" stop-color="#282B30" />
+      <stop offset="100%" stop-color="#0E0F11" />
+    </radialGradient>
+    <linearGradient id="rimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E2E6EA" />
+      <stop offset="50%" stop-color="#9BA1A8" />
+      <stop offset="100%" stop-color="#5B626A" />
+    </linearGradient>
+
+    <!-- Ground Shadow -->
+    <radialGradient id="shadowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(10,12,15,0.75)" />
+      <stop offset="60%" stop-color="rgba(10,12,15,0.4)" />
+      <stop offset="100%" stop-color="rgba(10,12,15,0)" />
+    </radialGradient>
+
+    <!-- Lighting Filters -->
+    <filter id="blurShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="14" />
+    </filter>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- 1. Ambient Ground Shadow -->
+  <ellipse cx="600" cy="462" rx="490" ry="24" fill="url(#shadowGrad)" filter="url(#blurShadow)" />
+  <ellipse cx="600" cy="460" rx="420" ry="14" fill="#0A0B0E" opacity="0.6" filter="url(#blurShadow)" />
+
+  <!-- 2. Ford Ka 1998 Main Body Shell (Red) -->
+  <path d="M 175 350
+           C 160 330, 168 285, 215 270
+           C 260 255, 360 225, 415 210
+           C 490 145, 600 120, 725 125
+           C 850 130, 920 185, 965 260
+           C 1010 330, 1015 375, 990 395
+           C 960 410, 890 415, 840 415
+           C 835 340, 775 340, 770 415
+           L 440 415
+           C 435 340, 375 340, 370 415
+           L 240 415
+           C 200 415, 175 390, 175 350 Z"
+        fill="url(#bodyGrad)" stroke="#111" stroke-width="1.5" />
+
+  <!-- 3. New Edge Distinctive Charcoal Contrast Bumpers (Front, Arches, Rear) -->
+  <!-- Front Bumper & Front Fender Flare -->
+  <path d="M 175 350
+           C 160 330, 168 285, 215 270
+           C 240 263, 275 275, 290 310
+           C 305 345, 335 365, 375 370
+           C 370 415, 360 422, 240 420
+           C 195 420, 165 390, 175 350 Z"
+        fill="url(#bumperGrad)" stroke="#16181B" stroke-width="1.5" />
+
+  <!-- Rear Bumper & Rear Quarter Flare -->
+  <path d="M 850 370
+           C 890 365, 930 335, 955 305
+           C 980 295, 1010 335, 990 395
+           C 960 420, 895 422, 840 420
+           C 845 375, 848 372, 850 370 Z"
+        fill="url(#bumperGrad)" stroke="#16181B" stroke-width="1.5" />
+
+  <!-- Side Sill Strip (Dark Lower Trim) -->
+  <path d="M 370 412 L 440 412 L 770 412 L 840 412 L 840 422 L 370 422 Z" fill="#1C1E22" />
+
+  <!-- 4. Windows & Cabin (Iconic Arc Glasshouse) -->
+  <!-- Window Frame Cutout -->
+  <path d="M 410 215
+           C 475 160, 580 138, 710 142
+           C 785 145, 845 175, 895 245
+           C 895 260, 875 262, 720 262
+           C 560 262, 440 260, 410 215 Z"
+        fill="#121518" />
+
+  <!-- Windshield Pillar & Glass (Front) -->
+  <path d="M 425 212
+           C 475 168, 550 150, 630 147
+           L 630 258
+           L 445 258 Z"
+        fill="url(#glassGrad)" />
+
+  <!-- Rear Teardrop Quarter Window (Rear) -->
+  <path d="M 640 147
+           C 720 148, 785 168, 865 242
+           L 640 258 Z"
+        fill="url(#glassGrad)" />
+
+  <!-- Glass Specular Reflection Highlight Arcs -->
+  <path d="M 440 210 Q 560 150 780 160 L 760 185 Q 550 175 450 240 Z" fill="url(#glassSheen)" />
+
+  <!-- B-Pillar Divider -->
+  <rect x="626" y="145" width="16" height="115" fill="#181B1F" rx="2" />
+
+  <!-- 5. Iconic New Edge Sharp Crease Arcs (Signature 1998 Ka Feature) -->
+  <!-- Hood to A-pillar Crease -->
+  <path d="M 215 270 C 275 258, 350 238, 415 210" stroke="#E6ECF0" stroke-width="2.5" fill="none" opacity="0.8" />
+  <!-- Lower Door Arc Crease -->
+  <path d="M 330 350 C 440 375, 620 380, 810 345" stroke="#757E88" stroke-width="2" fill="none" opacity="0.9" />
+  <path d="M 330 351 C 440 376, 620 381, 810 346" stroke="#FFFFFF" stroke-width="1" fill="none" opacity="0.6" />
+  <!-- Door Shutline -->
+  <path d="M 634 146 L 634 410" stroke="#16181B" stroke-width="2" opacity="0.8" />
+  <path d="M 412 216 L 402 360 C 398 385, 388 405, 375 412" stroke="#16181B" stroke-width="2" opacity="0.8" />
+
+  <!-- Oval Door Handle -->
+  <g transform="translate(650, 275)">
+    <ellipse cx="20" cy="10" rx="22" ry="9" fill="#1C1E22" />
+    <ellipse cx="20" cy="9" rx="19" ry="6" fill="#2E3238" />
+    <path d="M 8 9 L 32 9" stroke="#50555E" stroke-width="2" />
+  </g>
+
+  <!-- 6. Lights -->
+  <!-- Front Headlight (Teardrop Swept Oval with Amber Turn Signal) -->
+  <path d="M 180 300
+           C 185 280, 220 270, 245 276
+           C 230 305, 205 320, 185 315 Z"
+        fill="#E8ECEF" stroke="#909AA2" stroke-width="1.5" />
+  <!-- Amber Turn Indicator Inset -->
+  <path d="M 225 275 C 240 278, 243 285, 235 295 Z" fill="#FF9F1A" filter="url(#softGlow)" />
+  <!-- Headlamp Lens Facets -->
+  <ellipse cx="205" cy="295" rx="14" ry="10" fill="#FFF" opacity="0.75" />
+
+  <!-- Rear Tail Light (Iconic High-Mounted Triangular Cluster) -->
+  <path d="M 890 220
+           C 920 235, 935 270, 930 295
+           C 915 280, 895 255, 885 235 Z"
+        fill="#D41424" stroke="#7A000A" stroke-width="1.5" />
+  <!-- Reverse / White Light Segment -->
+  <path d="M 905 250 C 918 258, 922 272, 915 280 Z" fill="#F0F4F8" opacity="0.9" />
+
+  <!-- 7. Side Mirror (Aerodynamic Teardrop) -->
+  <g transform="translate(420, 245)">
+    <path d="M 0 12 C 10 5, 30 2, 42 10 C 45 18, 35 26, 12 24 Z" fill="#202327" />
+    <path d="M 5 14 C 15 8, 30 6, 38 12" stroke="#E6ECF0" stroke-width="1.5" fill="none" />
+  </g>
+
+  <!-- 8. Front Wheel & Tire (Left) -->
+  <g transform="translate(370, 395)">
+    <!-- Tire Outer Rubber -->
+    <circle cx="0" cy="0" r="66" fill="url(#tireGrad)" stroke="#0A0B0D" stroke-width="3" />
+    <circle cx="0" cy="0" r="50" fill="#141618" />
+    <!-- 13-inch Steel/Alloy Rim -->
+    <circle cx="0" cy="0" r="44" fill="url(#rimGrad)" stroke="#3A3E45" stroke-width="2" />
+    <!-- Rim Inner Lip & Brake Disc Shadow -->
+    <circle cx="0" cy="0" r="34" fill="#202327" />
+    <circle cx="0" cy="0" r="32" fill="#757D86" />
+    <!-- 8 Characteristic Circular Cooling Holes -->
+    <circle cx="0" cy="-22" r="5" fill="#1A1C1F" />
+    <circle cx="16" cy="-16" r="5" fill="#1A1C1F" />
+    <circle cx="22" cy="0" r="5" fill="#1A1C1F" />
+    <circle cx="16" cy="16" r="5" fill="#1A1C1F" />
+    <circle cx="0" cy="22" r="5" fill="#1A1C1F" />
+    <circle cx="-16" cy="16" r="5" fill="#1A1C1F" />
+    <circle cx="-22" cy="0" r="5" fill="#1A1C1F" />
+    <circle cx="-16" cy="-16" r="5" fill="#1A1C1F" />
+    <!-- Wheel Hub with Ford Blue Oval Accent -->
+    <circle cx="0" cy="0" r="13" fill="#DCE0E5" stroke="#9098A2" stroke-width="1.5" />
+    <ellipse cx="0" cy="0" rx="9" ry="5.5" fill="#003478" />
+    <text x="0" y="2.5" font-family="'Zen Kaku Gothic New', sans-serif" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle" font-style="italic">Ford</text>
+    <!-- 4 Lug Nuts -->
+    <circle cx="-7" cy="-7" r="2" fill="#333" />
+    <circle cx="7" cy="-7" r="2" fill="#333" />
+    <circle cx="7" cy="7" r="2" fill="#333" />
+    <circle cx="-7" cy="7" r="2" fill="#333" />
+  </g>
+
+  <!-- 9. Rear Wheel & Tire (Right) -->
+  <g transform="translate(805, 395)">
+    <!-- Tire Outer Rubber -->
+    <circle cx="0" cy="0" r="66" fill="url(#tireGrad)" stroke="#0A0B0D" stroke-width="3" />
+    <circle cx="0" cy="0" r="50" fill="#141618" />
+    <!-- 13-inch Steel/Alloy Rim -->
+    <circle cx="0" cy="0" r="44" fill="url(#rimGrad)" stroke="#3A3E45" stroke-width="2" />
+    <!-- Rim Inner Lip & Brake Drum Shadow -->
+    <circle cx="0" cy="0" r="34" fill="#202327" />
+    <circle cx="0" cy="0" r="32" fill="#757D86" />
+    <!-- 8 Characteristic Circular Cooling Holes -->
+    <circle cx="0" cy="-22" r="5" fill="#1A1C1F" />
+    <circle cx="16" cy="-16" r="5" fill="#1A1C1F" />
+    <circle cx="22" cy="0" r="5" fill="#1A1C1F" />
+    <circle cx="16" cy="16" r="5" fill="#1A1C1F" />
+    <circle cx="0" cy="22" r="5" fill="#1A1C1F" />
+    <circle cx="-16" cy="16" r="5" fill="#1A1C1F" />
+    <circle cx="-22" cy="0" r="5" fill="#1A1C1F" />
+    <circle cx="-16" cy="-16" r="5" fill="#1A1C1F" />
+    <!-- Wheel Hub with Ford Blue Oval Accent -->
+    <circle cx="0" cy="0" r="13" fill="#DCE0E5" stroke="#9098A2" stroke-width="1.5" />
+    <ellipse cx="0" cy="0" rx="9" ry="5.5" fill="#003478" />
+    <text x="0" y="2.5" font-family="'Zen Kaku Gothic New', sans-serif" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle" font-style="italic">Ford</text>
+    <!-- 4 Lug Nuts -->
+    <circle cx="-7" cy="-7" r="2" fill="#333" />
+    <circle cx="7" cy="-7" r="2" fill="#333" />
+    <circle cx="7" cy="7" r="2" fill="#333" />
+    <circle cx="-7" cy="7" r="2" fill="#333" />
+  </g>
+
+  <!-- 10. Chrome Exhaust Tip (Rear Lower) -->
+  <rect x="945" y="420" width="22" height="7" rx="3.5" fill="#D8DEE4" stroke="#7A828A" stroke-width="1" />
+  <ellipse cx="967" cy="423.5" rx="3" ry="3.5" fill="#181A1D" />
+
+  <!-- 11. Subtle Body Highlights & Clearcoat Lustre -->
+  <path d="M 430 148 C 550 128, 680 132, 750 140" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.45" />
+  <path d="M 230 268 C 300 248, 380 226, 420 212" stroke="#FFF" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.35" />
+  <path d="M 850 215 C 890 250, 930 295, 960 330" stroke="#FFF" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.25" />
+</svg>

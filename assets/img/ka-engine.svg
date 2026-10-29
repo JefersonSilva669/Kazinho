@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600">
+  <defs>
+    <linearGradient id="metalG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4E555E"/><stop offset="50%" stop-color="#2D3238"/><stop offset="100%" stop-color="#1A1C1E"/></linearGradient>
+    <linearGradient id="coverG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#363A40"/><stop offset="100%" stop-color="#1E2024"/></linearGradient>
+    <linearGradient id="glowR" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#C41E28"/><stop offset="100%" stop-color="#FF5544"/></linearGradient>
+  </defs>
+  <rect width="900" height="600" fill="#0C0E10"/>
+  <!-- Engine Bay Inner Walls -->
+  <path d="M 60 40 L 840 40 L 780 540 L 120 540 Z" fill="#16181B" stroke="#25282E" stroke-width="2"/>
+  
+  <!-- Endura-E Engine Block & Crossflow Cylinder Head -->
+  <g transform="translate(450, 300)">
+    <!-- Cast Iron Block Base -->
+    <rect x="-180" y="-80" width="360" height="220" rx="16" fill="url(#metalG)" stroke="#58616B" stroke-width="2"/>
+    
+    <!-- Ribbed Cam Cover (Rocker Cover) -->
+    <rect x="-160" y="-120" width="320" height="70" rx="12" fill="url(#coverG)" stroke="#4A525B" stroke-width="2"/>
+    <!-- Endura-E Embossed Typography -->
+    <text x="-80" y="-80" font-family="'Zen Kaku Gothic New', sans-serif" font-size="20" font-weight="bold" fill="#D0D8E0" letter-spacing="3">ENDURA-E</text>
+    <text x="80" y="-80" font-family="'Zen Kaku Gothic New', sans-serif" font-size="14" fill="#C41E28" font-weight="bold">1.0L / 1.3L</text>
+    <!-- Cooling Fins -->
+    <line x1="-140" y1="-105" x2="140" y2="-105" stroke="#22252A" stroke-width="3"/>
+    <line x1="-140" y1="-95" x2="140" y2="-95" stroke="#22252A" stroke-width="3"/>
+    <line x1="-140" y1="-60" x2="140" y2="-60" stroke="#22252A" stroke-width="3"/>
+
+    <!-- Spark Plug Leads in Vibrant Red (Iconic Ford Service leads) -->
+    <path d="M -110 -120 Q -110 -160 -150 -160" stroke="url(#glowR)" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M -40 -120 Q -40 -170 -140 -165" stroke="url(#glowR)" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M 30 -120 Q 30 -170 -130 -170" stroke="url(#glowR)" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M 100 -120 Q 100 -175 -120 -175" stroke="url(#glowR)" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <!-- Ignition Coil Pack -->
+    <rect x="-190" y="-190" width="70" height="50" rx="6" fill="#1C1F22" stroke="#555" stroke-width="2"/>
+
+    <!-- Crossflow Intake Manifold (Curved Aluminium Runners) -->
+    <path d="M -120 -10 Q -90 -40 -40 -30 Q 20 -40 80 -20" stroke="#8D97A2" stroke-width="16" fill="none" stroke-linecap="round"/>
+    
+    <!-- Alternator & Serpentine Belt Pulley -->
+    <circle cx="160" cy="40" r="38" fill="#3A3F45" stroke="#68727D" stroke-width="2"/>
+    <circle cx="160" cy="40" r="18" fill="#1A1C1E"/>
+    <!-- Belt -->
+    <path d="M 160 2 L 120 120" stroke="#111" stroke-width="8"/>
+
+    <!-- Oil Dipstick with Yellow Loop -->
+    <circle cx="-150" cy="-30" r="12" fill="none" stroke="#FFCC00" stroke-width="4"/>
+    <line x1="-150" y1="-18" x2="-150" y2="40" stroke="#C0C8D0" stroke-width="3"/>
+  </g>
+
+  <!-- Technical Telemetry Badges -->
+  <g transform="translate(100, 480)">
+    <text x="0" y="0" font-family="'Zen Kaku Gothic New', sans-serif" font-size="11" fill="#C41E28" letter-spacing="2">ARQUITETURA VALVULAR</text>
+    <text x="0" y="24" font-family="'Cormorant Garamond', Georgia, serif" font-size="22" fill="#E6ECF0">OHV · 8 Válvulas · Corrente Dupla</text>
+  </g>
+  <g transform="translate(540, 480)">
+    <text x="0" y="0" font-family="'Zen Kaku Gothic New', sans-serif" font-size="11" fill="#C41E28" letter-spacing="2">ALIMENTAÇÃO</text>
+    <text x="0" y="24" font-family="'Cormorant Garamond', Georgia, serif" font-size="22" fill="#E6ECF0">Injeção Multiponto EEC-V</text>
+  </g>
+</svg>

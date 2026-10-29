@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="brG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#E2D0B2"/><stop offset="50%" stop-color="#A88B5D"/><stop offset="100%" stop-color="#69512A"/></linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="#101214"/>
+  <!-- Brushed metal plaque -->
+  <rect x="40" y="40" width="520" height="320" rx="10" fill="url(#brG)" stroke="#261E12" stroke-width="4"/>
+  <rect x="52" y="52" width="496" height="296" rx="6" fill="#1C1814" stroke="#8E7345" stroke-width="2"/>
+  
+  <text x="300" y="110" font-family="'Cormorant Garamond', Georgia, serif" font-size="34" font-weight="600" fill="#D6BA88" text-anchor="middle" letter-spacing="4">FORD MOTOR COMPANY BRASIL</text>
+  <text x="300" y="150" font-family="'Zen Kaku Gothic New', sans-serif" font-size="12" fill="#E8DEC8" text-anchor="middle" letter-spacing="3">COMPLEXO INDUSTRIAL DE SÃO BERNARDO DO CAMPO</text>
+  
+  <line x1="120" y1="180" x2="480" y2="180" stroke="#8E7345" stroke-width="1"/>
+  
+  <text x="300" y="225" font-family="'Cormorant Garamond', Georgia, serif" font-size="28" font-style="italic" fill="#FFF" text-anchor="middle">Chassis Mk1 · New Edge 1998</text>
+  <text x="300" y="270" font-family="'Zen Kaku Gothic New', sans-serif" font-size="16" font-weight="bold" fill="#D6BA88" text-anchor="middle" letter-spacing="6">VIN: 9BFZZZFBXWB1998KA</text>
+  <text x="300" y="315" font-family="'Zen Kaku Gothic New', sans-serif" font-size="11" fill="#A89472" text-anchor="middle" letter-spacing="2">COR ORIGINAL: VERMELHO COLORADO (SOLID RED)</text>
+</svg>

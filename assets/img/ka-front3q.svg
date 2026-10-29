@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="800" height="520">
+  <defs>
+    <linearGradient id="bgG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#181B1F"/><stop offset="100%" stop-color="#0E1012"/></linearGradient>
+    <linearGradient id="kaRed" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#E83A45"/><stop offset="50%" stop-color="#C41E28"/><stop offset="100%" stop-color="#7A0F15"/></linearGradient>
+    <linearGradient id="bDark" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3A3E45"/><stop offset="100%" stop-color="#1A1C20"/></linearGradient>
+    <radialGradient id="glHead" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFF"/><stop offset="60%" stop-color="#FFDD99"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <rect width="800" height="520" fill="url(#bgG)"/>
+  <!-- Studio floor reflection grid -->
+  <line x1="50" y1="440" x2="750" y2="440" stroke="#252A30" stroke-width="1"/>
+  <ellipse cx="400" cy="445" rx="360" ry="22" fill="#050608" opacity="0.8"/>
+  
+  <!-- Front 3/4 Ka Silhouette in Vermelho Colorado -->
+  <!-- Main shell -->
+  <path d="M 120 370 C 140 310, 210 280, 310 260 C 370 210, 480 160, 620 180 C 700 240, 720 310, 700 380 C 670 410, 580 420, 520 420 C 510 350, 450 350, 440 420 L 250 420 C 240 350, 180 350, 170 420 L 130 415 C 115 400, 110 385, 120 370 Z" fill="url(#kaRed)" stroke="#111" stroke-width="2"/>
+  
+  <!-- Wrap-around textured front bumper -->
+  <path d="M 120 370 C 135 340, 170 330, 210 325 C 230 350, 260 370, 300 375 L 300 420 L 130 420 C 115 400, 115 385, 120 370 Z" fill="url(#bDark)" stroke="#111" stroke-width="1.5"/>
+  
+  <!-- Hood and New Edge Intersecting Arcs -->
+  <path d="M 210 325 C 260 290, 380 270, 480 275 C 500 320, 500 360, 480 380 C 380 385, 260 380, 210 325 Z" fill="url(#kaRed)" opacity="0.9" stroke="#E83A45" stroke-width="1.5"/>
+  
+  <!-- Teardrop Swept Headlight -->
+  <path d="M 135 345 C 150 325, 195 320, 220 330 C 200 355, 165 365, 140 360 Z" fill="#F4F8FA" stroke="#A0AAB2" stroke-width="2"/>
+  <ellipse cx="170" cy="342" rx="14" ry="9" fill="url(#glHead)"/>
+  <path d="M 195 328 C 210 330, 215 338, 208 348 Z" fill="#FF9F1A"/>
+
+  <!-- Ford Oval Badge on Front Hood Lip -->
+  <ellipse cx="265" cy="335" rx="14" ry="8" fill="#003478" stroke="#D0D6DC" stroke-width="1"/>
+  <text x="265" y="338" font-family="'Zen Kaku Gothic New', sans-serif" font-size="7" font-weight="bold" fill="#FFF" text-anchor="middle" font-style="italic">Ford</text>
+
+  <!-- Arched Windshield & Cabin Glass -->
+  <path d="M 330 260 C 400 200, 500 175, 610 190 L 600 270 C 480 265, 390 262, 330 260 Z" fill="#1C2730" stroke="#33404D" stroke-width="2"/>
+  <path d="M 345 255 Q 460 205 580 200 L 565 220 Q 460 220 360 260 Z" fill="#FFF" opacity="0.25"/>
+
+  <!-- Wheels -->
+  <g transform="translate(205, 400)">
+    <circle cx="0" cy="0" r="48" fill="#15171A" stroke="#000" stroke-width="3"/>
+    <circle cx="0" cy="0" r="34" fill="#889098" stroke="#333" stroke-width="2"/>
+    <circle cx="0" cy="0" r="14" fill="#003478"/>
+  </g>
+  <g transform="translate(475, 400)">
+    <circle cx="0" cy="0" r="46" fill="#15171A" stroke="#000" stroke-width="3"/>
+    <circle cx="0" cy="0" r="32" fill="#889098" stroke="#333" stroke-width="2"/>
+    <circle cx="0" cy="0" r="13" fill="#003478"/>
+  </g>
+  <text x="50" y="490" font-family="'Zen Kaku Gothic New', sans-serif" font-size="12" fill="#8E959E" letter-spacing="3">01 · ÂNGULO TRÊS QUARTOS DIANTEIRO · NOVO DESIGN NEW EDGE</text>
+</svg>
