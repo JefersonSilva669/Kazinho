@@ -1236,7 +1236,7 @@
       <!-- Vermelho Paris Metálico -->
       <img class="cc" data-p="paris" src="assets/img/wiki_1998_(S)_Ford_Ka.jpg" alt="Ford Ka 1998 em Vermelho Paris Metálico">
       <!-- Preto Ebony -->
-      <img class="cc" data-p="ebony" src="assets/img/ka-rear3q.jpg" alt="Ford Ka 1998 em Preto Ebony">
+      <img class="cc" data-p="ebony" src="assets/img/ka-black-ebony.jpg" alt="Ford Ka 1998 em Preto Ebony">
       <!-- Azul Mônaco -->
       <img class="cc" data-p="monaco" src="assets/img/ka-blue-1.jpg" alt="Ford Ka 1998 em Azul Mônaco Metálico">
       <!-- Prata Bari -->
@@ -1528,7 +1528,7 @@
         <figcaption>03 · Rodas de 13 Polegadas nos Quatro Vértices</figcaption>
       </figure>
       <figure>
-        <img src="assets/img/ka-cockpit.svg" alt="Interior do Ford Ka" loading="lazy">
+        <img src="assets/img/ka-cockpit.jpg" alt="Interior do Ford Ka" loading="lazy">
         <figcaption>04 · Cockpit Assimétrico &amp; Relógio Oval</figcaption>
       </figure>
       <figure>
@@ -1551,38 +1551,23 @@
         <p class="rv">O painel curvo que abraça o motorista, os difusores esféricos de rotação completa e o inesquecível relógio analógico oval. Clique nos pontos para explorar a cabine.</p>
       </div>
 
-      <div class="ifig rv" data-scrub>
-        <img src="assets/img/ka-cockpit.svg" alt="O cockpit do Ford Ka 1998 visto da perspectiva do passageiro">
+      <div class="ifig rv" data-scrub style="position:relative;border-radius:12px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.35);border:1px solid rgba(20,22,24,0.1)">
+        <img src="assets/img/ka-cockpit.jpg" alt="O cockpit do Ford Ka 1998 visto da perspectiva do passageiro">
 
         <!-- Hotspot 1: Relógio Oval -->
-        <button class="hs on" style="--x:50%;--y:41%" 
-                data-t="Relógio Oval Analógico" 
-                data-d="O clássico relógio analógico com formato da elipse Ford, embutido no ápice do console central com numerais nítidos e ponteiros minimalistas." 
-                aria-label="Relógio Oval Analógico"></button>
+        <button class="hs on" style="--x:50%;--y:33%" data-t="Relógio Oval Analógico" data-d="O clássico relógio analógico com formato da elipse Ford, embutido no ápice do console central com numerais nítidos e ponteiros minimalistas." aria-label="Relógio Oval Analógico"></button></button>
 
         <!-- Hotspot 2: Difusores Esféricos -->
-        <button class="hs" style="--x:41%;--y:48%" 
-                data-t="Difusores de Ar Esféricos 360°" 
-                data-d="Difusores em formato de esfera que giram em todos os eixos, permitindo direcionamento cirúrgico da climatização na cabine." 
-                aria-label="Difusores Esféricos"></button>
+        <button class="hs" style="--x:45%;--y:44%" data-t="Difusores de Ar Esféricos 360°" data-d="Difusores em formato de esfera que giram em todos os eixos, permitindo direcionamento cirúrgico da climatização na cabine." aria-label="Difusores Esféricos"></button></button>
 
         <!-- Hotspot 3: Painel New Edge -->
-        <button class="hs" style="--x:72%;--y:52%" 
-                data-t="Painel em Onda Assimétrica" 
-                data-d="Superfície plástica texturizada de alta durabilidade que flui em curva contínua, eliminando cantos retos e ampliando o espaço para pernas." 
-                aria-label="Painel em Onda"></button>
+        <button class="hs" style="--x:74%;--y:42%" data-t="Painel em Onda Assimétrica" data-d="Superfície plástica texturizada de alta durabilidade que flui em curva contínua, eliminando cantos retos e ampliando o espaço para pernas." aria-label="Painel em Onda"></button></button>
 
         <!-- Hotspot 4: Volante Esportivo -->
-        <button class="hs" style="--x:25%;--y:72%" 
-                data-t="Volante de 3 Raios Ergonômico" 
-                data-d="Diâmetro reduzido com empunhadura espessa para controle ágil e respostas imediatas da caixa de direção." 
-                aria-label="Volante de 3 Raios"></button>
+        <button class="hs" style="--x:23%;--y:45%" data-t="Volante com Emblema Ford" data-d="Empunhadura anatômica com o oval clássico da Ford gravado no centro da buzina, conferindo precisão direta e conexão visceral ao motorista." aria-label="Volante com Emblema Ford"></button></button>
 
         <!-- Hotspot 5: Câmbio iB5 -->
-        <button class="hs" style="--x:50%;--y:80%" 
-                data-t="Câmbio Manual iB5 de 5 Marchas" 
-                data-d="Alavanca de engates mecânicos curtos e estalados, proporcionando prazer absoluto em trocas rápidas de marcha no trânsito." 
-                aria-label="Câmbio iB5"></button>
+        <button class="hs" style="--x:50%;--y:88%" data-t="Câmbio Manual iB5 de 5 Marchas" data-d="Alavanca de engates mecânicos curtos e estalados com coifa sanfonada clássica, proporcionando agilidade inconfundível." aria-label="Câmbio iB5"></button></button>
 
         <div class="hsout" id="hsout" role="status" aria-live="polite">
           <b>Relógio Oval Analógico</b>
@@ -2851,100 +2836,143 @@
   window.setVehicleColor = function(colorKey) {
     const col = FACTORY_COLORS[colorKey] || FACTORY_COLORS.colorado;
 
-    // Atualiza label na UI
+    // Atualiza badges e labels da UI
     const pill = document.getElementById('sfPillLabel');
     if (pill) pill.textContent = 'Pintura: ' + col.name;
 
     const v3dLabel = document.getElementById('v3dColorLabel');
     if (v3dLabel) v3dLabel.textContent = col.name;
-    // Sincroniza hero swatches (.sw) com a cor do 3D
+
+    // Sincroniza círculos de seleção do hero (.sw)
     document.querySelectorAll('.paints .sw').forEach(function(s){
       var a = s.dataset.p === colorKey;
       s.classList.toggle('on', a);
       s.setAttribute('aria-pressed', String(a));
     });
+
+    // Sincroniza fotos no hero carstack
     document.querySelectorAll('#hero .cc').forEach(function(img){
       img.classList.toggle('on', img.dataset.p === colorKey);
     });
-    var PN_={colorado:'Vermelho Colorado',paris:'Vermelho Paris Met\u00e1lico',
-             ebony:'Preto Ebony',monaco:'Azul M\u00f4naco Met\u00e1lico',bari:'Prata Bari Met\u00e1lico'};
-    var _pn=document.getElementById('pn');
-    if(_pn && PN_[colorKey]) _pn.textContent = PN_[colorKey];
-    // Destaca botao ativo na barra de cores 3D
+
+    const PN_MAP = {
+      colorado: 'Vermelho Colorado',
+      paris: 'Vermelho Paris Metálico',
+      ebony: 'Preto Ebony',
+      monaco: 'Azul Mônaco Metálico',
+      bari: 'Prata Bari Metálico'
+    };
+    const pnEl = document.getElementById('pn');
+    if (pnEl && PN_MAP[colorKey]) pnEl.textContent = PN_MAP[colorKey];
+
+    // Destaca botão selecionado na barra flutuante da seção 3D
     document.querySelectorAll('[onclick*="setVehicleColor"]').forEach(function(b){
-      var m=(b.getAttribute('onclick')||'').match(/setVehicleColor\(['"](\w+)['"]\)/);
-      if(m){ var on=m[1]===colorKey;
-        b.style.border=on?'2px solid #FFF':'1px solid rgba(255,255,255,0.5)';
-        b.style.transform=on?'scale(1.3)':'scale(1)';
-        b.style.transition='transform .2s, border .2s';
+      var m = (b.getAttribute('onclick')||'').match(/setVehicleColor\(['"](\w+)['"]\)/);
+      if(m){
+        var on = m[1] === colorKey;
+        b.style.border = on ? '2px solid #FFF' : '1px solid rgba(255,255,255,0.5)';
+        b.style.transform = on ? 'scale(1.28)' : 'scale(1)';
+        b.style.boxShadow = on ? '0 0 10px rgba(255,255,255,0.7), 0 0 0 2px ' + (col.hex ? '#' + col.hex.toString(16).padStart(6,'0') : '#fff') : 'none';
+        b.style.transition = 'all .25s ease';
       }
     });
 
-    // 1. Atualizar materiais do Sketchfab
+    // 1. ATUALIZAR MATERIAIS NO SKETCHFAB
     if (sketchfabApi) {
       sketchfabApi.getMaterialList(function(err, materials) {
         if (err || !materials) return;
-        
-      // Captura cores originais dos materiais na 1a chamada (para preservar logo Ford)
-      if (!window._sfOrigMats) {
-        window._sfOrigMats = {};
-        materials.forEach(function(m_){ 
-          var ch_=m_.channels;
-          window._sfOrigMats[m_.name]=(ch_.AlbedoPBR&&ch_.AlbedoPBR.color)||(ch_.DiffuseColor&&ch_.DiffuseColor.color)||(ch_.DiffusePBR&&ch_.DiffusePBR.color)||null;
-        });
-      }
-materials.forEach(function(mat) {
+
+        // Armazena as propriedades originais na 1ª execução para detecção precisa
+        if (!window._sfOrigMats) {
+          window._sfOrigMats = {};
+          materials.forEach(function(m_){
+            var ch_ = m_.channels || {};
+            var origColor = (ch_.AlbedoPBR && ch_.AlbedoPBR.color) ||
+                            (ch_.DiffuseColor && ch_.DiffuseColor.color) ||
+                            (ch_.DiffusePBR && ch_.DiffusePBR.color) || null;
+            window._sfOrigMats[m_.id || m_.name] = {
+              color: origColor ? origColor.slice() : null,
+              name: (m_.name || '').toLowerCase()
+            };
+          });
+        }
+
+        materials.forEach(function(mat) {
           const n = (mat.name || '').toLowerCase();
+          const orig = window._sfOrigMats[mat.id || mat.name] || {};
+          const origC = orig.color;
 
-          // Detectar logo Ford: cor original azul escuro OU nome do material
-          var _oc = window._sfOrigMats ? window._sfOrigMats[mat.name] : null;
-          if (_oc) {
-            var _r=_oc[0],_g=_oc[1],_b=_oc[2];
-            // Azul Ford: baixo vermelho, verde medio, azul alto
-            if (_r<0.10 && _g>0.10 && _g<0.38 && _b>0.30 && _b<0.65) return; // logo Ford
-            if (_r<0.12 && _g<0.12 && _b<0.12) return; // preto puro (pneus)
-            if (_r>0.70 && _g>0.70 && _b>0.70) return; // branco/vidro
-            if (Math.abs(_r-_g)<0.10 && Math.abs(_g-_b)<0.10 && _r>0.42 && _r<0.92) return; // cromado
+          // ============================================================
+          // REGRA 1: SÍMBOLO DA FORD — SEMPRE PRESERVAR EM AZUL FORD OFICIAL!
+          // Detecta por nome (ford, logo, badge, emblem, oval) OU cor azul original
+          // ============================================================
+          const isFordName = n.includes('ford') || n.includes('logo') || n.includes('badge') || n.includes('emblem') || n.includes('oval') || n.includes('marca');
+          const isOrigBlue = origC && (origC[0] < 0.22 && origC[2] > 0.25 && origC[2] > origC[0] * 1.5);
+
+          if (isFordName || isOrigBlue) {
+            // FORÇA O AZUL OVAL OFICIAL FORD (#003478 = [0.0, 0.2039, 0.4706]) COM BRILHO
+            if (mat.channels.AlbedoPBR) { mat.channels.AlbedoPBR.color = FORD_BLUE_OVAL; mat.channels.AlbedoPBR.factor = 1.0; }
+            if (mat.channels.DiffuseColor) { mat.channels.DiffuseColor.color = FORD_BLUE_OVAL; mat.channels.DiffuseColor.factor = 1.0; }
+            if (mat.channels.DiffusePBR) { mat.channels.DiffusePBR.color = FORD_BLUE_OVAL; mat.channels.DiffusePBR.factor = 1.0; }
+            if (mat.channels.RoughnessPBR) { mat.channels.RoughnessPBR.factor = 0.2; }
+            sketchfabApi.setMaterial(mat);
+            return; // NÃO PINTAR DA COR DO CARRO!
           }
-          // Fallback por nome
-          var n_ = (mat.name||'').toLowerCase();
-          if (n_.includes('ford')||n_.includes('logo')||n_.includes('badge')||n_.includes('emblem')||n_.includes('oval')||n_.includes('marca')) return;
 
-          // NÃO PINTAR: Vidros, pneus, rodas, retrovisores pretos, interior, lanternas
-          if (n.includes('tire') || n.includes('pneu') || n.includes('wheel') || 
-              n.includes('rim') || n.includes('roda') || n.includes('glass') || 
-              n.includes('window') || n.includes('vidro') || n.includes('light') || 
-              n.includes('lamp') || n.includes('farol') || n.includes('lanterna') ||
-              n.includes('interior') || n.includes('seat') || n.includes('banco') || 
-              n.includes('black') || n.includes('rubber') || n.includes('borracha') || 
-              n.includes('bumper') || n.includes('parachoque') || n.includes('para-choque') ||
-              n.includes('grille') || n.includes('grade') || n.includes('calota')) {
+          // ============================================================
+          // REGRA 2: PNEUS, VIDROS, LANTERNAS, PARA-CHOQUES PRETO/CINZA
+          // Não pintar vidros, rodas, borrachas
+          // ============================================================
+          if (n.includes('tire') || n.includes('pneu') || n.includes('wheel') ||
+              n.includes('rim') || n.includes('roda') || n.includes('glass') ||
+              n.includes('window') || n.includes('vidro') || n.includes('windshield') ||
+              n.includes('light') || n.includes('lamp') || n.includes('farol') || n.includes('lanterna') ||
+              n.includes('interior') || n.includes('seat') || n.includes('banco') ||
+              n.includes('rubber') || n.includes('borracha') || n.includes('bumper') ||
+              n.includes('parachoque') || n.includes('para-choque') || n.includes('grille') ||
+              n.includes('grade') || n.includes('calota') || n.includes('black')) {
             return;
           }
 
-          // APLICAR COR DA CARROCERIA
+          // Ignora pneus e plásticos muito escuros por cor original
+          if (origC && origC[0] < 0.08 && origC[1] < 0.08 && origC[2] < 0.08) {
+            return;
+          }
+
+          // Ignora vidros com transparência PBR ativa
+          if (mat.channels.Opacity && mat.channels.Opacity.factor < 0.85) {
+            return;
+          }
+
+          // ============================================================
+          // REGRA 3: LATARIA / CARROCERIA DO FORD KA
+          // Aplica a cor selecionada com alto brilho New Edge!
+          // ============================================================
           let changed = false;
           if (mat.channels.AlbedoPBR) {
             mat.channels.AlbedoPBR.color = col.rgb;
             mat.channels.AlbedoPBR.factor = 1.0;
-            delete mat.channels.AlbedoPBR.texture;
             changed = true;
           }
           if (mat.channels.DiffuseColor) {
             mat.channels.DiffuseColor.color = col.rgb;
             mat.channels.DiffuseColor.factor = 1.0;
-            delete mat.channels.DiffuseColor.texture;
             changed = true;
           }
           if (mat.channels.DiffusePBR) {
             mat.channels.DiffusePBR.color = col.rgb;
             mat.channels.DiffusePBR.factor = 1.0;
-            delete mat.channels.DiffusePBR.texture;
             changed = true;
           }
           if (mat.channels.ClearCoat) {
             mat.channels.ClearCoat.factor = col.clearcoat;
-            mat.channels.ClearCoat.roughness = 0.08;
+            mat.channels.ClearCoat.roughness = 0.06;
+          }
+          if (mat.channels.RoughnessPBR) {
+            mat.channels.RoughnessPBR.factor = 0.22;
+          }
+          if (mat.channels.MetalnessPBR) {
+            mat.channels.MetalnessPBR.factor = col.metal || 0.1;
           }
           if (changed) {
             sketchfabApi.setMaterial(mat);
@@ -2953,7 +2981,7 @@ materials.forEach(function(mat) {
       });
     }
 
-    // 2. Atualizar Three.js se ativo
+    // 2. Sincroniza Estúdio Three.js caso esteja ativo
     if (window.paintMat) {
       window.paintMat.color.setHex(col.hex);
       window.paintMat.metalness = col.metal;
@@ -2961,7 +2989,6 @@ materials.forEach(function(mat) {
     }
   };
 
-  // Aliases de compatibilidade
   window.paintSketchfabColorado = function() { setVehicleColor('colorado'); };
 
   if (document.readyState === 'loading') {
