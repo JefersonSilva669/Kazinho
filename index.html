@@ -1527,7 +1527,7 @@
         <figcaption>02 · Traseira Envolvente &amp; Lanternas Triangulares</figcaption>
       </figure>
       <figure>
-        <img src="assets/img/ka-wheel.svg" alt="Roda aro 13 com calota Ford" loading="lazy">
+        <img src="assets/img/ka-wheel.jpg" alt="Roda aro 13 com calota Ford" loading="lazy">
         <figcaption>03 · Rodas de 13 Polegadas nos Quatro Vértices</figcaption>
       </figure>
       <figure>
@@ -2595,7 +2595,7 @@
       render3D();
     })();
 
-    /* ── 14. WEB AUDIO PROCEDURAL ENGINE SYNTHESIZER ── */
+    /* ── 14. WEB AUDIO PROCEDURAL ENGINE SYNTHESIZER (ROBUSTO E IMERSIVO) ── */
     (function(){
       const btnIgnition = document.getElementById('btnIgnition');
       const lblIgnition = document.getElementById('lblIgnition');
@@ -2605,62 +2605,60 @@
 
       let audioCtx = null;
       let isRunning = false;
+      let isStarting = false;
       let oscBase = null, oscSub = null, oscCams = null;
-      let noiseNode = null;
       let masterGain = null, gasGain = null;
       let filter = null;
       let currentRpm = 0;
       let targetRpm = 0;
 
-      // Tachometer Drawing
+      // Tacômetro Analógico Canvas
       const tCtx = tachoCanvas ? tachoCanvas.getContext('2d') : null;
 
       function drawTacho(rpm){
-        if(!tCtx) return;
+        if(!tCtx || !tachoCanvas) return;
         const W = tachoCanvas.width;
         const H = tachoCanvas.height;
         const cx = W / 2;
         const cy = H / 2;
-        const r = W * 0.42;
+        const r = W * 0.40;
 
         tCtx.clearRect(0, 0, W, H);
 
-        // Outer Dark Bezel
+        // Aro Externo Metálico
         tCtx.beginPath();
         tCtx.arc(cx, cy, r + 14, 0, Math.PI * 2);
-        tCtx.fillStyle = '#16191D';
+        tCtx.fillStyle = '#14161a';
         tCtx.fill();
-        tCtx.strokeStyle = '#32373F';
-        tCtx.lineWidth = 3;
+        tCtx.strokeStyle = '#2e343d';
+        tCtx.lineWidth = 4;
         tCtx.stroke();
 
-        // Inner Dial Face
+        // Fundo do Mostrador com Degradê Circular
         tCtx.beginPath();
         tCtx.arc(cx, cy, r, 0, Math.PI * 2);
-        const dialGrad = tCtx.createRadialGradient(cx, cy, 20, cx, cy, r);
-        dialGrad.addColorStop(0, '#1E232A');
-        dialGrad.addColorStop(1, '#0C0E10');
+        const dialGrad = tCtx.createRadialGradient(cx, cy, 10, cx, cy, r);
+        dialGrad.addColorStop(0, '#1c2026');
+        dialGrad.addColorStop(1, '#0a0c0e');
         tCtx.fillStyle = dialGrad;
         tCtx.fill();
 
-        // Tick marks (0 to 6000 RPM)
-        const startAngle = Math.PI * 0.75;
-        const endAngle = Math.PI * 2.25;
-        const maxRpm = 6000;
+        // Escala de Rotação (0 a 6000 RPM)
+        const startAng = Math.PI * 0.75;
+        const endAng = Math.PI * 2.25;
 
         for(let i = 0; i <= 60; i++){
           const frac = i / 60;
-          const ang = startAngle + frac * (endAngle - startAngle);
+          const ang = startAng + frac * (endAng - startAng);
           const isMajor = i % 10 === 0;
           const isMid = i % 5 === 0;
           const tickLen = isMajor ? 18 : (isMid ? 12 : 7);
-
           const isRedline = i >= 50;
 
-          const x1 = cx + Math.cos(ang) * (r - 8);
-          const y1 = cy + Math.sin(ang) * (r - 8);
-          const x2 = cx + Math.cos(ang) * (r - 8 - tickLen);
-          const y2 = cy + Math.sin(ang) * (r - 8 - tickLen);
+          const x1 = cx + Math.cos(ang) * (r - 6);
+          const y1 = cy + Math.sin(ang) * (r - 6);
+          const x2 = cx + Math.cos(ang) * (r - 6 - tickLen);
+          const y2 = cy + Math.sin(ang) * (r - 6 - tickLen);
 
           tCtx.beginPath();
           tCtx.moveTo(x1, y1);
@@ -2669,60 +2667,67 @@
           tCtx.lineWidth = isMajor ? 3 : 1.5;
           tCtx.stroke();
 
-          // Numbers at major ticks (x100)
+          // Números de 0 a 6 (x1000 RPM)
           if(isMajor){
-            const tx = cx + Math.cos(ang) * (r - 38);
-            const ty = cy + Math.sin(ang) * (r - 38);
-            tCtx.font = "bold 15px 'Zen Kaku Gothic New', sans-serif";
+            const tx = cx + Math.cos(ang) * (r - 34);
+            const ty = cy + Math.sin(ang) * (r - 34);
             tCtx.fillStyle = isRedline ? '#EF4444' : '#E5E7EB';
+            tCtx.font = '600 15px sans-serif';
             tCtx.textAlign = 'center';
             tCtx.textBaseline = 'middle';
             tCtx.fillText(String(i / 10), tx, ty);
           }
         }
 
-        // Center Dial Labels
-        tCtx.font = "bold 13px 'Zen Kaku Gothic New', sans-serif";
-        tCtx.fillStyle = '#C41E28';
+        // Arco Vermelho da Faixa de Corte (5.000 a 6.000 RPM)
+        const redStart = startAng + (50 / 60) * (endAng - startAng);
+        tCtx.beginPath();
+        tCtx.arc(cx, cy, r - 5, redStart, endAng);
+        tCtx.strokeStyle = '#EF4444';
+        tCtx.lineWidth = 5;
+        tCtx.stroke();
+
+        // Inscrição Central do Motor
+        tCtx.fillStyle = 'rgba(255,255,255,0.7)';
+        tCtx.font = '700 13px sans-serif';
         tCtx.textAlign = 'center';
-        tCtx.fillText("RPM × 1000", cx, cy - 35);
+        tCtx.fillText('ENDURA-E 1.0L', cx, cy - 32);
 
-        tCtx.font = "10px 'Zen Kaku Gothic New', sans-serif";
-        tCtx.fillStyle = 'rgba(255,255,255,0.4)';
-        tCtx.fillText("ENDURA-E 1.0L", cx, cy + 50);
+        tCtx.fillStyle = 'rgba(255,255,255,0.38)';
+        tCtx.font = '500 10px sans-serif';
+        tCtx.fillText('x 1000 RPM', cx, cy - 16);
 
-        // Needle
-        const clampedRpm = Math.max(0, Math.min(maxRpm, rpm));
-        const needleAngle = startAngle + (clampedRpm / maxRpm) * (endAngle - startAngle);
+        // Display Digital de RPM
+        tCtx.fillStyle = '#C41E28';
+        tCtx.font = '700 24px monospace';
+        tCtx.fillText(Math.round(rpm) + ' RPM', cx, cy + 45);
+
+        // Agulha Analógica Vermelha
+        const clampedRpm = Math.max(0, Math.min(6000, rpm));
+        const needleFrac = clampedRpm / 6000;
+        const needleAng = startAng + needleFrac * (endAng - startAng);
 
         tCtx.save();
         tCtx.translate(cx, cy);
-        tCtx.rotate(needleAngle);
+        tCtx.rotate(needleAng);
 
-        // Needle Shadow
         tCtx.beginPath();
-        tCtx.moveTo(-15, 0);
+        tCtx.moveTo(-16, -2);
         tCtx.lineTo(r - 18, 0);
-        tCtx.strokeStyle = 'rgba(0,0,0,0.5)';
-        tCtx.lineWidth = 4;
-        tCtx.stroke();
-
-        // Needle Blade
-        tCtx.beginPath();
-        tCtx.moveTo(-18, 0);
-        tCtx.lineTo(r - 20, 0);
-        tCtx.strokeStyle = '#EF4444';
-        tCtx.lineWidth = 3.5;
-        tCtx.lineCap = 'round';
-        tCtx.stroke();
-
-        // Center Cap
-        tCtx.beginPath();
-        tCtx.arc(0, 0, 12, 0, Math.PI * 2);
-        tCtx.fillStyle = '#111';
+        tCtx.lineTo(-16, 2);
+        tCtx.closePath();
+        tCtx.fillStyle = '#EF4444';
+        tCtx.shadowColor = 'rgba(239, 68, 68, 0.7)';
+        tCtx.shadowBlur = 8;
         tCtx.fill();
-        tCtx.strokeStyle = '#C41E28';
-        tCtx.lineWidth = 2;
+
+        // Miolo Central Cromado da Agulha
+        tCtx.beginPath();
+        tCtx.arc(0, 0, 11, 0, Math.PI * 2);
+        tCtx.fillStyle = '#22262C';
+        tCtx.fill();
+        tCtx.strokeStyle = '#EF4444';
+        tCtx.lineWidth = 2.5;
         tCtx.stroke();
 
         tCtx.restore();
@@ -2739,25 +2744,25 @@
         filter = audioCtx.createBiquadFilter();
         filter.type = 'lowpass';
         filter.frequency.setValueAtTime(260, audioCtx.currentTime);
-        filter.Q.setValueAtTime(4.2, audioCtx.currentTime);
+        filter.Q.setValueAtTime(3.8, audioCtx.currentTime);
 
         gasGain = audioCtx.createGain();
-        gasGain.gain.setValueAtTime(0.7, audioCtx.currentTime);
+        gasGain.gain.setValueAtTime(0.65, audioCtx.currentTime);
 
-        // Primary 4-Stroke Cylinder Pulse Oscillator
+        // Oscilador de Pulso dos 4 Cilindros (Fogo de Ignição)
         oscBase = audioCtx.createOscillator();
         oscBase.type = 'sawtooth';
-        oscBase.frequency.setValueAtTime(28, audioCtx.currentTime);
+        oscBase.frequency.setValueAtTime(28.3, audioCtx.currentTime);
 
-        // Sub Rumble Oscillator
+        // Oscilador de Sub-Grave (Ronco do Bloco em Ferro Fundido)
         oscSub = audioCtx.createOscillator();
         oscSub.type = 'triangle';
-        oscSub.frequency.setValueAtTime(14, audioCtx.currentTime);
+        oscSub.frequency.setValueAtTime(14.1, audioCtx.currentTime);
 
-        // Valve-Train Mechanical Chatter
+        // Oscilador de Válvulas e Varetas (Comando por Corrente OHV)
         oscCams = audioCtx.createOscillator();
         oscCams.type = 'square';
-        oscCams.frequency.setValueAtTime(56, audioCtx.currentTime);
+        oscCams.frequency.setValueAtTime(56.6, audioCtx.currentTime);
 
         const camGain = audioCtx.createGain();
         camGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
@@ -2777,48 +2782,66 @@
       }
 
       function startEngine(){
+        if(isStarting) return;
+        isStarting = true;
         initAudio();
-        if(audioCtx.state === 'suspended') audioCtx.resume();
+        if(audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
 
-        // Starter Motor Cranking Phase
+        // Fase de Motor de Arranque (Cranking)
         lblIgnition.textContent = "Dando a partida...";
         btnIgnition.style.background = "#D97706";
 
-        // Simulated crank sputter
-        masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
-        masterGain.gain.setValueAtTime(0.01, audioCtx.currentTime);
-        masterGain.gain.exponentialRampToValueAtTime(0.2, audioCtx.currentTime + 0.3);
+        if(masterGain && audioCtx){
+          const t = audioCtx.currentTime;
+          masterGain.gain.cancelScheduledValues(t);
+          masterGain.gain.setValueAtTime(0.01, t);
+          masterGain.gain.linearRampToValueAtTime(0.18, t + 0.35);
+        }
 
         setTimeout(() => {
-          // Ignition Roar & Settle into 850 RPM Idle
+          // Ignição do Motor e Estabilização em Marcha Lenta (850 RPM)
           isRunning = true;
+          isStarting = false;
           targetRpm = 850;
+          if(sliderGas) sliderGas.value = 850;
+          if(valRpm) valRpm.textContent = '850 RPM (Marcha Lenta)';
+
           btnIgnition.classList.add('running');
           btnIgnition.style.background = "#166534";
           lblIgnition.textContent = "Motor em Funcionamento (Desligar)";
 
-          masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
-          masterGain.gain.setValueAtTime(0.35, audioCtx.currentTime);
-          masterGain.gain.exponentialRampToValueAtTime(0.65, audioCtx.currentTime + 0.4);
-        }, 600);
+          if(masterGain && audioCtx){
+            const t = audioCtx.currentTime;
+            masterGain.gain.cancelScheduledValues(t);
+            masterGain.gain.setValueAtTime(0.3, t);
+            masterGain.gain.linearRampToValueAtTime(0.65, t + 0.35);
+          }
+        }, 550);
       }
 
       function stopEngine(){
         isRunning = false;
+        isStarting = false;
         targetRpm = 0;
+        if(sliderGas) sliderGas.value = 850;
+        if(valRpm) valRpm.textContent = 'Motor Desligado';
+
         btnIgnition.classList.remove('running');
         btnIgnition.style.background = "var(--red)";
         lblIgnition.textContent = "Dar a Partida (Start Engine)";
 
         if(masterGain && audioCtx){
-          masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
-          masterGain.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+          const t = audioCtx.currentTime;
+          masterGain.gain.cancelScheduledValues(t);
+          masterGain.gain.linearRampToValueAtTime(0.0001, t + 0.4);
         }
       }
 
       if(btnIgnition){
         btnIgnition.addEventListener('click', () => {
-          if(!isRunning) startEngine();
+          if(!isRunning && !isStarting) startEngine();
           else stopEngine();
         });
       }
@@ -2827,11 +2850,13 @@
         sliderGas.addEventListener('input', e => {
           if(!isRunning) return;
           targetRpm = parseFloat(e.target.value);
-          if(valRpm) valRpm.textContent = `${Math.round(targetRpm)} RPM`;
+          if(valRpm) {
+            valRpm.textContent = `${Math.round(targetRpm)} RPM`;
+          }
         });
       }
 
-      // Tachometer & Audio Modulation Loop
+      // Loop de Áudio e Atualização do Tacômetro
       function updateEngineSound(){
         requestAnimationFrame(updateEngineSound);
 
@@ -2839,21 +2864,23 @@
         drawTacho(currentRpm);
 
         if(isRunning && audioCtx && oscBase){
-          // 4-cylinder engine: firing frequency = (RPM / 60) * 2
+          const t = audioCtx.currentTime;
+          // Frequência de queima do motor 4 cilindros: (RPM / 60) * 2
           const freq = Math.max(14, (currentRpm / 60) * 2);
-          oscBase.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.05);
-          oscSub.frequency.setTargetAtTime(freq * 0.5, audioCtx.currentTime, 0.05);
-          oscCams.frequency.setTargetAtTime(freq * 2.0, audioCtx.currentTime, 0.05);
+          oscBase.frequency.setTargetAtTime(freq, t, 0.04);
+          if(oscSub) oscSub.frequency.setTargetAtTime(freq * 0.5, t, 0.04);
+          if(oscCams) oscCams.frequency.setTargetAtTime(freq * 2.0, t, 0.04);
 
-          // Induction Filter opening with RPM
-          const filterFreq = 180 + (currentRpm / 5500) * 1400;
-          filter.frequency.setTargetAtTime(filterFreq, audioCtx.currentTime, 0.06);
+          // Abertura do filtro de indução com a subida do acelerador
+          const filterFreq = 160 + (currentRpm / 5500) * 1600;
+          if(filter) filter.frequency.setTargetAtTime(filterFreq, t, 0.05);
 
-          // Volume dynamics
-          const dynamicVol = 0.45 + (currentRpm / 5500) * 0.4;
-          gasGain.gain.setTargetAtTime(dynamicVol, audioCtx.currentTime, 0.05);
+          // Dinâmica de volume
+          const dynamicVol = 0.45 + (currentRpm / 5500) * 0.45;
+          if(gasGain) gasGain.gain.setTargetAtTime(dynamicVol, t, 0.04);
         }
       }
+
       drawTacho(0);
       updateEngineSound();
     })();
@@ -2922,8 +2949,10 @@
           sketchfabApi = api;
           api.start();
           api.addEventListener('viewerready', function() {
-            console.log('Sketchfab Viewer pronto com fidelidade gráfica máxima HD!');
-            // Preserva a renderização de estúdio HDR original do autor sem mutação inicial
+            console.log('Sketchfab Viewer pronto! Aplicando Vermelho Colorado New Edge...');
+            setTimeout(function(){
+              setVehicleColor('colorado');
+            }, 350);
           });
         },
         error: function(err) {
@@ -2980,34 +3009,94 @@
       }
     });
 
-    // 1. ATUALIZAR SKETCHFAB DE FORMA CIRÚRGICA (SEM DESTRUIR OS SHADERS E ILUMINAÇÃO)
+    // 1. ATUALIZAR MATERIAIS NO SKETCHFAB (MANTENDO ILUMINAÇÃO, PLACA E LOGO INTACTOS)
     if (sketchfabApi) {
       sketchfabApi.getMaterialList(function(err, materials) {
         if (err || !materials) return;
 
+        // Captura propriedades originais na 1ª execução
+        if (!window._sfOrigMats) {
+          window._sfOrigMats = {};
+          materials.forEach(function(m_){
+            var ch_ = m_.channels || {};
+            var origColor = (ch_.AlbedoPBR && ch_.AlbedoPBR.color) ||
+                            (ch_.DiffuseColor && ch_.DiffuseColor.color) ||
+                            (ch_.DiffusePBR && ch_.DiffusePBR.color) || null;
+            var hasTex = !!((ch_.AlbedoPBR && ch_.AlbedoPBR.texture) || (ch_.DiffuseColor && ch_.DiffuseColor.texture));
+            window._sfOrigMats[m_.id || m_.name] = {
+              color: origColor ? origColor.slice() : null,
+              hasTexture: hasTex,
+              name: (m_.name || '').toLowerCase()
+            };
+          });
+        }
+
         materials.forEach(function(mat) {
           const n = (mat.name || '').toLowerCase();
+          const orig = window._sfOrigMats[mat.id || mat.name] || {};
+          const origC = orig.color;
+          const hasTex = orig.hasTexture;
 
-          // NUNCA MEXER: Placa, Logotipo Ford, Vidros, Pneus, Faróis, Para-choques, Interior
-          if (n.includes('plate') || n.includes('licens') || n.includes('placa') || n.includes('humster') ||
-              n.includes('ford') || n.includes('logo') || n.includes('badge') || n.includes('emblem') ||
-              n.includes('tire') || n.includes('pneu') || n.includes('wheel') || n.includes('rim') ||
-              n.includes('glass') || n.includes('window') || n.includes('vidro') ||
+          // ============================================================
+          // REGRA A: PLACA DE LICENÇA (HUMSTER3D)
+          // Se tiver textura da placa OU nome com plate/license/placa/humster
+          // ============================================================
+          if (hasTex || n.includes('plate') || n.includes('licens') || n.includes('placa') || n.includes('humster')) {
+            return; // PLACA 100% INTACTA BRANCA COM TEXTO E BANDEIRA
+          }
+
+          // ============================================================
+          // REGRA B: LOGOTIPO DA FORD (AZUL COM LETRAS PRATEADAS)
+          // ============================================================
+          const isFordName = n.includes('ford') || n.includes('logo') || n.includes('badge') || n.includes('emblem') || n.includes('oval') || n.includes('marca');
+          const isBlueLogo = origC && (origC[0] < 0.22 && origC[2] > 0.25 && origC[2] > origC[0] * 1.4);
+          if (isFordName || isBlueLogo) {
+            return; // LOGO FORD 100% INTACTO ORIGINAL
+          }
+
+          // ============================================================
+          // REGRA C: VIDROS, LANTERNAS, PNEUS, PARA-CHOQUES PRETO/CINZA
+          // ============================================================
+          if (n.includes('tire') || n.includes('pneu') || n.includes('wheel') || n.includes('rim') ||
+              n.includes('glass') || n.includes('window') || n.includes('vidro') || n.includes('windshield') ||
               n.includes('light') || n.includes('lamp') || n.includes('farol') || n.includes('lanterna') ||
               n.includes('interior') || n.includes('seat') || n.includes('rubber') || n.includes('bumper') ||
               n.includes('parachoque') || n.includes('grille') || n.includes('grade')) {
             return;
           }
 
-          // Apenas alterar cor suave se for o material de lataria/carroceria
-          if (n.includes('body') || n.includes('paint') || n.includes('car') || n.includes('color') || n.includes('material')) {
-            if (mat.channels.DiffuseColor) {
-              mat.channels.DiffuseColor.color = col.rgb;
-              sketchfabApi.setMaterial(mat);
-            } else if (mat.channels.AlbedoPBR) {
-              mat.channels.AlbedoPBR.color = col.rgb;
-              sketchfabApi.setMaterial(mat);
-            }
+          // Ignora pneus e borrachas quase pretas por cor original
+          if (origC && origC[0] < 0.08 && origC[1] < 0.08 && origC[2] < 0.08) {
+            return;
+          }
+
+          // Ignora vidros com transparência PBR
+          if (mat.channels.Opacity && mat.channels.Opacity.factor < 0.85) {
+            return;
+          }
+
+          // ============================================================
+          // REGRA D: CARROCERIA / LATARIA DO FORD KA
+          // Aplica a cor selecionada SEM destruir reflexos ou mapa HDR!
+          // ============================================================
+          let changed = false;
+          if (mat.channels.AlbedoPBR) {
+            mat.channels.AlbedoPBR.color = col.rgb;
+            mat.channels.AlbedoPBR.factor = 1.0;
+            changed = true;
+          }
+          if (mat.channels.DiffuseColor) {
+            mat.channels.DiffuseColor.color = col.rgb;
+            mat.channels.DiffuseColor.factor = 1.0;
+            changed = true;
+          }
+          if (mat.channels.DiffusePBR) {
+            mat.channels.DiffusePBR.color = col.rgb;
+            mat.channels.DiffusePBR.factor = 1.0;
+            changed = true;
+          }
+          if (changed) {
+            sketchfabApi.setMaterial(mat);
           }
         });
       });
@@ -3019,16 +3108,6 @@
       window.paintMat.metalness = col.metal || 0.1;
       window.paintMat.clearcoat = col.clearcoat || 1.0;
     }
-  };
-
-  // Função para recarregar o Sketchfab em Alta Definição Original Instantaneamente
-  window.resetSketchfabHD = function() {
-    const frame = document.getElementById('sketchfab-frame');
-    if (frame) {
-      frame.src = 'https://sketchfab.com/models/434d5030c0144d5f990ded6953d218dc/embed?autostart=1&internal=1&tracking=0&ui_infos=0&ui_watermark=0&ui_help=0&ui_settings=0&ui_inspector=0&ui_annotations=0&ui_stop=0&ui_vr=0&preload=1';
-    }
-    const pill = document.getElementById('sfPillLabel');
-    if (pill) pill.textContent = 'Renderização: HD Original Máxima';
   };
 
   window.paintSketchfabColorado = function() { setVehicleColor('colorado'); };
