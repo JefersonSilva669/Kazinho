@@ -2225,16 +2225,16 @@
       podiumGroup.add(halo);
 
       // 2.4 Anel Externo de Alumínio Polido
-      const rimGeo = new THREE.TorusGeometry(3.7, 0.02, 16, 64);
-      rimGeo.rotateX(Math.PI / 2);
-      const rimMat = new THREE.MeshStandardMaterial({
+      const podiumRimGeo = new THREE.TorusGeometry(3.7, 0.02, 16, 64);
+      podiumRimGeo.rotateX(Math.PI / 2);
+      const podiumRimMat = new THREE.MeshStandardMaterial({
         color: 0x7c8a98,
         metalness: 0.95,
         roughness: 0.12
       });
-      const rimMesh = new THREE.Mesh(rimGeo, rimMat);
+      const podiumRimMesh = new THREE.Mesh(podiumRimGeo, podiumRimMat);
       rimMesh.position.y = 0.08;
-      podiumGroup.add(rimMesh);
+      podiumGroup.add(podiumRimMesh);
 
       // 2.5 Holofote Central Zenithal de Apresentação (Showroom Spotlight)
       const showroomSpot = new THREE.SpotLight(0xffffff, 2.5, 20, Math.PI / 4.5, 0.4, 1.2);
