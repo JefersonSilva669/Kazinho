@@ -1232,7 +1232,7 @@
     <!-- Interactive Car Stack (Cut-out with transparent background) -->
     <div class="carstack hv" id="car">
       <!-- Vermelho Colorado (Default) -->
-      <img class="cc on" data-p="colorado" src="assets/img/ka-red-colorado.jpg" alt="Ford Ka 1998 em Vermelho Colorado com para-choques New Edge">
+      <img class="cc on" data-p="colorado" src="assets/img/ka-front3q.jpg" alt="Ford Ka 1998 de Frente — O Carisma Inconfundível New Edge">
       <!-- Vermelho Paris Metálico -->
       <img class="cc" data-p="paris" src="assets/img/ka-red-paris.svg" alt="Ford Ka 1998 em Vermelho Paris Metálico">
       <!-- Preto Ebony -->
@@ -1311,24 +1311,24 @@
       <!-- Container 1: Sketchfab Oficial Embed -->
       <div id="sketchfabWrap" class="v3d-canvas-wrap rv" style="display:block;height:clamp(440px,72vh,740px)">
         <iframe id="sketchfab-frame" title="Ford Ka 3D Model" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/434d5030c0144d5f990ded6953d218dc/embed?autostart=1&internal=1&tracking=0&ui_infos=0&ui_watermark=0&ui_help=0&ui_settings=0&ui_inspector=0&ui_annotations=0&ui_stop=0&ui_vr=0&preload=1" style="width:100%;height:100%;border:none;border-radius:4px"></iframe>
-        <!-- Barra de Cor Vermelho Colorado Superior -->
-        <div style="position:absolute;top:16px;left:18px;display:flex;align-items:center;gap:10px;pointer-events:auto;z-index:20">
-          <div class="v3d-pill" style="background:rgba(196,30,40,0.92);color:#FFF;border:1px solid rgba(255,255,255,0.4);font-weight:700">
-            <span class="v3d-pill-dot" style="background:#FFF"></span>
+                <!-- Barra de Paleta de Cores e Controle Superior -->
+        <div style="position:absolute;top:16px;left:18px;display:flex;align-items:center;gap:10px;pointer-events:auto;z-index:20;flex-wrap:wrap">
+          <div class="v3d-pill" style="background:rgba(15,18,22,0.85);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.18)">
+            <span class="v3d-pill-dot" style="background:var(--crimson)"></span>
             <span id="sfPillLabel">Pintura: Vermelho Colorado</span>
           </div>
-          <button onclick="paintSketchfabColorado()" class="v3d-pill" style="cursor:pointer;background:rgba(196,30,40,0.95);color:#FFF;font-weight:700;border:1px solid #FFF;transition:transform .2s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-            ★ PINTAR DE VERMELHO COLORADO
-          </button>
-        </div>
-        <div style="position:absolute;bottom:14px;left:18px;right:18px;display:flex;justify-content:space-between;align-items:center;pointer-events:none">
-          <div class="v3d-pill" style="pointer-events:auto">
-            <span class="v3d-pill-dot"></span>
-            <span>Ford Ka Mk1 3D • 625.947 Faces • Licença CC Attribution</span>
+          <!-- Seletor Rápido de Cores de Fábrica -->
+          <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(15,18,22,0.85);backdrop-filter:blur(8px);padding:4px 10px;border-radius:24px;border:1px solid rgba(255,255,255,0.18)">
+            <span style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-right:4px">Cores:</span>
+            <button onclick="setVehicleColor('colorado')" title="Vermelho Colorado (Sólido)" style="width:20px;height:20px;border-radius:50%;background:#C41E28;border:2px solid #FFF;cursor:pointer;box-shadow:0 0 8px rgba(196,30,40,0.6)"></button>
+            <button onclick="setVehicleColor('paris')" title="Vermelho Paris (Metálico)" style="width:20px;height:20px;border-radius:50%;background:#8C1420;border:1px solid rgba(255,255,255,0.6);cursor:pointer"></button>
+            <button onclick="setVehicleColor('ebony')" title="Preto Ebony (Sólido)" style="width:20px;height:20px;border-radius:50%;background:#1E2024;border:1px solid rgba(255,255,255,0.6);cursor:pointer"></button>
+            <button onclick="setVehicleColor('monaco')" title="Azul Mônaco (Metálico)" style="width:20px;height:20px;border-radius:50%;background:#1C3866;border:1px solid rgba(255,255,255,0.6);cursor:pointer"></button>
+            <button onclick="setVehicleColor('bari')" title="Prata Bari (Metálico)" style="width:20px;height:20px;border-radius:50%;background:#B8BFC6;border:1px solid rgba(255,255,255,0.6);cursor:pointer"></button>
           </div>
-          <a href="https://sketchfab.com/3d-models/ford-ka-434d5030c0144d5f990ded6953d218dc" target="_blank" rel="noopener" class="v3d-pill" style="pointer-events:auto;text-decoration:none;cursor:pointer;background:rgba(255,255,255,0.12)">
-            Abrir no Sketchfab ↗
-          </a>
+          <button onclick="setVehicleColor('colorado')" class="v3d-pill" style="cursor:pointer;background:var(--crimson);color:#FFF;font-weight:700;border:1px solid rgba(255,255,255,0.5)">
+            ★ VERMELHO COLORADO ORIGINAL
+          </button>
         </div>
       </div>
 
@@ -1423,6 +1423,7 @@
   </section>
 
   <!-- 5. SOUND LAB (WEB AUDIO PROCEDURAL ENGINE SYNTHESIZER) -->
+    <!-- 5. SOUND LAB (WEB AUDIO API MOTOR ENDURA-E) & FOTO DETALHADA DO MOTOR -->
   <section id="sound-lab">
     <div class="wrap">
       <div class="sound-grid">
@@ -1432,7 +1433,7 @@
             O som analógico do <em>Endura-E</em>.
           </h2>
           <p class="rv" style="color:rgba(255,255,255,0.65);line-height:1.75;margin-bottom:28px">
-            Sintetizador procedural em tempo real via Web Audio API. Experimente a partida clássica, a marcha lenta pulsante de 850 RPM e controle o acelerador para ouvir o fluxo cruzado subir até a faixa de corte de 5.500 RPM.
+            Sintetizador procedural em tempo real via Web Audio API. Experimente a partida clássica do motor de arranque, a marcha lenta de 850 RPM e module o pedal virtual para ouvir o fluxo cruzado subir até a faixa de corte de 5.500 RPM.
           </p>
 
           <div class="throttle-controls rv">
@@ -1453,7 +1454,38 @@
         <div class="tacho-container rv">
           <canvas id="tachoCanvas" width="400" height="400"></canvas>
           <div style="font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:10px">
-            Tacômetro Analógico · Ford Instruments
+            Tacômetro Analógico • Ford Instruments
+          </div>
+        </div>
+      </div>
+
+      <!-- SHOWCASE DETALHADO DO MOTOR ENDURA-E NO COFRE (ALTA RESOLUÇÃO) -->
+      <div class="rv" style="margin-top:48px;background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:clamp(20px, 3.2vw, 36px);display:grid;grid-template-columns:1.2fr 0.8fr;gap:clamp(24px, 3vw, 44px);align-items:center;box-shadow:0 24px 60px rgba(0,0,0,0.4)">
+        <div style="position:relative;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.12);box-shadow:0 16px 40px rgba(0,0,0,0.6)">
+          <img src="assets/img/ka-engine.jpg" alt="Foto Detalhada do Motor Ford Endura-E no Cofre do Ka" style="width:100%;height:clamp(280px, 38vh, 420px);object-fit:cover;display:block">
+          <div style="position:absolute;bottom:0;inset-inline:0;background:linear-gradient(180deg,transparent 0%,rgba(10,12,16,0.92) 100%);padding:24px 20px 16px">
+            <span style="font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--crimson);font-weight:700">Acervo Mecânico Original</span>
+            <h4 class="ser" style="font-size:24px;color:#FFF;margin-top:2px">Cofre do Motor Endura-E 1.0 / 1.3</h4>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="lbl" style="color:var(--crimson)">Powertrain & Engenharia</div>
+          <h3 class="ser" style="font-size:clamp(26px,3.2vw,38px);color:#FFF;line-height:1.15">
+            O coração mecânico do <em>Ka 1998</em>
+          </h3>
+          <p style="color:rgba(255,255,255,0.68);font-size:14px;line-height:1.8">
+            Fotografia de alta definição exibindo a arquitetura clássica do motor <strong>Endura-E OHV</strong> no cofre do Ford Ka. Notável pela robustez extrema: comando de válvulas posicionado no bloco acionado por <strong>corrente dupla</strong> e varetas metálicas, eliminando qualquer risco de quebra de correia dentada.
+          </p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px">
+            <div style="background:rgba(255,255,255,0.05);padding:12px 16px;border-radius:6px;border:1px solid rgba(255,255,255,0.08)">
+              <span style="display:block;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.45)">Comando</span>
+              <b style="font-size:13.5px;color:#FFF">Corrente Dupla (Sem Correia)</b>
+            </div>
+            <div style="background:rgba(255,255,255,0.05);padding:12px 16px;border-radius:6px;border:1px solid rgba(255,255,255,0.08)">
+              <span style="display:block;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.45)">Injeção</span>
+              <b style="font-size:13.5px;color:#FFF">Ford EEC-V Sequencial</b>
+            </div>
           </div>
         </div>
       </div>
@@ -2769,9 +2801,18 @@
   };
 </script>
 <script>
-  // ── AUTOMAÇÃO DA PINTURA VERMELHO COLORADO NO MODELO SKETCHFAB ──
+  // ── PALETA DE FÁBRICA FORD KA 1998 COM PRESERVAÇÃO TOTAL DO LOGO FORD ──
+  const FACTORY_COLORS = {
+    colorado: { hex: 0xC41E28, rgb: [0.7686, 0.1176, 0.1568], clearcoat: 1.0,  metal: 0.08, name: 'Vermelho Colorado — Sólido' },
+    paris:    { hex: 0x8C1420, rgb: [0.5490, 0.0784, 0.1255], clearcoat: 0.95, metal: 0.65, name: 'Vermelho Paris — Metálico' },
+    ebony:    { hex: 0x1E2024, rgb: [0.1176, 0.1255, 0.1412], clearcoat: 0.95, metal: 0.20, name: 'Preto Ebony — Sólido' },
+    monaco:   { hex: 0x1C3866, rgb: [0.1098, 0.2196, 0.4000], clearcoat: 0.95, metal: 0.70, name: 'Azul Mônaco — Metálico' },
+    bari:     { hex: 0xB8BFC6, rgb: [0.7216, 0.7490, 0.7765], clearcoat: 0.95, metal: 0.85, name: 'Prata Bari — Metálico' }
+  };
+
+  const FORD_BLUE_OVAL = [0.0, 0.2039, 0.4706]; // #003478 Azul Oficial Ford
+
   let sketchfabApi = null;
-  const COLORADO_RED_NORM = [0.7686, 0.1176, 0.1568]; // #C41E28 normalizado
 
   function initSketchfabColorEngine() {
     const frame = document.getElementById('sketchfab-frame');
@@ -2793,8 +2834,8 @@
           sketchfabApi = api;
           api.start();
           api.addEventListener('viewerready', function() {
-            console.log('Sketchfab Viewer pronto! Aplicando Vermelho Colorado...');
-            paintSketchfabColorado();
+            console.log('Sketchfab Viewer pronto! Aplicando Vermelho Colorado preservando logo Ford...');
+            setVehicleColor('colorado');
           });
         },
         error: function(err) {
@@ -2806,59 +2847,87 @@
     }
   }
 
-  window.paintSketchfabColorado = function(rgbArray) {
-    const targetColor = rgbArray || COLORADO_RED_NORM;
-    if (!sketchfabApi) return;
+  // Função Global para mudar cor em ambos os visualizadores (Sketchfab + Three.js)
+  window.setVehicleColor = function(colorKey) {
+    const col = FACTORY_COLORS[colorKey] || FACTORY_COLORS.colorado;
 
-    sketchfabApi.getMaterialList(function(err, materials) {
-      if (err || !materials) return;
-      materials.forEach(function(mat) {
-        const n = (mat.name || '').toLowerCase();
-        // Não alterar vidros, pneus, rodas, interior e lanternas
-        if (n.includes('tire') || n.includes('pneu') || n.includes('wheel') || 
-            n.includes('rim') || n.includes('glass') || n.includes('window') || 
-            n.includes('vidro') || n.includes('light') || n.includes('lamp') ||
-            n.includes('interior') || n.includes('seat') || n.includes('mirror') ||
-            n.includes('black') || n.includes('rubber') || n.includes('calota')) {
-          return;
-        }
-
-        let changed = false;
-        if (mat.channels.AlbedoPBR) {
-          mat.channels.AlbedoPBR.color = targetColor;
-          mat.channels.AlbedoPBR.factor = 1.0;
-          delete mat.channels.AlbedoPBR.texture;
-          changed = true;
-        }
-        if (mat.channels.DiffuseColor) {
-          mat.channels.DiffuseColor.color = targetColor;
-          mat.channels.DiffuseColor.factor = 1.0;
-          delete mat.channels.DiffuseColor.texture;
-          changed = true;
-        }
-        if (mat.channels.DiffusePBR) {
-          mat.channels.DiffusePBR.color = targetColor;
-          mat.channels.DiffusePBR.factor = 1.0;
-          delete mat.channels.DiffusePBR.texture;
-          changed = true;
-        }
-        if (mat.channels.ClearCoat) {
-          mat.channels.ClearCoat.factor = 0.95;
-          mat.channels.ClearCoat.roughness = 0.08;
-        }
-        if (changed) {
-          sketchfabApi.setMaterial(mat, function() {
-            console.log('Material pintado com sucesso:', mat.name);
-          });
-        }
-      });
-    });
-
+    // Atualiza label na UI
     const pill = document.getElementById('sfPillLabel');
-    if (pill) pill.textContent = 'Pintura: Vermelho Colorado (Aplicada)';
+    if (pill) pill.textContent = 'Pintura: ' + col.name;
+
+    const v3dLabel = document.getElementById('v3dColorLabel');
+    if (v3dLabel) v3dLabel.textContent = col.name;
+
+    // 1. Atualizar materiais do Sketchfab
+    if (sketchfabApi) {
+      sketchfabApi.getMaterialList(function(err, materials) {
+        if (err || !materials) return;
+        materials.forEach(function(mat) {
+          const n = (mat.name || '').toLowerCase();
+
+          // SE FOR O EMBLEMA / LOGO DA FORD: FORÇAR O AZUL OVAL OFICIAL COM BRILHO CROMADO!
+          if (n.includes('ford') || n.includes('logo') || n.includes('badge') || n.includes('emblem') || n.includes('oval') || n.includes('marca')) {
+            if (mat.channels.AlbedoPBR) { mat.channels.AlbedoPBR.color = FORD_BLUE_OVAL; mat.channels.AlbedoPBR.factor = 1.0; }
+            if (mat.channels.DiffuseColor) { mat.channels.DiffuseColor.color = FORD_BLUE_OVAL; mat.channels.DiffuseColor.factor = 1.0; }
+            if (mat.channels.DiffusePBR) { mat.channels.DiffusePBR.color = FORD_BLUE_OVAL; mat.channels.DiffusePBR.factor = 1.0; }
+            sketchfabApi.setMaterial(mat);
+            return;
+          }
+
+          // NÃO PINTAR: Vidros, pneus, rodas, retrovisores pretos, interior, lanternas
+          if (n.includes('tire') || n.includes('pneu') || n.includes('wheel') || 
+              n.includes('rim') || n.includes('roda') || n.includes('glass') || 
+              n.includes('window') || n.includes('vidro') || n.includes('light') || 
+              n.includes('lamp') || n.includes('farol') || n.includes('lanterna') ||
+              n.includes('interior') || n.includes('seat') || n.includes('banco') || 
+              n.includes('black') || n.includes('rubber') || n.includes('borracha') || 
+              n.includes('bumper') || n.includes('parachoque') || n.includes('para-choque') ||
+              n.includes('grille') || n.includes('grade') || n.includes('calota')) {
+            return;
+          }
+
+          // APLICAR COR DA CARROCERIA
+          let changed = false;
+          if (mat.channels.AlbedoPBR) {
+            mat.channels.AlbedoPBR.color = col.rgb;
+            mat.channels.AlbedoPBR.factor = 1.0;
+            delete mat.channels.AlbedoPBR.texture;
+            changed = true;
+          }
+          if (mat.channels.DiffuseColor) {
+            mat.channels.DiffuseColor.color = col.rgb;
+            mat.channels.DiffuseColor.factor = 1.0;
+            delete mat.channels.DiffuseColor.texture;
+            changed = true;
+          }
+          if (mat.channels.DiffusePBR) {
+            mat.channels.DiffusePBR.color = col.rgb;
+            mat.channels.DiffusePBR.factor = 1.0;
+            delete mat.channels.DiffusePBR.texture;
+            changed = true;
+          }
+          if (mat.channels.ClearCoat) {
+            mat.channels.ClearCoat.factor = col.clearcoat;
+            mat.channels.ClearCoat.roughness = 0.08;
+          }
+          if (changed) {
+            sketchfabApi.setMaterial(mat);
+          }
+        });
+      });
+    }
+
+    // 2. Atualizar Three.js se ativo
+    if (window.paintMat) {
+      window.paintMat.color.setHex(col.hex);
+      window.paintMat.metalness = col.metal;
+      window.paintMat.clearcoat = col.clearcoat;
+    }
   };
 
-  // Iniciar após carregamento do DOM
+  // Aliases de compatibilidade
+  window.paintSketchfabColorado = function() { setVehicleColor('colorado'); };
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSketchfabColorEngine);
   } else {
