@@ -1238,7 +1238,7 @@
       <!-- Preto Ebony -->
       <img class="cc" data-p="ebony" src="assets/img/ka-black-ebony.jpg" alt="Ford Ka 1998 em Preto Ebony">
       <!-- Azul Mônaco -->
-      <img class="cc" data-p="monaco" src="assets/img/ka-blue-1.jpg" alt="Ford Ka 1998 em Azul Mônaco Metálico">
+      <img class="cc" data-p="monaco" src="assets/img/ka-blue-monaco.jpg" alt="Ford Ka 1998 em Azul Mônaco Metálico">
       <!-- Prata Bari -->
       <img class="cc" data-p="bari" src="assets/img/ka-silver-1.jpg" alt="Ford Ka 1998 em Prata Bari Metálico">
     </div>
@@ -2123,16 +2123,21 @@
       const canvas = document.getElementById('canvas3d');
       if(!canvas || typeof THREE === 'undefined') return;
 
-      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+      const initW = Math.max(canvas.clientWidth || 0, canvas.parentElement ? canvas.parentElement.clientWidth : 0, 960);
+      const initH = Math.max(canvas.clientHeight || 0, canvas.parentElement ? canvas.parentElement.clientHeight : 0, 580);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(initW, initH, false);
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.15;
 
       const scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2(0x101215, 0.035);
+      scene.fog = new THREE.FogExp2(0x101215, 0.028);
 
-      const camera = new THREE.PerspectiveCamera(40, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+      const camera = new THREE.PerspectiveCamera(38, initW / initH, 0.1, 100);
       camera.position.set(5.2, 2.1, 5.2);
 
       // Studio Lighting
@@ -2165,33 +2170,80 @@
       scene.add(headR);
       scene.add(headR.target);
 
-      // Studio Ground Floor with Shadow Receiving
-      const floorGeo = new THREE.PlaneGeometry(30, 30);
+      // ── PLATAFORMA CIRCULAR DE APRESENTAÇÃO SHOWROOM (TURNTABLE PODIUM) ──
+      // 1. Piso Infinito Escuro do Estúdio
+      const floorGeo = new THREE.PlaneGeometry(60, 60);
       const floorMat = new THREE.MeshStandardMaterial({
-        color: 0x14181d,
-        roughness: 0.82,
-        metalness: 0.15
+        color: 0x0a0c0f,
+        roughness: 0.92,
+        metalness: 0.1
       });
       const floor = new THREE.Mesh(floorGeo, floorMat);
       floor.rotation.x = -Math.PI / 2;
+      floor.position.y = -0.01;
       floor.receiveShadow = true;
       scene.add(floor);
 
-      // Circular Turntable Platform
-      const plinthGeo = new THREE.CylinderGeometry(3.2, 3.4, 0.08, 64);
-      const plinthMat = new THREE.MeshStandardMaterial({ color: 0x1d2229, roughness: 0.6, metalness: 0.3 });
-      const plinth = new THREE.Mesh(plinthGeo, plinthMat);
-      plinth.position.y = 0.04;
-      plinth.receiveShadow = true;
-      scene.add(plinth);
+      // 2. Grupo da Plataforma Giratória de Apresentação
+      const podiumGroup = new THREE.Group();
+      scene.add(podiumGroup);
 
-      // Turntable Edge Ring
-      const ringGeo = new THREE.RingGeometry(3.18, 3.24, 64);
-      const ringMat = new THREE.MeshBasicMaterial({ color: 0xC41E28, side: THREE.DoubleSide });
-      const ring = new THREE.Mesh(ringGeo, ringMat);
-      ring.rotation.x = -Math.PI / 2;
-      ring.position.y = 0.085;
-      scene.add(ring);
+      // 2.1 Base Cilíndrica Chanfrada (Nível Inferior)
+      const podiumBaseGeo = new THREE.CylinderGeometry(3.5, 3.75, 0.16, 64);
+      const podiumBaseMat = new THREE.MeshStandardMaterial({
+        color: 0x16191f,
+        roughness: 0.35,
+        metalness: 0.75
+      });
+      const podiumBase = new THREE.Mesh(podiumBaseGeo, podiumBaseMat);
+      podiumBase.position.y = 0.08;
+      podiumBase.receiveShadow = true;
+      podiumGroup.add(podiumBase);
+
+      // 2.2 Disco Superior Reflexivo em Metal Escovado (Nível Superior Turntable)
+      const podiumTopGeo = new THREE.CylinderGeometry(3.35, 3.35, 0.06, 64);
+      const podiumTopMat = new THREE.MeshStandardMaterial({
+        color: 0x101318,
+        roughness: 0.18,
+        metalness: 0.92
+      });
+      const podiumTop = new THREE.Mesh(podiumTopGeo, podiumTopMat);
+      podiumTop.position.y = 0.18;
+      podiumTop.receiveShadow = true;
+      podiumGroup.add(podiumTop);
+
+      // 2.3 Halo de Luz LED Neon Circular (Borda Iluminada Vermelho New Edge)
+      const haloGeo = new THREE.TorusGeometry(3.36, 0.022, 16, 64);
+      haloGeo.rotateX(Math.PI / 2);
+      const haloMat = new THREE.MeshBasicMaterial({
+        color: 0xC41E28,
+        transparent: true,
+        opacity: 0.95
+      });
+      const halo = new THREE.Mesh(haloGeo, haloMat);
+      halo.position.y = 0.185;
+      podiumGroup.add(halo);
+
+      // 2.4 Anel Externo de Alumínio Polido
+      const rimGeo = new THREE.TorusGeometry(3.7, 0.02, 16, 64);
+      rimGeo.rotateX(Math.PI / 2);
+      const rimMat = new THREE.MeshStandardMaterial({
+        color: 0x7c8a98,
+        metalness: 0.95,
+        roughness: 0.12
+      });
+      const rimMesh = new THREE.Mesh(rimGeo, rimMat);
+      rimMesh.position.y = 0.08;
+      podiumGroup.add(rimMesh);
+
+      // 2.5 Holofote Central Zenithal de Apresentação (Showroom Spotlight)
+      const showroomSpot = new THREE.SpotLight(0xffffff, 2.5, 20, Math.PI / 4.5, 0.4, 1.2);
+      showroomSpot.position.set(0, 8.5, 0);
+      showroomSpot.target.position.set(0, 0.2, 0);
+      showroomSpot.castShadow = true;
+      showroomSpot.shadow.bias = -0.001;
+      scene.add(showroomSpot);
+      scene.add(showroomSpot.target);
 
       // ── FORD KA 1998 3D PROCEDURAL CAR GROUP ──
       const carGroup = new THREE.Group();
@@ -2491,9 +2543,50 @@
       });
 
       // Turntable Render Loop
+      // Função global de redimensionamento para nunca deixar tela preta
+      window.resizeThreeCanvas = function() {
+        if (!canvas || !renderer || !camera) return;
+        const w = canvas.clientWidth || canvas.parentElement.clientWidth || 800;
+        const h = canvas.clientHeight || canvas.parentElement.clientHeight || 520;
+        if (w > 10 && h > 10) {
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h, false);
+          renderer.render(scene, camera);
+        }
+      };
+
+      // Turntable Render Loop com Rotação da Plataforma Circular
+      function checkResize() {
+        const w = canvas.clientWidth || (canvas.parentElement ? canvas.parentElement.clientWidth : 0);
+        const h = canvas.clientHeight || (canvas.parentElement ? canvas.parentElement.clientHeight : 0);
+        if (w > 20 && h > 20) {
+          const pr = Math.min(window.devicePixelRatio || 1, 2);
+          const rw = Math.floor(w * pr);
+          const rh = Math.floor(h * pr);
+          if (canvas.width !== rw || canvas.height !== rh) {
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h, false);
+          }
+        }
+      }
+
+      window.resizeThreeCanvas = function() {
+        checkResize();
+        if (typeof renderer !== 'undefined' && typeof scene !== 'undefined' && typeof camera !== 'undefined') {
+          renderer.render(scene, camera);
+        }
+      };
+
+      // Turntable Render Loop com Rotação da Plataforma
       function render3D(){
         requestAnimationFrame(render3D);
+        checkResize();
         updateCamera();
+        if (typeof autoRotate !== 'undefined' && autoRotate && typeof podiumGroup !== 'undefined') {
+          podiumGroup.rotation.y += 0.002;
+        }
         renderer.render(scene, camera);
       }
       render3D();
@@ -2777,11 +2870,18 @@
       if (tThree) { tThree.style.background = 'transparent'; tThree.style.color = 'rgba(255,255,255,0.7)'; }
     } else {
       if (sWrap) sWrap.style.display = 'none';
-      if (tWrap) tWrap.style.display = 'block';
+      if (tWrap) {
+        tWrap.style.display = 'block';
+        // Redimensiona imediatamente e renderiza o Three.js
+        setTimeout(function(){
+          if (window.resizeThreeCanvas) {
+            window.resizeThreeCanvas();
+          }
+          window.dispatchEvent(new Event('resize'));
+        }, 60);
+      }
       if (tThree) { tThree.style.background = 'var(--crimson)'; tThree.style.color = '#FFF'; }
       if (tSketch) { tSketch.style.background = 'transparent'; tSketch.style.color = 'rgba(255,255,255,0.7)'; }
-      // Trigger resize to fix Three.js canvas size
-      window.dispatchEvent(new Event('resize'));
     }
   };
 </script>
@@ -2882,7 +2982,7 @@
       sketchfabApi.getMaterialList(function(err, materials) {
         if (err || !materials) return;
 
-        // Armazena as propriedades originais na 1ª execução para detecção precisa
+        // Armazena as propriedades originais na 1ª execução
         if (!window._sfOrigMats) {
           window._sfOrigMats = {};
           materials.forEach(function(m_){
@@ -2903,25 +3003,72 @@
           const origC = orig.color;
 
           // ============================================================
-          // REGRA 1: SÍMBOLO DA FORD — SEMPRE PRESERVAR EM AZUL FORD OFICIAL!
-          // Detecta por nome (ford, logo, badge, emblem, oval) OU cor azul original
+          // REGRA 1: PLACA DE LICENÇA (HUMSTER3D / PLACA) — SEMPRE BRANCA!
+          // Nunca pintar com a cor da carroceria!
           // ============================================================
-          const isFordName = n.includes('ford') || n.includes('logo') || n.includes('badge') || n.includes('emblem') || n.includes('oval') || n.includes('marca');
-          const isOrigBlue = origC && (origC[0] < 0.22 && origC[2] > 0.25 && origC[2] > origC[0] * 1.5);
-
-          if (isFordName || isOrigBlue) {
-            // FORÇA O AZUL OVAL OFICIAL FORD (#003478 = [0.0, 0.2039, 0.4706]) COM BRILHO
-            if (mat.channels.AlbedoPBR) { mat.channels.AlbedoPBR.color = FORD_BLUE_OVAL; mat.channels.AlbedoPBR.factor = 1.0; }
-            if (mat.channels.DiffuseColor) { mat.channels.DiffuseColor.color = FORD_BLUE_OVAL; mat.channels.DiffuseColor.factor = 1.0; }
-            if (mat.channels.DiffusePBR) { mat.channels.DiffusePBR.color = FORD_BLUE_OVAL; mat.channels.DiffusePBR.factor = 1.0; }
-            if (mat.channels.RoughnessPBR) { mat.channels.RoughnessPBR.factor = 0.2; }
+          const isPlate = n.includes('plate') || n.includes('licens') || n.includes('placa') ||
+                          n.includes('humster') || n.includes('matricul') || n.includes('number') ||
+                          (n.includes('decal') && !n.includes('body'));
+          if (isPlate) {
+            const WHITE_PLATE = [0.97, 0.97, 0.97];
+            if (mat.channels.AlbedoPBR) { mat.channels.AlbedoPBR.color = WHITE_PLATE; mat.channels.AlbedoPBR.factor = 1.0; }
+            if (mat.channels.DiffuseColor) { mat.channels.DiffuseColor.color = WHITE_PLATE; mat.channels.DiffuseColor.factor = 1.0; }
+            if (mat.channels.DiffusePBR) { mat.channels.DiffusePBR.color = WHITE_PLATE; mat.channels.DiffusePBR.factor = 1.0; }
+            if (mat.channels.RoughnessPBR) { mat.channels.RoughnessPBR.factor = 0.35; }
             sketchfabApi.setMaterial(mat);
-            return; // NÃO PINTAR DA COR DO CARRO!
+            return;
           }
 
           // ============================================================
-          // REGRA 2: PNEUS, VIDROS, LANTERNAS, PARA-CHOQUES PRETO/CINZA
-          // Não pintar vidros, rodas, borrachas
+          // REGRA 2: LOGO DA FORD (AZUL E BRANCA / CROMADA)
+          // - Fundo oval: Azul Ford Oficial #003478
+          // - Letras 'Ford' e borda elíptica: Branco / Cromado #FFFFFF
+          // ============================================================
+          const isFordRelated = n.includes('ford') || n.includes('logo') || n.includes('badge') ||
+                                n.includes('emblem') || n.includes('oval') || n.includes('marca');
+          const isOrigBlue = origC && (origC[0] < 0.22 && origC[2] > 0.25 && origC[2] > origC[0] * 1.5);
+
+          if (isFordRelated || isOrigBlue) {
+            // Se for o texto / letras / contorno prateado do emblema:
+            const isTextOrBorder = n.includes('text') || n.includes('letter') || n.includes('chrome') ||
+                                   n.includes('silver') || n.includes('font') || n.includes('border') ||
+                                   (origC && origC[0] > 0.4 && origC[1] > 0.4 && origC[2] > 0.4);
+
+            if (isTextOrBorder && !isOrigBlue) {
+              // LETRAS 'FORD' E BORDA EM BRANCO CROMADO BRILHANTE
+              const CHROME_WHITE = [0.98, 0.98, 0.98];
+              if (mat.channels.AlbedoPBR) { mat.channels.AlbedoPBR.color = CHROME_WHITE; mat.channels.AlbedoPBR.factor = 1.0; }
+              if (mat.channels.DiffuseColor) { mat.channels.DiffuseColor.color = CHROME_WHITE; mat.channels.DiffuseColor.factor = 1.0; }
+              if (mat.channels.DiffusePBR) { mat.channels.DiffusePBR.color = CHROME_WHITE; mat.channels.DiffusePBR.factor = 1.0; }
+              if (mat.channels.RoughnessPBR) { mat.channels.RoughnessPBR.factor = 0.08; }
+              if (mat.channels.MetalnessPBR) { mat.channels.MetalnessPBR.factor = 0.95; }
+              sketchfabApi.setMaterial(mat);
+              return;
+            } else {
+              // FUNDO OVAL NO AZUL FORD CLÁSSICO (#003478)
+              if (mat.channels.AlbedoPBR) { mat.channels.AlbedoPBR.color = FORD_BLUE_OVAL; mat.channels.AlbedoPBR.factor = 1.0; }
+              if (mat.channels.DiffuseColor) { mat.channels.DiffuseColor.color = FORD_BLUE_OVAL; mat.channels.DiffuseColor.factor = 1.0; }
+              if (mat.channels.DiffusePBR) { mat.channels.DiffusePBR.color = FORD_BLUE_OVAL; mat.channels.DiffusePBR.factor = 1.0; }
+              if (mat.channels.RoughnessPBR) { mat.channels.RoughnessPBR.factor = 0.15; }
+              sketchfabApi.setMaterial(mat);
+              return;
+            }
+          }
+
+          // ============================================================
+          // REGRA 3: PEÇAS CROMADAS GERAIS (Maçanetas, frisos, espelhos)
+          // ============================================================
+          if (n.includes('chrome') || n.includes('silver') || n.includes('metal')) {
+            const CHROME_C = [0.92, 0.92, 0.94];
+            if (mat.channels.AlbedoPBR) { mat.channels.AlbedoPBR.color = CHROME_C; mat.channels.AlbedoPBR.factor = 1.0; }
+            if (mat.channels.DiffuseColor) { mat.channels.DiffuseColor.color = CHROME_C; mat.channels.DiffuseColor.factor = 1.0; }
+            if (mat.channels.DiffusePBR) { mat.channels.DiffusePBR.color = CHROME_C; mat.channels.DiffusePBR.factor = 1.0; }
+            sketchfabApi.setMaterial(mat);
+            return;
+          }
+
+          // ============================================================
+          // REGRA 4: PNEUS, VIDROS, LANTERNAS, PARA-CHOQUES PRETO/CINZA
           // ============================================================
           if (n.includes('tire') || n.includes('pneu') || n.includes('wheel') ||
               n.includes('rim') || n.includes('roda') || n.includes('glass') ||
@@ -2934,19 +3081,19 @@
             return;
           }
 
-          // Ignora pneus e plásticos muito escuros por cor original
+          // Ignora pneus e plásticos pretos muito escuros por cor original
           if (origC && origC[0] < 0.08 && origC[1] < 0.08 && origC[2] < 0.08) {
             return;
           }
 
-          // Ignora vidros com transparência PBR ativa
+          // Ignora vidros com transparência ativa
           if (mat.channels.Opacity && mat.channels.Opacity.factor < 0.85) {
             return;
           }
 
           // ============================================================
-          // REGRA 3: LATARIA / CARROCERIA DO FORD KA
-          // Aplica a cor selecionada com alto brilho New Edge!
+          // REGRA 5: CARROCERIA / LATARIA DO FORD KA
+          // Aplica a cor de fábrica New Edge selecionada!
           // ============================================================
           let changed = false;
           if (mat.channels.AlbedoPBR) {
