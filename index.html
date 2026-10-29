@@ -1327,7 +1327,10 @@
             <button onclick="setVehicleColor('bari')" title="Prata Bari (Metálico)" style="width:20px;height:20px;border-radius:50%;background:#B8BFC6;border:1px solid rgba(255,255,255,0.6);cursor:pointer"></button>
           </div>
           <button onclick="setVehicleColor('colorado')" class="v3d-pill" style="cursor:pointer;background:var(--crimson);color:#FFF;font-weight:700;border:1px solid rgba(255,255,255,0.5)">
-            ★ VERMELHO COLORADO ORIGINAL
+            ★ VERMELHO COLORADO
+          </button>
+          <button onclick="resetSketchfabHD()" title="Recarrega o modelo 3D com iluminação, sombras e reflexos máximos de estúdio" class="v3d-pill" style="cursor:pointer;background:rgba(255,255,255,0.15);color:#FFF;border:1px solid rgba(255,255,255,0.3);backdrop-filter:blur(8px)">
+            ↺ Restaurar HD Original
           </button>
         </div>
       </div>
@@ -2919,8 +2922,8 @@
           sketchfabApi = api;
           api.start();
           api.addEventListener('viewerready', function() {
-            console.log('Sketchfab Viewer pronto! Aplicando Vermelho Colorado preservando logo Ford...');
-            setVehicleColor('colorado');
+            console.log('Sketchfab Viewer pronto com fidelidade gráfica máxima HD!');
+            // Preserva a renderização de estúdio HDR original do autor sem mutação inicial
           });
         },
         error: function(err) {
@@ -2977,163 +2980,55 @@
       }
     });
 
-    // 1. ATUALIZAR MATERIAIS NO SKETCHFAB
+    // 1. ATUALIZAR SKETCHFAB DE FORMA CIRÚRGICA (SEM DESTRUIR OS SHADERS E ILUMINAÇÃO)
     if (sketchfabApi) {
       sketchfabApi.getMaterialList(function(err, materials) {
         if (err || !materials) return;
 
-        // Armazena as propriedades originais na 1ª execução
-        if (!window._sfOrigMats) {
-          window._sfOrigMats = {};
-          materials.forEach(function(m_){
-            var ch_ = m_.channels || {};
-            var origColor = (ch_.AlbedoPBR && ch_.AlbedoPBR.color) ||
-                            (ch_.DiffuseColor && ch_.DiffuseColor.color) ||
-                            (ch_.DiffusePBR && ch_.DiffusePBR.color) || null;
-            window._sfOrigMats[m_.id || m_.name] = {
-              color: origColor ? origColor.slice() : null,
-              name: (m_.name || '').toLowerCase()
-            };
-          });
-        }
-
         materials.forEach(function(mat) {
           const n = (mat.name || '').toLowerCase();
-          const orig = window._sfOrigMats[mat.id || mat.name] || {};
-          const origC = orig.color;
 
-          // ============================================================
-          // REGRA 1: PLACA DE LICENÇA (HUMSTER3D / PLACA) — SEMPRE BRANCA!
-          // Nunca pintar com a cor da carroceria!
-          // ============================================================
-          const isPlate = n.includes('plate') || n.includes('licens') || n.includes('placa') ||
-                          n.includes('humster') || n.includes('matricul') || n.includes('number') ||
-                          (n.includes('decal') && !n.includes('body'));
-          if (isPlate) {
-            const WHITE_PLATE = [0.97, 0.97, 0.97];
-            if (mat.channels.AlbedoPBR) { mat.channels.AlbedoPBR.color = WHITE_PLATE; mat.channels.AlbedoPBR.factor = 1.0; }
-            if (mat.channels.DiffuseColor) { mat.channels.DiffuseColor.color = WHITE_PLATE; mat.channels.DiffuseColor.factor = 1.0; }
-            if (mat.channels.DiffusePBR) { mat.channels.DiffusePBR.color = WHITE_PLATE; mat.channels.DiffusePBR.factor = 1.0; }
-            if (mat.channels.RoughnessPBR) { mat.channels.RoughnessPBR.factor = 0.35; }
-            sketchfabApi.setMaterial(mat);
-            return;
-          }
-
-          // ============================================================
-          // REGRA 2: LOGO DA FORD (AZUL E BRANCA / CROMADA)
-          // - Fundo oval: Azul Ford Oficial #003478
-          // - Letras 'Ford' e borda elíptica: Branco / Cromado #FFFFFF
-          // ============================================================
-          const isFordRelated = n.includes('ford') || n.includes('logo') || n.includes('badge') ||
-                                n.includes('emblem') || n.includes('oval') || n.includes('marca');
-          const isOrigBlue = origC && (origC[0] < 0.22 && origC[2] > 0.25 && origC[2] > origC[0] * 1.5);
-
-          if (isFordRelated || isOrigBlue) {
-            // Se for o texto / letras / contorno prateado do emblema:
-            const isTextOrBorder = n.includes('text') || n.includes('letter') || n.includes('chrome') ||
-                                   n.includes('silver') || n.includes('font') || n.includes('border') ||
-                                   (origC && origC[0] > 0.4 && origC[1] > 0.4 && origC[2] > 0.4);
-
-            if (isTextOrBorder && !isOrigBlue) {
-              // LETRAS 'FORD' E BORDA EM BRANCO CROMADO BRILHANTE
-              const CHROME_WHITE = [0.98, 0.98, 0.98];
-              if (mat.channels.AlbedoPBR) { mat.channels.AlbedoPBR.color = CHROME_WHITE; mat.channels.AlbedoPBR.factor = 1.0; }
-              if (mat.channels.DiffuseColor) { mat.channels.DiffuseColor.color = CHROME_WHITE; mat.channels.DiffuseColor.factor = 1.0; }
-              if (mat.channels.DiffusePBR) { mat.channels.DiffusePBR.color = CHROME_WHITE; mat.channels.DiffusePBR.factor = 1.0; }
-              if (mat.channels.RoughnessPBR) { mat.channels.RoughnessPBR.factor = 0.08; }
-              if (mat.channels.MetalnessPBR) { mat.channels.MetalnessPBR.factor = 0.95; }
-              sketchfabApi.setMaterial(mat);
-              return;
-            } else {
-              // FUNDO OVAL NO AZUL FORD CLÁSSICO (#003478)
-              if (mat.channels.AlbedoPBR) { mat.channels.AlbedoPBR.color = FORD_BLUE_OVAL; mat.channels.AlbedoPBR.factor = 1.0; }
-              if (mat.channels.DiffuseColor) { mat.channels.DiffuseColor.color = FORD_BLUE_OVAL; mat.channels.DiffuseColor.factor = 1.0; }
-              if (mat.channels.DiffusePBR) { mat.channels.DiffusePBR.color = FORD_BLUE_OVAL; mat.channels.DiffusePBR.factor = 1.0; }
-              if (mat.channels.RoughnessPBR) { mat.channels.RoughnessPBR.factor = 0.15; }
-              sketchfabApi.setMaterial(mat);
-              return;
-            }
-          }
-
-          // ============================================================
-          // REGRA 3: PEÇAS CROMADAS GERAIS (Maçanetas, frisos, espelhos)
-          // ============================================================
-          if (n.includes('chrome') || n.includes('silver') || n.includes('metal')) {
-            const CHROME_C = [0.92, 0.92, 0.94];
-            if (mat.channels.AlbedoPBR) { mat.channels.AlbedoPBR.color = CHROME_C; mat.channels.AlbedoPBR.factor = 1.0; }
-            if (mat.channels.DiffuseColor) { mat.channels.DiffuseColor.color = CHROME_C; mat.channels.DiffuseColor.factor = 1.0; }
-            if (mat.channels.DiffusePBR) { mat.channels.DiffusePBR.color = CHROME_C; mat.channels.DiffusePBR.factor = 1.0; }
-            sketchfabApi.setMaterial(mat);
-            return;
-          }
-
-          // ============================================================
-          // REGRA 4: PNEUS, VIDROS, LANTERNAS, PARA-CHOQUES PRETO/CINZA
-          // ============================================================
-          if (n.includes('tire') || n.includes('pneu') || n.includes('wheel') ||
-              n.includes('rim') || n.includes('roda') || n.includes('glass') ||
-              n.includes('window') || n.includes('vidro') || n.includes('windshield') ||
+          // NUNCA MEXER: Placa, Logotipo Ford, Vidros, Pneus, Faróis, Para-choques, Interior
+          if (n.includes('plate') || n.includes('licens') || n.includes('placa') || n.includes('humster') ||
+              n.includes('ford') || n.includes('logo') || n.includes('badge') || n.includes('emblem') ||
+              n.includes('tire') || n.includes('pneu') || n.includes('wheel') || n.includes('rim') ||
+              n.includes('glass') || n.includes('window') || n.includes('vidro') ||
               n.includes('light') || n.includes('lamp') || n.includes('farol') || n.includes('lanterna') ||
-              n.includes('interior') || n.includes('seat') || n.includes('banco') ||
-              n.includes('rubber') || n.includes('borracha') || n.includes('bumper') ||
-              n.includes('parachoque') || n.includes('para-choque') || n.includes('grille') ||
-              n.includes('grade') || n.includes('calota') || n.includes('black')) {
+              n.includes('interior') || n.includes('seat') || n.includes('rubber') || n.includes('bumper') ||
+              n.includes('parachoque') || n.includes('grille') || n.includes('grade')) {
             return;
           }
 
-          // Ignora pneus e plásticos pretos muito escuros por cor original
-          if (origC && origC[0] < 0.08 && origC[1] < 0.08 && origC[2] < 0.08) {
-            return;
-          }
-
-          // Ignora vidros com transparência ativa
-          if (mat.channels.Opacity && mat.channels.Opacity.factor < 0.85) {
-            return;
-          }
-
-          // ============================================================
-          // REGRA 5: CARROCERIA / LATARIA DO FORD KA
-          // Aplica a cor de fábrica New Edge selecionada!
-          // ============================================================
-          let changed = false;
-          if (mat.channels.AlbedoPBR) {
-            mat.channels.AlbedoPBR.color = col.rgb;
-            mat.channels.AlbedoPBR.factor = 1.0;
-            changed = true;
-          }
-          if (mat.channels.DiffuseColor) {
-            mat.channels.DiffuseColor.color = col.rgb;
-            mat.channels.DiffuseColor.factor = 1.0;
-            changed = true;
-          }
-          if (mat.channels.DiffusePBR) {
-            mat.channels.DiffusePBR.color = col.rgb;
-            mat.channels.DiffusePBR.factor = 1.0;
-            changed = true;
-          }
-          if (mat.channels.ClearCoat) {
-            mat.channels.ClearCoat.factor = col.clearcoat;
-            mat.channels.ClearCoat.roughness = 0.06;
-          }
-          if (mat.channels.RoughnessPBR) {
-            mat.channels.RoughnessPBR.factor = 0.22;
-          }
-          if (mat.channels.MetalnessPBR) {
-            mat.channels.MetalnessPBR.factor = col.metal || 0.1;
-          }
-          if (changed) {
-            sketchfabApi.setMaterial(mat);
+          // Apenas alterar cor suave se for o material de lataria/carroceria
+          if (n.includes('body') || n.includes('paint') || n.includes('car') || n.includes('color') || n.includes('material')) {
+            if (mat.channels.DiffuseColor) {
+              mat.channels.DiffuseColor.color = col.rgb;
+              sketchfabApi.setMaterial(mat);
+            } else if (mat.channels.AlbedoPBR) {
+              mat.channels.AlbedoPBR.color = col.rgb;
+              sketchfabApi.setMaterial(mat);
+            }
           }
         });
       });
     }
 
-    // 2. Sincroniza Estúdio Three.js caso esteja ativo
+    // 2. ATUALIZAR ESTÚDIO THREE.JS (PLATAFORMA CIRCULAR COM VERNIZ COMPLETO)
     if (window.paintMat) {
       window.paintMat.color.setHex(col.hex);
-      window.paintMat.metalness = col.metal;
-      window.paintMat.clearcoat = col.clearcoat;
+      window.paintMat.metalness = col.metal || 0.1;
+      window.paintMat.clearcoat = col.clearcoat || 1.0;
     }
+  };
+
+  // Função para recarregar o Sketchfab em Alta Definição Original Instantaneamente
+  window.resetSketchfabHD = function() {
+    const frame = document.getElementById('sketchfab-frame');
+    if (frame) {
+      frame.src = 'https://sketchfab.com/models/434d5030c0144d5f990ded6953d218dc/embed?autostart=1&internal=1&tracking=0&ui_infos=0&ui_watermark=0&ui_help=0&ui_settings=0&ui_inspector=0&ui_annotations=0&ui_stop=0&ui_vr=0&preload=1';
+    }
+    const pill = document.getElementById('sfPillLabel');
+    if (pill) pill.textContent = 'Renderização: HD Original Máxima';
   };
 
   window.paintSketchfabColorado = function() { setVehicleColor('colorado'); };
