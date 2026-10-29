@@ -1446,7 +1446,7 @@
 
             <div class="gas-slider-wrap">
               <label style="display:flex;justify-content:space-between;align-items:center">
-                <span>Acelerador / Rotação (RPM)</span>
+                <span>Controle de Aceleração (RPM)</span>
                 <b id="valRpm" style="color:var(--crimson);font-size:16px;font-family:monospace">850 RPM</b>
               </label>
               <input type="range" id="sliderGas" class="gas-range" min="850" max="5500" value="850" step="10">
@@ -1454,23 +1454,51 @@
               <!-- Botões de Aceleração Rápida -->
               <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
                 <button type="button" onclick="setFastRpm(850)" style="flex:1;background:rgba(255,255,255,0.08);color:#FFF;border:1px solid rgba(255,255,255,0.18);padding:6px 10px;border-radius:16px;font-size:11px;cursor:pointer;transition:all .2s">
-                  850 (Lenta)
+                  850 RPM Lenta
                 </button>
                 <button type="button" onclick="setFastRpm(3000)" style="flex:1;background:rgba(255,255,255,0.08);color:#FFF;border:1px solid rgba(255,255,255,0.18);padding:6px 10px;border-radius:16px;font-size:11px;cursor:pointer;transition:all .2s">
-                  3.000 (Cruzeiro)
+                  3.000 RPM Cruzeiro
                 </button>
                 <button type="button" onclick="setFastRpm(5500)" style="flex:1;background:rgba(239,68,68,0.2);color:#EF4444;border:1px solid rgba(239,68,68,0.4);padding:6px 10px;border-radius:16px;font-size:11px;cursor:pointer;font-weight:700;transition:all .2s">
-                  5.500 (Corte)
+                  5.500 RPM Corte
                 </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="tacho-container rv">
-          <canvas id="tachoCanvas" width="400" height="400"></canvas>
-          <div style="font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:10px">
-            Tacômetro Analógico • Ford Instruments
+        <div class="tacho-container rv" style="background:linear-gradient(180deg,#16191f 0%,#0c0e12 100%);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,0.6);display:flex;flex-direction:column;align-items:center;gap:18px">
+          <!-- Moldura com Foto Real do Relógio Analógico Oval do Ka -->
+          <div style="position:relative;width:240px;height:240px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,0.22);box-shadow:0 12px 30px rgba(0,0,0,0.7),inset 0 0 20px rgba(0,0,0,0.8)">
+            <img src="assets/img/ka-clock.jpg" alt="Relógio Analógico Oval do Ford Ka 1998" style="width:100%;height:100%;object-fit:cover;display:block">
+            <!-- Anel de LED Neon New Edge ao redor do Relógio -->
+            <div id="clockHalo" style="position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 15px rgba(196,30,40,0.4);border:2px solid rgba(196,30,40,0.6);pointer-events:none;transition:all .3s"></div>
+          </div>
+
+          <!-- Display Digital e Barra LED Dinâmica de Rotação -->
+          <div style="width:100%;max-width:320px;text-align:center">
+            <div style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px">
+              Ford Instruments • Painel New Edge
+            </div>
+            <div id="tachoDisplay" style="font-size:32px;font-family:monospace;font-weight:700;color:var(--crimson);letter-spacing:.05em;text-shadow:0 0 12px rgba(196,30,40,0.5)">
+              850 RPM
+            </div>
+            <div id="tachoStatus" style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:2px;font-weight:600">
+              ○ Motor Desligado
+            </div>
+
+            <!-- Barra de LED Progressiva de RPM (0 a 5.500 RPM) -->
+            <div style="width:100%;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;margin-top:14px;border:1px solid rgba(255,255,255,0.12)">
+              <div id="tachoLedBar" style="width:15%;height:100%;background:linear-gradient(90deg,#22C55E 0%,#EAB308 65%,#EF4444 100%);border-radius:4px;transition:width .08s ease"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:9px;color:rgba(255,255,255,0.35);margin-top:4px;letter-spacing:.1em">
+              <span>0</span>
+              <span>1000</span>
+              <span>2000</span>
+              <span>3000</span>
+              <span>4000</span>
+              <span style="color:#EF4444">5000+</span>
+            </div>
           </div>
         </div>
       </div>
@@ -2608,13 +2636,16 @@
       render3D();
     })();
 
-    /* ── 14. WEB AUDIO PROCEDURAL ENGINE SYNTHESIZER & TACÔMETRO ANALÓGICO HD ── */
+    /* ── 14. WEB AUDIO PROCEDURAL ENGINE SYNTHESIZER & RELÓGIO / PAINEL INSTRUMENTS ── */
     (function(){
       const btnIgnition = document.getElementById('btnIgnition');
       const lblIgnition = document.getElementById('lblIgnition');
       const sliderGas = document.getElementById('sliderGas');
       const valRpm = document.getElementById('valRpm');
-      const tachoCanvas = document.getElementById('tachoCanvas');
+      const tachoDisplay = document.getElementById('tachoDisplay');
+      const tachoStatus = document.getElementById('tachoStatus');
+      const tachoLedBar = document.getElementById('tachoLedBar');
+      const clockHalo = document.getElementById('clockHalo');
 
       let audioCtx = null;
       let isRunning = false;
@@ -2640,138 +2671,37 @@
         }
       };
 
-      // Tacômetro Analógico Canvas (Garantido em Alta Resolução)
-      const tCtx = tachoCanvas ? tachoCanvas.getContext('2d') : null;
-
-      function drawTacho(rpmVal){
-        if (!tCtx || !tachoCanvas) return;
-        const rpm = Math.max(0, Math.min(6000, Number(rpmVal) || 0));
-
-        // Dimensões reais do canvas
-        const W = tachoCanvas.width || 400;
-        const H = tachoCanvas.height || 400;
-        const cx = W / 2;
-        const cy = H / 2;
-        const r = W * 0.41;
-
-        // Resetar qualquer transformação anterior
-        tCtx.setTransform(1, 0, 0, 1, 0, 0);
-        tCtx.clearRect(0, 0, W, H);
-
-        // 1. Moldura Externa Metálica com Sombra Suave
-        tCtx.beginPath();
-        tCtx.arc(cx, cy, r + 16, 0, Math.PI * 2);
-        tCtx.fillStyle = '#111418';
-        tCtx.fill();
-        tCtx.strokeStyle = '#2b323c';
-        tCtx.lineWidth = 4;
-        tCtx.stroke();
-
-        // 2. Fundo do Mostrador com Degradê Circular de Instrumento Ford
-        tCtx.beginPath();
-        tCtx.arc(cx, cy, r, 0, Math.PI * 2);
-        const dialGrad = tCtx.createRadialGradient(cx, cy, 15, cx, cy, r);
-        dialGrad.addColorStop(0, '#1c222b');
-        dialGrad.addColorStop(0.7, '#0f1216');
-        dialGrad.addColorStop(1, '#07090b');
-        tCtx.fillStyle = dialGrad;
-        tCtx.fill();
-        tCtx.strokeStyle = 'rgba(255,255,255,0.12)';
-        tCtx.lineWidth = 1.5;
-        tCtx.stroke();
-
-        // 3. Escala Analógica (0 a 6000 RPM)
-        const startAng = Math.PI * 0.75;  // 135° (Ponto zero, embaixo à esquerda)
-        const endAng = Math.PI * 2.25;    // 405° (Máximo 6.000, embaixo à direita)
-
-        for (let i = 0; i <= 60; i++) {
-          const frac = i / 60;
-          const ang = startAng + frac * (endAng - startAng);
-          const isMajor = (i % 10 === 0);
-          const isMid = (i % 5 === 0);
-          const tickLen = isMajor ? 18 : (isMid ? 12 : 7);
-          const isRedline = (i >= 50);
-
-          const x1 = cx + Math.cos(ang) * (r - 6);
-          const y1 = cy + Math.sin(ang) * (r - 6);
-          const x2 = cx + Math.cos(ang) * (r - 6 - tickLen);
-          const y2 = cy + Math.sin(ang) * (r - 6 - tickLen);
-
-          tCtx.beginPath();
-          tCtx.moveTo(x1, y1);
-          tCtx.lineTo(x2, y2);
-          tCtx.strokeStyle = isRedline ? '#EF4444' : (isMajor ? '#FFFFFF' : '#8A95A5');
-          tCtx.lineWidth = isMajor ? 3 : (isMid ? 2 : 1.2);
-          tCtx.stroke();
-
-          // Números de 0 a 6 (x1000 RPM)
-          if (isMajor) {
-            const tx = cx + Math.cos(ang) * (r - 35);
-            const ty = cy + Math.sin(ang) * (r - 35);
-            tCtx.fillStyle = isRedline ? '#EF4444' : '#F3F4F6';
-            tCtx.font = '700 16px sans-serif';
-            tCtx.textAlign = 'center';
-            tCtx.textBaseline = 'middle';
-            tCtx.fillText(String(i / 10), tx, ty);
+      function updateDashboard(rpm) {
+        const r = Math.round(rpm);
+        if (tachoDisplay) {
+          tachoDisplay.textContent = r + ' RPM';
+          tachoDisplay.style.color = isRunning ? (r >= 4800 ? '#EF4444' : 'var(--crimson)') : '#6B7280';
+        }
+        if (valRpm) {
+          valRpm.textContent = isRunning ? (r + ' RPM') : 'Motor Desligado';
+        }
+        if (tachoStatus) {
+          if (!isRunning) {
+            tachoStatus.textContent = '○ Motor Desligado';
+            tachoStatus.style.color = 'rgba(255,255,255,0.4)';
+          } else if (r >= 5200) {
+            tachoStatus.textContent = '⚡ Faixa de Corte (Redline)';
+            tachoStatus.style.color = '#EF4444';
+          } else if (r <= 950) {
+            tachoStatus.textContent = '● Marcha Lenta Estabilizada';
+            tachoStatus.style.color = '#22C55E';
+          } else {
+            tachoStatus.textContent = '● Motor em Funcionamento';
+            tachoStatus.style.color = '#38BDF8';
           }
         }
-
-        // 4. Arco Vermelho da Faixa de Corte (5.000 a 6.000 RPM)
-        const redStart = startAng + (50 / 60) * (endAng - startAng);
-        tCtx.beginPath();
-        tCtx.arc(cx, cy, r - 5, redStart, endAng);
-        tCtx.strokeStyle = '#EF4444';
-        tCtx.lineWidth = 4;
-        tCtx.stroke();
-
-        // 5. Inscrições Clássicas Ford Instruments
-        tCtx.fillStyle = 'rgba(255,255,255,0.85)';
-        tCtx.font = '700 14px sans-serif';
-        tCtx.textAlign = 'center';
-        tCtx.fillText('FORD ENDURA-E', cx, cy - 35);
-
-        tCtx.fillStyle = 'rgba(255,255,255,0.45)';
-        tCtx.font = '500 10px sans-serif';
-        tCtx.fillText('RPM x 1000 • CROSSFLOW', cx, cy - 18);
-
-        // 6. Display Digital Central de RPM
-        tCtx.fillStyle = isRunning ? '#EF4444' : '#6B7280';
-        tCtx.font = '700 22px monospace';
-        tCtx.fillText(Math.round(rpm) + ' RPM', cx, cy + 48);
-
-        tCtx.fillStyle = isRunning ? '#22C55E' : 'rgba(255,255,255,0.35)';
-        tCtx.font = '600 10px sans-serif';
-        tCtx.fillText(isRunning ? '● MOTOR EM FUNCIONAMENTO' : '○ MOTOR DESLIGADO', cx, cy + 68);
-
-        // 7. Agulha Vermelha de Alta Visibilidade com Brilho Neon
-        const needleFrac = rpm / 6000;
-        const needleAng = startAng + needleFrac * (endAng - startAng);
-
-        tCtx.save();
-        tCtx.translate(cx, cy);
-        tCtx.rotate(needleAng);
-
-        // Sombra da agulha
-        tCtx.beginPath();
-        tCtx.moveTo(-18, -2);
-        tCtx.lineTo(r - 16, 0);
-        tCtx.lineTo(-18, 2);
-        tCtx.closePath();
-        tCtx.fillStyle = '#EF4444';
-        tCtx.shadowColor = 'rgba(239, 68, 68, 0.8)';
-        tCtx.shadowBlur = 10;
-        tCtx.fill();
-
-        // Miolo Central Metálico da Agulha
-        tCtx.beginPath();
-        tCtx.arc(0, 0, 12, 0, Math.PI * 2);
-        tCtx.fillStyle = '#1A1E24';
-        tCtx.fill();
-        tCtx.strokeStyle = '#EF4444';
-        tCtx.lineWidth = 2.5;
-        tCtx.stroke();
-
-        tCtx.restore();
+        if (tachoLedBar) {
+          const pct = Math.max(0, Math.min(100, (rpm / 5500) * 100));
+          tachoLedBar.style.width = pct + '%';
+        }
+        if (clockHalo) {
+          clockHalo.style.boxShadow = isRunning ? ('inset 0 0 25px rgba(239,68,68,' + (0.3 + (rpm/5500)*0.5) + '), 0 0 20px rgba(196,30,40,0.5)') : 'none';
+        }
       }
 
       function initAudio(){
@@ -2791,17 +2721,17 @@
         gasGain = audioCtx.createGain();
         gasGain.gain.setValueAtTime(0.65, audioCtx.currentTime);
 
-        // Oscilador 1: Pulso dos 4 Cilindros (2 pulsos por volta)
+        // Oscilador 1: Ciclo de Ignição dos 4 Cilindros Endura-E
         oscBase = audioCtx.createOscillator();
         oscBase.type = 'sawtooth';
         oscBase.frequency.setValueAtTime(28.3, audioCtx.currentTime);
 
-        // Oscilador 2: Sub-Grave do Bloco em Ferro Fundido
+        // Oscilador 2: Sub-Grave Mecânico
         oscSub = audioCtx.createOscillator();
         oscSub.type = 'triangle';
         oscSub.frequency.setValueAtTime(14.1, audioCtx.currentTime);
 
-        // Oscilador 3: Válvulas e Varetas (Comando OHV)
+        // Oscilador 3: Varetas e Balancins OHV
         oscCams = audioCtx.createOscillator();
         oscCams.type = 'square';
         oscCams.frequency.setValueAtTime(56.6, audioCtx.currentTime);
@@ -2831,7 +2761,6 @@
           audioCtx.resume();
         }
 
-        // Fase de Motor de Arranque (Cranking)
         if(lblIgnition) lblIgnition.textContent = "Dando a partida...";
         if(btnIgnition) btnIgnition.style.background = "#D97706";
 
@@ -2839,16 +2768,14 @@
           const t = audioCtx.currentTime;
           masterGain.gain.cancelScheduledValues(t);
           masterGain.gain.setValueAtTime(0.01, t);
-          masterGain.gain.linearRampToValueAtTime(0.18, t + 0.35);
+          masterGain.gain.linearRampToValueAtTime(0.2, t + 0.35);
         }
 
         setTimeout(() => {
-          // Ignição do Motor e Marcha Lenta (850 RPM)
           isRunning = true;
           isStarting = false;
           targetRpm = 850;
           if(sliderGas) sliderGas.value = 850;
-          if(valRpm) valRpm.textContent = '850 RPM (Marcha Lenta)';
 
           if(btnIgnition) {
             btnIgnition.classList.add('running');
@@ -2859,7 +2786,7 @@
           if(masterGain && audioCtx){
             const t = audioCtx.currentTime;
             masterGain.gain.cancelScheduledValues(t);
-            masterGain.gain.setValueAtTime(0.3, t);
+            masterGain.gain.setValueAtTime(0.35, t);
             masterGain.gain.linearRampToValueAtTime(0.65, t + 0.35);
           }
 
@@ -2872,7 +2799,6 @@
         isStarting = false;
         targetRpm = 0;
         if(sliderGas) sliderGas.value = 850;
-        if(valRpm) valRpm.textContent = 'Motor Desligado';
 
         if(btnIgnition) {
           btnIgnition.classList.remove('running');
@@ -2898,39 +2824,32 @@
         sliderGas.addEventListener('input', e => {
           if(!isRunning) return;
           targetRpm = parseFloat(e.target.value) || 850;
-          if(valRpm) {
-            valRpm.textContent = `${Math.round(targetRpm)} RPM`;
-          }
         });
       }
 
-      // Loop de Áudio e Animação Fluida do Tacômetro
+      // Loop de Áudio e Atualização do Painel de Rotação
       function updateEngineSound(){
         requestAnimationFrame(updateEngineSound);
 
         currentRpm += (targetRpm - currentRpm) * 0.14;
-        drawTacho(currentRpm);
+        updateDashboard(currentRpm);
 
         if(isRunning && audioCtx && oscBase){
           const t = audioCtx.currentTime;
-          // Frequência do ciclo de 4 tempos: (RPM / 60) * 2
           const freq = Math.max(14, (currentRpm / 60) * 2);
           oscBase.frequency.setTargetAtTime(freq, t, 0.04);
           if(oscSub) oscSub.frequency.setTargetAtTime(freq * 0.5, t, 0.04);
           if(oscCams) oscCams.frequency.setTargetAtTime(freq * 2.0, t, 0.04);
 
-          // Filtro de ressonância do coletor de admissão
           const filterFreq = 160 + (currentRpm / 5500) * 1600;
           if(filter) filter.frequency.setTargetAtTime(filterFreq, t, 0.05);
 
-          // Ganho dinâmico do acelerador
           const dynamicVol = 0.45 + (currentRpm / 5500) * 0.45;
           if(gasGain) gasGain.gain.setTargetAtTime(dynamicVol, t, 0.04);
         }
       }
 
-      // Desenha o mostrador imediatamente no carregamento da página!
-      drawTacho(0);
+      updateDashboard(0);
       updateEngineSound();
     })();
   </script>
